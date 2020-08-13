@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="" />
+    <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentCollectInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentCollectInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentCommentInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentCommentInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentLikeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentLikeInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentShareInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentShareInfoRepositry.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +56,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="E:/" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1fcINa1hauCuEp0vXWFmU1kWvTe" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -173,7 +182,7 @@
       <workItem from="1597281454412" duration="4318000" />
       <workItem from="1597286677989" duration="5135000" />
       <workItem from="1597296601482" duration="2591000" />
-      <workItem from="1597302330984" duration="7486000" />
+      <workItem from="1597302330984" duration="8217000" />
     </task>
     <servers />
   </component>
