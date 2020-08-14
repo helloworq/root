@@ -6,9 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tb_usermonmentlikeinfo")
+@Table(name = "tb_usermonmentshareinfo")
 @Data
-public class UserMonmentLikeInfo {
+public class UserMomentShareInfo {
     @Id
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
     @GeneratedValue(generator = "idGenerator")
@@ -17,10 +17,9 @@ public class UserMonmentLikeInfo {
     @Column(name = "momentId", unique = true, nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "whoLike", unique = true, nullable = false, length = 64)
-    private String whoLike;
+    @Column(name = "whoShare", unique = true, nullable = false, length = 64)
+    private String whoShare;
 
-    @Column(name = "likeTime", unique = true, nullable = false, length = 64)
-    private String likeTime;
-
+    @Column(name = "shareTime", unique = true, nullable = false, length = 64)
+    private String shareTime;
 }

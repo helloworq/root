@@ -1,12 +1,12 @@
 package com.transform.service;
 
+import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EntityScan("com.transform.api")//扫描实体类包
-@EnableDiscoveryClient
+@EntityScan("com.transform.api")
+@EnableDubbo(scanBasePackages = "com.transform.service")
 @SpringBootApplication
 public class ServiceApplication {
 

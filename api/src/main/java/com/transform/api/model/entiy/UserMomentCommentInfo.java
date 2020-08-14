@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_usermonmentcommentinfo")
 @Data
-public class UserMonmentCommentInfo {
+public class UserMomentCommentInfo {
     @Id
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
     @GeneratedValue(generator = "idGenerator")
