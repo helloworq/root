@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_usermonmentshareinfo")
@@ -21,5 +22,5 @@ public class UserMomentShareInfo {
     private String whoShare;
 
     @Column(name = "shareTime", unique = true, nullable = false, length = 64)
-    private String shareTime;
+    private Date shareTime;
 }

@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCollectInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCollectInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCommentInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCommentInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentLikeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentLikeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentShareInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentShareInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/LoginController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,7 +93,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.WebApplication">
+  <component name="RunManager" selected="JUnit.ServiceApplicationTests">
+    <configuration name="ServiceApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.transform.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.transform.service" />
+      <option name="MAIN_CLASS_NAME" value="com.transform.service.ServiceApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServiceApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="service" />
       <extension name="coverage">
@@ -144,6 +162,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServiceApplicationTests" />
         <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
       </list>
     </recent_temporary>
@@ -185,7 +204,11 @@
       <workItem from="1597367509582" duration="2071000" />
       <workItem from="1597371255339" duration="11382000" />
       <workItem from="1597387926131" duration="957000" />
-      <workItem from="1597389284486" duration="4968000" />
+      <workItem from="1597389284486" duration="6244000" />
+      <workItem from="1597546332818" duration="1197000" />
+      <workItem from="1597554734929" duration="1195000" />
+      <workItem from="1597587372212" duration="874000" />
+      <workItem from="1597625892498" duration="383000" />
     </task>
     <servers />
   </component>

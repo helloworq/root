@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_usermonmentlikeinfo")
@@ -21,6 +22,6 @@ public class UserMomentLikeInfo {
     private String whoLike;
 
     @Column(name = "likeTime", unique = true, nullable = false, length = 64)
-    private String likeTime;
+    private Date likeTime;
 
 }

@@ -4,7 +4,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.service.ILoginService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 
 @RestController
 @RequestMapping("v1/rest/")
