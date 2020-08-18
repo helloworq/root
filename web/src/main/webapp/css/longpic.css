@@ -1,0 +1,23 @@
+.weiboheader{
+	position: relative;
+}
+.weiboheaderpic{
+	margin-top: 10px;
+	width: 1024px;
+	height: 300px;
+}
+.headONlongpicPosition {
+	position: absolute;
+	top: 50px;
+	left: 462px
+}
+.headONlongpic{
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+}
+.operaONlongpicPosition{
+	position: absolute;
+	top: 200px;
+	left: 425px
+}

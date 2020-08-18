@@ -1,0 +1,47 @@
+.mynav{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid #e7e7e7;
+	background-color: #f3f3f3;
+}
+.mynavli {
+    float: left;
+}
+li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.mynavliinput{
+	float: right;
+	padding: 7px;
+}
+input[type=text] {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: white;
+  background-image: url('https://static.runoob.com/images/mix/searchicon.png');
+  background-position: 5px 5px; 
+  background-repeat: no-repeat;
+  padding: 5px 10px 8px 40px;
+}
+.mynavlibtn{
+	float: right;
+	margin-top: -7px;
+	height: 30px;
+}
+.writemsg{
+	border: 0;
+	width: 38px;
+	height: 35px;
+	background: url(../img/writemsg.png);
+	
+}
+

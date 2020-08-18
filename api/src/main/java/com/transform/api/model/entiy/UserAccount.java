@@ -16,7 +16,7 @@ public class UserAccount {
     private String id;
 
     @Column(name = "userAccount", unique = true, nullable = false, length = 64)
-    private String useraAcount;
+    private String userAccount;
 
     @Column(name = "userPassword", nullable = false, length = 64)
     private String userPassword;

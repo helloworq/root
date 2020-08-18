@@ -7,7 +7,6 @@ import com.transform.service.dao.UserAccountRepositry;
 import com.transform.service.util.EncodeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @Component
@@ -25,7 +24,7 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public String addAccount(String userAccount, String userPassword){
         UserAccount userAccountEntiy=new UserAccount();
-        userAccountEntiy.setUseraAcount(userAccount);
+        userAccountEntiy.setUserAccount(userAccount);
         userAccountEntiy.setUserPassword(encodeString.encodePasswordWithSHA(userPassword));
         userAccountRepositry.save(userAccountEntiy);
         return "success";
@@ -56,4 +55,13 @@ public class LoginServiceImpl implements ILoginService {
         return encodeString.encodePasswordWithSHA(userPassword).equals(password);
     }
 
+    /**
+     * 验证用户名是否唯一
+     * @param userAccount
+     * @return
+     */
+    @Override
+    public boolean isUserAccountUnique(String userAccount) {
+        return null==userAccountRepositry.findByUserAccount(userAccount);
+    }
 }

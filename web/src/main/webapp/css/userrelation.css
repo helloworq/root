@@ -1,0 +1,35 @@
+.userrelation{
+	width: 100%;
+	position: relative;
+	background-color: white;
+}
+.userrelationheader{
+	font-size: large;
+	padding: 20px;
+	font-weight: bold;
+}
+.userfollowheader{
+	font-size: large;
+	padding: 20px;
+	font-weight: bold;
+}
+.userfollowcontent{
+	overflow:hidden;
+}
+.userfollowfriend{
+	width: 33%;
+	float: left;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.userfollowfriendpic{
+	width: 80px;
+	height: 80px;
+	border-radius: 100%;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+.userrelationfooter{
+	font-size: medium;
+	text-align: center;
+}

@@ -6,4 +6,6 @@ public interface ILoginService {
     boolean checkPassword(String userAccount,String userPassword);
 
     String deleteAccount(String userAccount,String userPassword);
+
+    boolean isUserAccountUnique(String userAccount);
 }

@@ -8,5 +8,5 @@ import org.springframework.data.repository.RepositoryDefinition;
 
 @RepositoryDefinition(domainClass = UserInfo.class, idClass = String.class)
 public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
-
+    UserInfo findByUuid(String operationUserUUID);
 }

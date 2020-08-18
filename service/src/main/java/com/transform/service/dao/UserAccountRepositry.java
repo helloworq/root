@@ -13,4 +13,6 @@ public interface UserAccountRepositry extends JpaRepository<UserAccount,String> 
 
     @Query(value = "select USER_PASSWORD from TB_USERACCOUNT u where u.USER_ACCOUNT=?1",nativeQuery = true)
     String findPasswordbyUserAccount(String useraccount);
+
+    UserAccount findByUserAccount(String userAccount);
 }

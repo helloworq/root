@@ -2,19 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000/storage_v2/_src_/schema/DGP_ARS.MFfjig.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000/storage_v2/_src_/schema/DGP_ARS.MFfjig.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCollectInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCollectInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCommentInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentCommentInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentLikeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentLikeInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentShareInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserMomentShareInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserAccountRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserAccountRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfoRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -49,6 +58,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Jsp File" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -61,6 +71,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="oracle" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -68,17 +79,26 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\DistCode\root\web\src\main\java\com\transform\web\Controller" />
-      <recent name="E:\DistCode\root\api\src\main\java\com\transform\api\model\entiy" />
+      <recent name="E:\DistCode\root\web\src\main\resources\static" />
+      <recent name="E:\DistCode\root\web\src\main\resources" />
+      <recent name="E:\DistCode\root\web\src\main\resources\templates" />
+      <recent name="E:\DistCode\root\web\src\main\webapp\WEB-INF\views" />
+      <recent name="E:\DistCode\root\web\src\main\webapp" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.transform.web.Config" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\DistCode\root\web\src\main\resources\templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -93,7 +113,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ServiceApplicationTests">
+  <component name="RunManager" selected="Spring Boot.WebApplication">
     <configuration name="ServiceApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="service" />
       <extension name="coverage">
@@ -156,14 +176,24 @@
     <configuration name="WebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="web" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.transform.web.WebApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.ServiceApplicationTests" />
+      <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
+      <item itemvalue="Spring Boot.ApiApplication" />
+      <item itemvalue="Spring Boot.BaseApplication" />
+      <item itemvalue="Spring Boot.ServerApplication" />
+      <item itemvalue="Spring Boot.ServiceApplication" />
+      <item itemvalue="Spring Boot.WebApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ServiceApplicationTests" />
         <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
+        <item itemvalue="JUnit.ServiceApplicationTests" />
       </list>
     </recent_temporary>
   </component>
@@ -174,7 +204,7 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@16b419e4" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2fb9236a" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -208,7 +238,17 @@
       <workItem from="1597546332818" duration="1197000" />
       <workItem from="1597554734929" duration="1195000" />
       <workItem from="1597587372212" duration="874000" />
-      <workItem from="1597625892498" duration="383000" />
+      <workItem from="1597625892498" duration="807000" />
+      <workItem from="1597626743519" duration="240000" />
+      <workItem from="1597627015374" duration="682000" />
+      <workItem from="1597627746848" duration="10765000" />
+      <workItem from="1597642394067" duration="10479000" />
+      <workItem from="1597655573310" duration="1001000" />
+      <workItem from="1597712881865" duration="368000" />
+      <workItem from="1597718032266" duration="28000" />
+      <workItem from="1597728041862" duration="1796000" />
+      <workItem from="1597731284536" duration="19000" />
+      <workItem from="1597735523714" duration="6197000" />
     </task>
     <servers />
   </component>
