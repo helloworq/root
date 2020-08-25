@@ -2,18 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000/storage_v2/_src_/schema/DGP_ARS.MFfjig.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/22343e32-e159-4001-8589-6e8c92c24000/storage_v2/_src_/schema/DGP_ARS.MFfjig.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/model/entiy/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/ILoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserAccountRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserAccountRepositry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/IBaseInfoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/IBaseInfoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserMomentInfoRepositry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/LoginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/transform/service/ServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/BaseInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/BaseInfoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FollowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FollowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/PageJumpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/PageJumpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/WebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/WebApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -79,7 +76,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../deqing/dgpoms-server-root-dqyzt/pom.xml" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
@@ -100,6 +97,116 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\DistCode\root\web\src\main\resources\templates" />
     </key>
+  </component>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8088" />
+          <option name="urlPath" value="/v1/rest/getjqdata" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="str" />
+                <option name="value" value="das" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="obj" />
+                <option name="value" value="dasda" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8085" />
+          <option name="urlPath" value="/v1/rest/getjqdata" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="str" />
+                <option name="value" value="das" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="obj" />
+                <option name="value" value="dasda" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8085" />
+          <option name="urlPath" value="/v1/rest/getjqdata" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8085" />
+          <option name="urlPath" value="/v1/rest/getuuid" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -201,12 +308,7 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2fb9236a" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -248,7 +350,23 @@
       <workItem from="1597718032266" duration="28000" />
       <workItem from="1597728041862" duration="1796000" />
       <workItem from="1597731284536" duration="19000" />
-      <workItem from="1597735523714" duration="6197000" />
+      <workItem from="1597735523714" duration="6889000" />
+      <workItem from="1597799182950" duration="585000" />
+      <workItem from="1597806531005" duration="8613000" />
+      <workItem from="1597888545167" duration="5364000" />
+      <workItem from="1597901622359" duration="16000" />
+      <workItem from="1597904428338" duration="196000" />
+      <workItem from="1597908075393" duration="3869000" />
+      <workItem from="1597972252976" duration="1096000" />
+      <workItem from="1597975064534" duration="11935000" />
+      <workItem from="1598237899013" duration="273000" />
+      <workItem from="1598238599034" duration="86000" />
+      <workItem from="1598251193229" duration="390000" />
+      <workItem from="1598251753635" duration="1005000" />
+      <workItem from="1598253201880" duration="785000" />
+      <workItem from="1598266268583" duration="497000" />
+      <workItem from="1598268488371" duration="6000" />
+      <workItem from="1598317607196" duration="1966000" />
     </task>
     <servers />
   </component>

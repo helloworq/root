@@ -30,4 +30,8 @@ public interface IBaseInfoService {
      */
     UserBaseInfoDTO getUserBaseInfo(String operationUserUUID);
 
+    /**
+     * 获取用户的uuid
+     */
+    String getUserUUID(String operationUsername);
 }

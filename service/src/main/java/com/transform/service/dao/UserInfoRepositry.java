@@ -9,4 +9,7 @@ import org.springframework.data.repository.RepositoryDefinition;
 @RepositoryDefinition(domainClass = UserInfo.class, idClass = String.class)
 public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
     UserInfo findByUuid(String operationUserUUID);
+
+    @Query(value = "select UUID from TB_USERINFO u where u.USER_NAME=?1",nativeQuery = true)
+    String findUuid(String operationUsername);
 }

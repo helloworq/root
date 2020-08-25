@@ -10,4 +10,10 @@ public class PageJumpController {
         System.out.println("进入");
         return "index1";
     }
+
+    @RequestMapping(value = "/swagger")
+    public String swagger() {
+        System.out.println("swagger-ui.html");
+        return "redirect:swagger-ui.html";
+    }
 }
