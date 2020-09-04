@@ -336,4 +336,14 @@
 
 </div>
 </body>
+
+<script>
+	var a="\t\t  <li "+" id=id"+i+" onclick=\"getSpecificPatrolImg()\""+"style=\"border-style:solid;border-width:1px;padding: 10px;margin-top: 5px;\">\n" +
+			"\t\t\t  <label>巡查任务Id:</lable><label id=\"patrolTaskId"+ s +"\">"+ d +"</label>\n" +
+			"\t\t\t  <label>图块Id:</lable><label id=\"patrolBlockId"+ s +"\">"+ d +"</label>\n" +
+			"\t\t\t  <label>layerId:</lable><label id=\"patrolLayerId"+ s +"\">"+ d +"</label>\n" +
+			"\t\t\t  <label>objectId:</lable><label id=\"patrolObjectId"+ s +"\">"+ d +"</label>\n" +
+			"\t\t  </li>";
+</script>
+
 </html>

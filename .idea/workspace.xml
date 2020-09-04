@@ -2,16 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4331e9b3-957f-4d49-9324-aa8ffd14b7d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/IBaseInfoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/transform/api/service/IBaseInfoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/dao/UserInfoRepositry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/BaseInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/serviceimpl/BaseInfoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/transform/service/ServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/transform/service/ServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FollowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FollowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/PageJumpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/PageJumpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/testController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/Controller/testController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/transform/web/WebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/transform/web/WebApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/views/index1.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/views/index1.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +59,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
+        <option value="AnnotationType" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -76,26 +80,29 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../deqing/dgpoms-server-root-dqyzt/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/service/src/main/resources/WEB-INF" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\DistCode\root\web\src\main\resources\static" />
-      <recent name="E:\DistCode\root\web\src\main\resources" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\DistCode\root\service\src\main\resources\webapp" />
+      <recent name="E:\DistCode\root\service\src\main\resources\WEB-INF" />
       <recent name="E:\DistCode\root\web\src\main\resources\templates" />
-      <recent name="E:\DistCode\root\web\src\main\webapp\WEB-INF\views" />
-      <recent name="E:\DistCode\root\web\src\main\webapp" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.transform.web.Config" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\DistCode\root\web\src\main\resources\templates" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\DistCode\root\service\src\main\resources\WEB-INF" />
+      <recent name="E:\DistCode\root\service\src\main\resources" />
+      <recent name="E:\DistCode\root\web\src\main\webapp\WEB-INF" />
+      <recent name="E:\DistCode\root\web\src\main\webapp" />
+      <recent name="E:\DistCode\root\service\src\main\resources\webapp\WEB-INF" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -367,6 +374,26 @@
       <workItem from="1598266268583" duration="497000" />
       <workItem from="1598268488371" duration="6000" />
       <workItem from="1598317607196" duration="1966000" />
+      <workItem from="1598321084193" duration="462000" />
+      <workItem from="1598321584955" duration="2337000" />
+      <workItem from="1598325218477" duration="8198000" />
+      <workItem from="1598335191491" duration="347000" />
+      <workItem from="1598336516874" duration="799000" />
+      <workItem from="1598347879574" duration="125000" />
+      <workItem from="1598402186966" duration="43000" />
+      <workItem from="1598410313221" duration="50000" />
+      <workItem from="1598497176137" duration="31000" />
+      <workItem from="1598838983499" duration="1708000" />
+      <workItem from="1598923212720" duration="25000" />
+      <workItem from="1598923278557" duration="8000" />
+      <workItem from="1599020797923" duration="2629000" />
+      <workItem from="1599103397209" duration="34000" />
+      <workItem from="1599106614175" duration="2814000" />
+      <workItem from="1599111716444" duration="3209000" />
+      <workItem from="1599119879595" duration="1950000" />
+      <workItem from="1599125170234" duration="685000" />
+      <workItem from="1599197494059" duration="8938000" />
+      <workItem from="1599207620696" duration="2440000" />
     </task>
     <servers />
   </component>

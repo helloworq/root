@@ -1,10 +1,9 @@
 package com.transform.web.Controller;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,11 +20,6 @@ import java.util.UUID;
 @Api("上传文件")
 @RestController
 public class FileController {
-
-    @GetMapping(value = "/file")
-    public String file() {
-        return "file";
-    }
 
     @PostMapping(value = "/fileUpload")
     public String fileUpload(@RequestParam(value = "file") MultipartFile file, Model model, HttpServletRequest request) {
@@ -47,18 +40,16 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filename = "/temp-rainy/" + fileName;
-        model.addAttribute("filename", filename);
         return "\"filename\", filename";
     }
 
 
-    @PostMapping(value = "/mulitFileUpload",headers = "content-type=multipart/form-data")
+    @PostMapping(value = "/mulitFileUpload")
     public String mulitFileUpload(
             @ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-            @ApiParam("参数") @RequestParam(value = "param") String text) {
+            @ApiParam("参数") someDTO text) {
         System.out.println(list.length);
-        System.out.println(text);
+        System.out.println(JSON.toJSON(text));
         for (MultipartFile file:list) {
             if (file.isEmpty()) {
                 return "";
