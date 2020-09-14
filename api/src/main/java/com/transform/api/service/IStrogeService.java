@@ -3,6 +3,8 @@ package com.transform.api.service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -10,9 +12,32 @@ import java.util.List;
  */
 public interface IStrogeService {
 
-    String uploadFile(File file,String uploadFilePath);
+    /**
+     * 上传本地缓存中的文件
+     * @param fileTempPath
+     * @return
+     */
+    String uploadTempFile(String fileTempPath);
 
-    String uploadMulitFile(MultipartFile[] list, String uploadFilePath);
+    /**
+     * 根据上传后返回的文件标识id下载文件
+     * @param id
+     * @return
+     */
+    byte[] getMongoFileInputStream(String id) throws IOException;
 
-    String downloadFile(String filePath);
+
+    /**
+     * 根据id删除mongo中的文件信息以及数据
+     * @param id
+     * @return
+     */
+    String deleteMongoFile(String id);
+
+    /**
+     * 保存实体数据
+     * @param entiy
+     * @return
+     */
+    String save(Object entiy);
 }

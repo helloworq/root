@@ -10,4 +10,6 @@ public interface UserMomentInfoRepositry extends JpaRepository<UserMomentInfo,St
     //获取用户动态数量
     @Query(value = "select count(*) from TB_USERMOMENTINFO where UUID=?1",nativeQuery = true)
     Integer getUserMomentInfoCount(String operationUserUUID);
+
+    UserMomentInfo getById(String id);
 }

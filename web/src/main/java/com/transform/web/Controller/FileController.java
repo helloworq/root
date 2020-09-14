@@ -1,18 +1,25 @@
 package com.transform.web.Controller;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.transform.api.model.dto.UserMomentInfoDTO;
+import com.transform.api.model.entiy.UserMomentInfo;
+import com.transform.api.service.IMomentService;
+import com.transform.api.service.IStrogeService;
+import com.transform.base.util.ListUtil;
+import com.transform.web.util.MyIOUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文件上传
@@ -20,57 +27,53 @@ import java.util.UUID;
 @Api("上传文件")
 @RestController
 public class FileController {
-
+    @Reference
+    IStrogeService strogeService;
+    @Reference
+    IMomentService momentService;
+    @Autowired
+    MyIOUtil myIOUtil;
+    /**
+     * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致难以传输，
+     * 故采取先上传到临时目录的方法
+     * @param list
+     * @param userMomentInfoDTO
+     * @return
+     * @throws IOException
+     */
     @PostMapping(value = "/fileUpload")
-    public String fileUpload(@RequestParam(value = "file") MultipartFile file, Model model, HttpServletRequest request) {
-        if (file.isEmpty()) {
-            System.out.println("文件为空空");
+    public String fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
+                             @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO) throws IOException {
+        if (list.length==0||null==list)
+            return null;
+
+        //判断是更新请求还是上传请求,是更新请求则删除已存信息
+        if (null!=userMomentInfoDTO.getId()) {
+            //删除已存文件
+            UserMomentInfoDTO momentInfo=momentService.getUserMomentInfo(userMomentInfoDTO.getId());
+            List<String> picIds = ListUtil.stringToList(momentInfo.getPicIds());
+            for (String s : picIds) {
+                strogeService.deleteMongoFile(s);
+            }
         }
-        System.out.println("文件类型："+file.getContentType());
-        String fileName = file.getOriginalFilename();  // 文件名
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-        String filePath = "C:\\Users\\12733\\Desktop\\Windows聚焦图片\\"; // 上传后的路径
-        fileName = UUID.randomUUID() + suffixName; // 新文件名
-        File dest = new File(filePath + fileName);
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
+
+        List<String> imageIds=new ArrayList<>();
+        for (MultipartFile file: list) {
+            imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
         }
-        try {
-            file.transferTo(dest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "\"filename\", filename";
+        userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
+        momentService.uploadMoment(userMomentInfoDTO);//上传动态到oracle
+
+        return "filename:";
     }
 
+    @GetMapping(value = "/getPic",produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getPic(@RequestParam("id")String id) throws IOException {
+        return strogeService.getMongoFileInputStream(id);
+    }
 
-    @PostMapping(value = "/mulitFileUpload")
-    public String mulitFileUpload(
-            @ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-            @ApiParam("参数") someDTO text) {
-        System.out.println(list.length);
-        System.out.println(JSON.toJSON(text));
-        for (MultipartFile file:list) {
-            if (file.isEmpty()) {
-                return "";
-            }
-            System.out.println("文件类型："+file.getContentType());
-            String fileName = file.getOriginalFilename();  // 文件名
-            System.out.println(fileName);
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-            String filePath = "C:\\Users\\12733\\Desktop\\Windows聚焦图片\\"; // 上传后的路径
-            fileName = UUID.randomUUID() + suffixName; // 新文件名
-            File dest = new File(filePath + fileName);
-            if (!dest.getParentFile().exists()) {
-                dest.getParentFile().mkdirs();
-            }
-            try {
-                file.transferTo(dest);
-            } catch (IOException e) {
-                System.out.println("错误！");
-                e.printStackTrace();
-            }
-        }
-        return "\"filename\", filename";
+    @GetMapping(value = "/getDTO")
+    public UserMomentInfoDTO getDTO(@RequestParam("id")String id) throws IOException {
+        return momentService.getUserMomentInfo(id);
     }
 }

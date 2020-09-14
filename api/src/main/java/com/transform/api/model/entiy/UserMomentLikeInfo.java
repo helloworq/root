@@ -4,12 +4,13 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "tb_usermonmentlikeinfo")
 @Data
-public class UserMomentLikeInfo {
+public class UserMomentLikeInfo implements Serializable {
     @Id
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
     @GeneratedValue(generator = "idGenerator")

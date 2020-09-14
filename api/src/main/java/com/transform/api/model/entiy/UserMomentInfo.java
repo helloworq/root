@@ -4,25 +4,23 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "tb_usermomentinfo")
 @Data
-public class UserMomentInfo {
+public class UserMomentInfo implements Serializable {
     @Id
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "uuid", unique = true, nullable = false, length = 64)
+    @Column(name = "uuid", nullable = false, length = 64)
     private String uuid;
 
     @Column(name = "momentContentWords", nullable = false, length = 64)
     private String momentContentWords;
-
-    @Column(name = "momentContentPicLinks", nullable = false, length = 64)
-    private String momentContentPicLinks;
 
     @Column(name = "momentSendTime", nullable = false, length = 64)
     private Date momentSendTime;
@@ -44,6 +42,9 @@ public class UserMomentInfo {
 
     @Column(name = "likeCount", nullable = false, length = 64)
     private String likeCount;
+
+    @Column(name = "picIds", nullable = false, length = 1024)
+    private String picIds;
 }
 
 
