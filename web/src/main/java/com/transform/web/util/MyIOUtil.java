@@ -116,12 +116,13 @@ public class MyIOUtil {
     }
 
     /**
-     * 由于dubbo传输时只允许传字节数据，可通过引入Hessin依赖解决，
+     * 由于dubbo传输时只允许传字节数据，可通过引入Hessin依赖解决，暂时不采用
      * 为避免麻烦，上传的文件先保存在本地，然后再上传到Mongo，同时保存文件信息
      * 此时涉及到的数据操作有四个地方：
      * 1.oracle保存的动态信息，里面存有图片id与mongo里的数据关联
-     * 2.mongo库存的信息，有文件描述信息存在Resource表里，还有文件数据信息分为files表和chunks表
-     * 3.本地存储的文件
+     * 2.mongo库存的信息，有文件描述信息存在Resource表里，
+     * 3.还有Mongo库里的文件数据分为files表和chunks表
+     * 4.本地存储的文件
      * 更新文件的策略采取删除全部已有文件和信息.
      * @param file
      * @return

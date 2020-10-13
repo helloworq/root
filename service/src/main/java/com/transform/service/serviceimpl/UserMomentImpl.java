@@ -1,6 +1,5 @@
 package com.transform.service.serviceimpl;
 
-import com.alibaba.dubbo.common.json.JSON;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.entiy.UserMomentInfo;
@@ -9,6 +8,8 @@ import com.transform.service.dao.UserMomentInfoRepositry;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Service
 @Component
@@ -35,5 +36,16 @@ public class UserMomentImpl implements IMomentService {
         UserMomentInfoDTO userMomentInfoDTO=new UserMomentInfoDTO();
         BeanUtils.copyProperties(userMomentInfoRepositry.getById(id),userMomentInfoDTO);
         return userMomentInfoDTO;
+    }
+
+    @Override
+    public List<UserMomentInfo> getAllUserMomentInfo() {
+        return userMomentInfoRepositry.findAll();
+    }
+
+    @Override
+    public String deleteUserMoment(String id) {
+        userMomentInfoRepositry.deleteById(id);
+        return "success";
     }
 }

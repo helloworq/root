@@ -10,9 +10,12 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @EntityScan("com.transform.api")
 @EnableDubbo(scanBasePackages = "com.transform.service")
+@EnableMongoRepositories("com.transform.api.model.entiy.mongo")
 @SpringBootApplication
 public class ServiceApplication extends SpringBootServletInitializer {
 

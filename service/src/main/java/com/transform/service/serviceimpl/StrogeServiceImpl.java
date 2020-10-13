@@ -71,6 +71,7 @@ public class StrogeServiceImpl implements IStrogeService {
     public String deleteMongoFile(String id) {
         //根据文件id删除fs.files和fs.chunks中的记录
         gridFsTemplate.delete(Query.query(Criteria.where("_id").is(id)));
+        //删除Rsource表里存的信息
         mongoTemplate.remove(mongoTemplate.findById(id, ResourceInfo.class));
         return "success delete";
     }
@@ -79,5 +80,10 @@ public class StrogeServiceImpl implements IStrogeService {
     public String save(Object entiy) {
         mongoTemplate.save(entiy);
         return "success save";
+    }
+
+    @Override
+    public Object getObject(String id,Class type) {
+        return mongoTemplate.findById(id,type);
     }
 }

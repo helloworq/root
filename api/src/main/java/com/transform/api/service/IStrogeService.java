@@ -20,12 +20,11 @@ public interface IStrogeService {
     String uploadTempFile(String fileTempPath);
 
     /**
-     * 根据上传后返回的文件标识id下载文件
+     * 根据上传后返回的文件标识id下载文件字节
      * @param id
      * @return
      */
     byte[] getMongoFileInputStream(String id) throws IOException;
-
 
     /**
      * 根据id删除mongo中的文件信息以及数据
@@ -40,4 +39,12 @@ public interface IStrogeService {
      * @return
      */
     String save(Object entiy);
+
+    /**
+     *
+     * @param id
+     * @param type
+     * @return
+     */
+    Object getObject(String id,Class type);
 }

@@ -29,6 +29,7 @@
         <maven.compiler.plugin.version>3.6.0</maven.compiler.plugin.version>
         <mavne.surefire.plugin.version>2.19.1</mavne.surefire.plugin.version>
         <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <fastjson>1.2.70</fastjson>
     </properties>
 
 
