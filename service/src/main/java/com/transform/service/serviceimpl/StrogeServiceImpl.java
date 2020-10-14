@@ -13,11 +13,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.UUID;
 
 @Service
+@Component
 public class StrogeServiceImpl implements IStrogeService {
     @Autowired
     GridFsTemplate gridFsTemplate;

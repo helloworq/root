@@ -19,7 +19,7 @@ public class UserMomentInfo implements Serializable {
     @Column(name = "uuid", nullable = false, length = 64)
     private String uuid;
 
-    @Column(name = "momentContentWords", nullable = false, length = 64)
+    @Column(name = "momentContentWords", nullable = false, length = 1024)
     private String momentContentWords;
 
     @Column(name = "momentSendTime", nullable = false, length = 64)

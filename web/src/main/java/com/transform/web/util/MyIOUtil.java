@@ -3,7 +3,6 @@ package com.transform.web.util;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IStrogeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Service
