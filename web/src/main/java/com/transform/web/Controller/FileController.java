@@ -8,6 +8,7 @@ import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.util.ListUtil;
 import com.transform.web.util.MyIOUtil;
+import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class FileController {
     IMomentService momentService;
     @Autowired
     MyIOUtil myIOUtil;
+    @Autowired
+    WebTools tools;
     /**
      * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致难以传输，
      * 故采取先上传到临时目录的方法
@@ -104,7 +107,7 @@ public class FileController {
             OutputStream fileOutputStream=new FileOutputStream(new File(filePath));
             myIOUtil.inputStreamWriteToOutputStream(fileInputStream,fileOutputStream);
             //写入完成之后将数据拼成可访问的链接
-            String url="localhost:6729/"+"upload"+filePath.substring(filePath.lastIndexOf("/"));
+            String url=tools.getUrl()+"/upload"+filePath.substring(filePath.lastIndexOf("/"));
             newPicList.add(url);
         }
         userMomentInfoDTO.setPicIds(ListUtil.listToString(newPicList));

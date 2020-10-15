@@ -1,19 +1,43 @@
 package com.transform.web.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class Tools {
+public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
     @Autowired
     MyIOUtil myIOUtil;
 
-    public void getWindowsLockScreenWallPaper() throws IOException {
+    private int serverPort;
 
+    /**
+     * 返回项目的ip+port，避免手动写死
+     * @return
+     */
+    public String getUrl() {
+        InetAddress address = null;
+        try {
+            address = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "http://"+address.getHostAddress() +":"+this.serverPort;
+    }
+
+    @Override
+    public void onApplicationEvent(WebServerInitializedEvent event) {
+        this.serverPort = event.getWebServer().getPort();
+    }
+
+    public void getWindowsLockScreenWallPaper() throws IOException {
         String originFilePath = "C:\\Users\\12733\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets";
         //小程序，从Windows聚焦的目录里提取所有文件到指定目录下，并且加上.jpg后缀
         String TargetfilePath = "C:\\Users\\12733\\Desktop\\Windows聚焦图片";
