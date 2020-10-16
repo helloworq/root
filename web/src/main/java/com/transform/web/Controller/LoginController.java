@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.service.ILoginService;
 import com.transform.base.util.GenerateCaptchaUtil;
 import com.transform.web.util.WebTools;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Api("登录控制器")
 @RestController
 @RequestMapping("v1/rest/")
 public class LoginController {
@@ -99,7 +100,7 @@ public class LoginController {
     @GetMapping("checkPassword")
     public boolean checkPassword(@RequestParam(value = "userAccount") String userAccount,
                                  @RequestParam(value = "userPassword") String userPassword) {
-        return loginService.checkPassword(userAccount, userPassword) == true ? true : false;
+        return loginService.checkPassword(userAccount, userPassword) ;
     }
 
 }

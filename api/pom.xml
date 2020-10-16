@@ -62,6 +62,17 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <!--======================加入jpa支持==============================-->
+        <!--======================加入参数校验支持==============================-->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.16.Final</version>
+        </dependency>
     </dependencies>
     <!--============== 配置Artifactory私服START =============== -->
     <repositories>
@@ -139,6 +150,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.2.RELEASE</version>
             </plugin>
         </plugins>
     </build>

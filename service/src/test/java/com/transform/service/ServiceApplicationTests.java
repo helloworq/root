@@ -10,8 +10,11 @@ import com.transform.service.dao.UserRelationRepositry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class ServiceApplicationTests {
@@ -24,22 +27,14 @@ class ServiceApplicationTests {
     @Test
     void contextLoads() {
         System.out.println("开始");
-        /*UserInfo userInfo=new UserInfo();
-        userInfo.setUserAge("2");
-        userInfo.setUserBlogLink("www.baidu,com");
-        userInfo.setUserEmail("123@qq.com");
-        userInfo.setUserHeadUrl("www.google.com");
-        userInfo.setUserJoinTime(new Date());
-        userInfo.setUserName("水水水");
-        userInfo.setUserPhoneNum("15751266432");
-        userInfo.setUserQQNum("312323121");
-        userInfo.setUserSex("n");
-        userInfo.setUserWechatNum("阿萨大大");
-        userInfoRepositry.save(userInfo);*/
-        UserAccount userAccount=new UserAccount();
-        userAccount.setUserPassword("ss");
-        userAccount.setUserAccount("ss");
-        userAccountRepositry.save(userAccount);
+        UserInfo userInfo=new UserInfo();
+        List list=new ArrayList(){};
+        String[] a=new String[1];
+        System.out.println(ObjectUtils.isEmpty(userInfo));
+        System.out.println(ObjectUtils.isEmpty(list));
+        System.out.println(ObjectUtils.isEmpty(a));
+
+        System.out.println(a.length);
         System.out.println("结束");
     }
 

@@ -67,8 +67,14 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     }
 
     @Override
-    public String getUserUUID(String operationUsername){
-        return userInfoRepositry.findUuid(operationUsername);
+    public String getUserId(String operationUsername){
+        return userInfoRepositry.findId(operationUsername);
+    }
+
+    @Override
+    public String uploadUserInfo(UserInfo userInfo) {
+        userInfoRepositry.save(userInfo);
+        return "success";
     }
 
 }

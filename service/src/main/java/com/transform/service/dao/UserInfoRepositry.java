@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
     Optional<UserInfo> findById(String id);
 
-    @Query(value = "select UUID from TB_USERINFO u where u.USER_NAME=?1",nativeQuery = true)
-    String findUuid(String Username);
+    @Query(value = "select id from TB_USERINFO u where u.USER_NAME=?1",nativeQuery = true)
+    String findId(String Username);
 }

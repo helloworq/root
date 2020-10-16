@@ -28,8 +28,9 @@ import java.util.List;
 /**
  * 文件上传
  */
-@Api("上传动态")
+@Api("上传动态控制器")
 @RestController
+@RequestMapping("/v1/rest")
 public class MomentController {
     @Reference
     IStrogeService strogeService;

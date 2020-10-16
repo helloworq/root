@@ -34,8 +34,6 @@ public class testController {
     @RequestMapping("getuuid")
     public Map<String,Object> info(){
         HashMap<String,Object> hashMap=new HashMap<>();
-        String uuid=baseInfoService.getUserUUID("水水水");
-        hashMap.put("info", uuid);
         return hashMap;
     }
 }

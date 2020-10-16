@@ -33,5 +33,10 @@ public interface IBaseInfoService {
     /**
      * 获取用户的uuid
      */
-    String getUserUUID(String operationUsername);
+    String getUserId(String operationUsername);
+
+    /**
+     * 上传用户信息
+     */
+    String uploadUserInfo(UserInfo userInfo);
 }
