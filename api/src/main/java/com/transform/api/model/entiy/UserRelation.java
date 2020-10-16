@@ -23,9 +23,11 @@ public class UserRelation implements Serializable {
         this.operTime = operTime;
     }
 
+    //操作人
     @Column(name = "uuidUserA", unique = true, nullable = false, length = 64)
     private String uuidUserA;
 
+    //被执行人
     @Column(name = "uuidUserB", unique = true, nullable = false, length = 64)
     private String uuidUserB;
 

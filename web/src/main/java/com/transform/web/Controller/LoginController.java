@@ -20,8 +20,13 @@ public class LoginController {
     @PostMapping("Account")
     public String addAccount(@RequestParam(value = "userAccount") String userAccount,
                              @RequestParam(value = "userPassword") String userPassword){
-        loginService.addAccount(userAccount,userPassword);
-        return "success";
+        if (loginService.isUserAccountUnique(userAccount)) {
+            loginService.addAccount(userAccount, userPassword);
+            return "success";
+        }
+        else
+            return "账户名已存在，请修改账户名";
+
     }
 
     /**
