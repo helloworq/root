@@ -5,6 +5,7 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -35,6 +36,17 @@ public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {
         this.serverPort = event.getWebServer().getPort();
+    }
+
+    public String getCookie(Cookie[] cookies, String key){
+        if (cookies!=null){
+            for (Cookie cookie:cookies) {
+                if (cookie.getName().equals(key)){
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 
     public void getWindowsLockScreenWallPaper() throws IOException {

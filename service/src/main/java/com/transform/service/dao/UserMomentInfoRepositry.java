@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 
+import java.util.List;
+
 @RepositoryDefinition(domainClass = UserMomentInfo.class, idClass = String.class)
 public interface UserMomentInfoRepositry extends JpaRepository<UserMomentInfo,String> {
     //获取用户动态数量
@@ -12,4 +14,6 @@ public interface UserMomentInfoRepositry extends JpaRepository<UserMomentInfo,St
     Integer getUserMomentInfoCount(String operationUserUUID);
 
     UserMomentInfo getById(String id);
+
+    List<UserMomentInfo> getByUuid(String uuid);
 }

@@ -8,4 +8,5 @@ import org.springframework.data.repository.RepositoryDefinition;
 @RepositoryDefinition(domainClass = UserMomentLikeInfo.class, idClass = String.class)
 public interface UserMomentLikeInfoRepositry extends JpaRepository<UserMomentLikeInfo,String> {
 
+    UserMomentLikeInfo findByMomentIdAndWhoLike(String momentId,String whoLike);
 }

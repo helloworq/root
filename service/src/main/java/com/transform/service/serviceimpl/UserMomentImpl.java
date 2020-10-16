@@ -2,9 +2,15 @@ package com.transform.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.transform.api.model.dto.UserMomentInfoDTO;
+import com.transform.api.model.entiy.UserMomentCollectInfo;
+import com.transform.api.model.entiy.UserMomentCommentInfo;
 import com.transform.api.model.entiy.UserMomentInfo;
+import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.service.IMomentService;
+import com.transform.service.dao.UserMomentCollectInfoRepositry;
+import com.transform.service.dao.UserMomentCommentInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
+import com.transform.service.dao.UserMomentLikeInfoRepositry;
 import com.transform.service.util.ListUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +23,12 @@ import java.util.List;
 public class UserMomentImpl implements IMomentService {
     @Autowired
     UserMomentInfoRepositry userMomentInfoRepositry;
+    @Autowired
+    UserMomentLikeInfoRepositry userMomentLikeInfoRepositry;
+    @Autowired
+    UserMomentCollectInfoRepositry userMomentCollectInfoRepositry;
+    @Autowired
+    UserMomentCommentInfoRepositry userMomentCommentInfoRepositry;
     @Autowired
     StrogeServiceImpl strogeService;
     /**
@@ -42,8 +54,8 @@ public class UserMomentImpl implements IMomentService {
     }
 
     @Override
-    public List<UserMomentInfo> getAllUserMomentInfo() {
-        return userMomentInfoRepositry.findAll();
+    public List<UserMomentInfo> getAllUserMomentInfo(String uuid) {
+        return userMomentInfoRepositry.getByUuid(uuid);
     }
 
     @Override
@@ -56,4 +68,51 @@ public class UserMomentImpl implements IMomentService {
         userMomentInfoRepositry.deleteById(id);
         return "success";
     }
+
+    @Override
+    public String like(UserMomentLikeInfo userMomentLikeInfo) {
+        userMomentLikeInfoRepositry.save(userMomentLikeInfo);
+        return "success";
+    }
+
+    @Override
+    public String unLike(String id) {
+        userMomentLikeInfoRepositry.deleteById(id);
+        return "success";
+    }
+
+    @Override
+    public UserMomentLikeInfo getLikeInfo(String momentId, String whoLiked) {
+        return userMomentLikeInfoRepositry.findByMomentIdAndWhoLike(momentId,whoLiked);
+    }
+
+    @Override
+    public String collect(UserMomentCollectInfo userMomentCollectInfo) {
+        userMomentCollectInfoRepositry.save(userMomentCollectInfo);
+        return "success";
+    }
+
+    @Override
+    public String unCollect(String id) {
+        userMomentCollectInfoRepositry.deleteById(id);
+        return "success";
+    }
+
+    @Override
+    public UserMomentCollectInfo getCollectInfo(String momentId, String whoCollected) {
+        return userMomentCollectInfoRepositry.findByMomentIdAndAndWhoCollect(momentId,whoCollected);
+    }
+
+    @Override
+    public String comment(UserMomentCommentInfo userMomentCommentInfo) {
+        userMomentCommentInfoRepositry.save(userMomentCommentInfo);
+        return "success";
+    }
+
+    @Override
+    public String deleteComment(String momentId, String whoComment) {
+        userMomentCommentInfoRepositry.deleteByMomentIdAndWhoComment(momentId,whoComment);
+        return "success";
+    }
+
 }

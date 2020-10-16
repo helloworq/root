@@ -6,5 +6,5 @@ import org.springframework.data.repository.RepositoryDefinition;
 
 @RepositoryDefinition(domainClass = UserMomentCollectInfo.class, idClass = String.class)
 public interface UserMomentCollectInfoRepositry extends JpaRepository<UserMomentCollectInfo,String> {
-
+    UserMomentCollectInfo findByMomentIdAndAndWhoCollect(String momentId,String whoCollect);
 }
