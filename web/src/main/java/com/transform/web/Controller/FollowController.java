@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.model.dto.UserBaseInfoDTO;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
+import com.transform.base.response.ResponseData;
+import com.transform.base.response.ResponseUtil;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,58 +25,43 @@ public class FollowController {
     IFollowService followService;
 
     @GetMapping("getbaseinfo")
-    public Map<String,Object> getbaseinfo(){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        UserBaseInfoDTO userBaseInfoDTO=baseInfoService.getUserBaseInfo("4028825573ebbe240173ebbe84840000");
-        hashMap.put("info", userBaseInfoDTO);
-        return hashMap;
+    public ResponseData getbaseinfo(){
+        return ResponseUtil.success(baseInfoService.getUserBaseInfo("4028825573ebbe240173ebbe84840000"));
     }
 
     @GetMapping("follow")
-    public Map<String,Object> follow(@RequestParam("operationUserUUID") String operationUserUUID,
-                                     @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.followSomeone(operationUserUUID, targetUserUUID));
-        return hashMap;
+    public ResponseData follow(@RequestParam("operationUserUUID") String operationUserUUID,
+                               @RequestParam("targetUserUUID") String targetUserUUID){
+        return ResponseUtil.success(followService.followSomeone(operationUserUUID, targetUserUUID));
     }
 
     @GetMapping("unfollow")
-    public Map<String,Object> unfollow(@RequestParam("operationUserUUID") String operationUserUUID,
-                                       @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.unFollowSomeone(operationUserUUID, targetUserUUID));
-        return hashMap;
+    public ResponseData unfollow(@RequestParam("operationUserUUID") String operationUserUUID,
+                                 @RequestParam("targetUserUUID") String targetUserUUID){
+        return ResponseUtil.success(followService.unFollowSomeone(operationUserUUID, targetUserUUID));
     }
 
     @GetMapping("unfriend")
-    public Map<String,Object> unfriend(@RequestParam("operationUserUUID") String operationUserUUID,
-                                       @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.unFriendSomeone(operationUserUUID, targetUserUUID));
-        return hashMap;
+    public ResponseData unfriend(@RequestParam("operationUserUUID") String operationUserUUID,
+                                 @RequestParam("targetUserUUID") String targetUserUUID){
+        return ResponseUtil.success(followService.unFriendSomeone(operationUserUUID, targetUserUUID));
     }
 
     @GetMapping("unUnfriend")
-    public Map<String,Object> unUnfriend(@RequestParam("operationUserUUID") String operationUserUUID,
-                                       @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.unUnFriendSomeone(operationUserUUID, targetUserUUID));
-        return hashMap;
+    public ResponseData unUnfriend(@RequestParam("operationUserUUID") String operationUserUUID,
+                                   @RequestParam("targetUserUUID") String targetUserUUID){
+        return ResponseUtil.success(followService.unUnFriendSomeone(operationUserUUID, targetUserUUID));
     }
 
     @GetMapping("sendIntoBlackList")
-    public Map<String,Object> sendIntoBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
-                                         @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.sendIntoBlackList(operationUserUUID, targetUserUUID));
-        return hashMap;
+    public ResponseData sendIntoBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
+                                          @RequestParam("targetUserUUID") String targetUserUUID){
+        return ResponseUtil.success(followService.sendIntoBlackList(operationUserUUID, targetUserUUID));
     }
 
     @GetMapping("outFromBlackList")
-    public Map<String,Object> outFromBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
+    public ResponseData outFromBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
                                                 @RequestParam("targetUserUUID") String targetUserUUID){
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("msg",followService.outFromBlackList(operationUserUUID, targetUserUUID));
-        return hashMap;
+        return ResponseUtil.success(followService.outFromBlackList(operationUserUUID, targetUserUUID));
     }
 }

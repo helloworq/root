@@ -2,6 +2,8 @@ package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.service.ILoginService;
+import com.transform.base.response.ResponseData;
+import com.transform.base.response.ResponseUtil;
 import com.transform.base.util.GenerateCaptchaUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
@@ -33,23 +35,18 @@ public class LoginController {
      * 三项验证成功后返回给浏览器对应的cookie值
      */
     @GetMapping("loginCheck")
-    public Map<String, Object> loginCheck(@RequestParam(value = "inputAccount") String inputAccount,
+    public ResponseData loginCheck(@RequestParam(value = "inputAccount") String inputAccount,
                                           @RequestParam(value = "inputPassword") String inputPassword,
                                           @RequestParam(value = "inputCaptcha") String inputCaptcha,
                                           HttpServletResponse httpResponse) {
-        Map<String, Object> map = new HashMap<>();
         if (!inputCaptcha.equals(GenerateCaptchaUtil.getGeneratedString())) {
-            map.put("msg", "验证码错误");
-            return map;
+            return ResponseUtil.fail("验证码错误");
         }
         if (checkPassword(inputAccount, inputPassword)) {
-            map.put("msg", "success");
             httpResponse.addCookie(new Cookie("userName", inputAccount));
-            return map;
+            return ResponseUtil.success("success");
         } else {
-            System.out.println("验证失败");
-            map.put("msg", "fail");
-            return map;
+            return ResponseUtil.success("验证失败");
         }
     }
 
@@ -61,13 +58,13 @@ public class LoginController {
      * @return
      */
     @PostMapping("Account")
-    public String addAccount(@RequestParam(value = "userAccount") String userAccount,
-                             @RequestParam(value = "userPassword") String userPassword) {
+    public ResponseData addAccount(@RequestParam(value = "userAccount") String userAccount,
+                                   @RequestParam(value = "userPassword") String userPassword) {
         if (loginService.isUserAccountUnique(userAccount)) {
             loginService.addAccount(userAccount, userPassword);
-            return "success";
+            return ResponseUtil.success("success");
         } else {
-            return "账户名已存在，请修改账户名";
+            return ResponseUtil.fail("账户名已存在，请修改账户名");
         }
     }
 

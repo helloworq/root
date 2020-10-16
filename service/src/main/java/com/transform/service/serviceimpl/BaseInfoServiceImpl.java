@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,4 +79,19 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
         return "success";
     }
 
+    @Override
+    public String deleteUserInfo(String userId) {
+        userInfoRepositry.deleteById(userId);
+        return "success";
+    }
+
+    @Override
+    public List<UserInfo> getAllUserInfo() {
+        return userInfoRepositry.findAll();
+    }
+
+    @Override
+    public Optional<UserInfo> getUserInfo(String userId) {
+        return userInfoRepositry.findById(userId);
+    }
 }

@@ -9,6 +9,8 @@ import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
+import com.transform.base.response.ResponseData;
+import com.transform.base.response.ResponseUtil;
 import com.transform.base.util.ListUtil;
 import com.transform.web.util.MyIOUtil;
 import com.transform.web.util.WebTools;
@@ -51,8 +53,8 @@ public class MomentController {
      * @throws IOException
      */
     @PostMapping(value = "/fileUpload")
-    public String fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-                             @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO) throws IOException {
+    public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
+                                   @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO) throws IOException {
         if (list.length == 0 || null == list)
             return null;
         //判断是更新请求还是上传请求,是更新请求则删除已存信息
@@ -71,7 +73,7 @@ public class MomentController {
         }
         userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
         momentService.uploadMoment(userMomentInfoDTO);//上传动态到oracle
-        return "上传成功！";
+        return ResponseUtil.success( "上传成功！");
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.transform.web.Config;
 
+import com.transform.base.response.ResponseData;
+import com.transform.base.response.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,9 +18,8 @@ public class GlobalExceptionHandlerConfig {
      * 方法参数校验
      */
     @ExceptionHandler(BindException.class)
-    public String handleMethodArgumentNotValidException(BindException e) {
+    public ResponseData handleMethodArgumentNotValidException(BindException e) {
         log.error(e.getMessage(), e);
-        System.out.println(e.getBindingResult().getFieldError().getDefaultMessage().length());
-        return e.getBindingResult().getFieldError().getDefaultMessage();
+        return ResponseUtil.success(e.getBindingResult().getFieldError().getDefaultMessage());
     }
 }

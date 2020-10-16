@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Service
+
 public class GenerateCaptchaUtil {
     final static int width = 120;
     final static int height = 40;
