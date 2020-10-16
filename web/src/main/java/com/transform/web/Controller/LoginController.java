@@ -26,27 +26,27 @@ public class LoginController {
     GenerateCaptchaUtil generateCaptchaUtil;
     @Autowired
     WebTools tools;
+
     /**
      * 验证码验证完成后开始验证输入的账号与密码是否匹配
      * 假如账号密码验证码全部验证成功则跳转进主页面，并且加入cookie值用来根据用户名拉取数据
      * 三项验证成功后返回给浏览器对应的cookie值
      */
     @GetMapping("loginCheck")
-    public Map<String,Object> loginCheck(@RequestParam(value = "inputAccount") String inputAccount,
-                                         @RequestParam(value = "inputPassword") String inputPassword,
-                                         @RequestParam(value = "inputCaptcha") String inputCaptcha,
-                                         HttpServletResponse httpResponse){
-        Map<String,Object> map=new HashMap<>();
-        if(!inputCaptcha.equals(generateCaptchaUtil.getGeneratedString())){
-            map.put("msg","验证码错误");
+    public Map<String, Object> loginCheck(@RequestParam(value = "inputAccount") String inputAccount,
+                                          @RequestParam(value = "inputPassword") String inputPassword,
+                                          @RequestParam(value = "inputCaptcha") String inputCaptcha,
+                                          HttpServletResponse httpResponse) {
+        Map<String, Object> map = new HashMap<>();
+        if (!inputCaptcha.equals(generateCaptchaUtil.getGeneratedString())) {
+            map.put("msg", "验证码错误");
             return map;
         }
-        if (checkPassword(inputAccount,inputPassword)){
+        if (checkPassword(inputAccount, inputPassword)) {
             map.put("msg", "success");
-            httpResponse.addCookie(new Cookie("userName",inputAccount));
+            httpResponse.addCookie(new Cookie("userName", inputAccount));
             return map;
-        }
-        else {
+        } else {
             System.out.println("验证失败");
             map.put("msg", "fail");
             return map;
@@ -55,50 +55,51 @@ public class LoginController {
 
     /**
      * 添加账户
+     *
      * @param userAccount
      * @param userPassword
      * @return
      */
     @PostMapping("Account")
     public String addAccount(@RequestParam(value = "userAccount") String userAccount,
-                             @RequestParam(value = "userPassword") String userPassword){
+                             @RequestParam(value = "userPassword") String userPassword) {
         if (loginService.isUserAccountUnique(userAccount)) {
             loginService.addAccount(userAccount, userPassword);
             return "success";
-        }
-        else {
+        } else {
             return "账户名已存在，请修改账户名";
         }
     }
 
     /**
      * 删除账户
+     *
      * @param userAccount
      * @param userPassword
      * @return
      */
     @DeleteMapping("Account")
     public String deleteAccount(@RequestParam(value = "userAccount") String userAccount,
-                                @RequestParam(value = "userPassword") String userPassword){
+                                @RequestParam(value = "userPassword") String userPassword) {
         if (loginService.checkPassword(userAccount, userPassword)) {
             loginService.deleteAccount(userAccount, userPassword);
             return "删除账户成功！";
-        }
-        else {
+        } else {
             return "删除失败！";
         }
     }
 
     /**
      * 校验账户
+     *
      * @param userAccount
      * @param userPassword
      * @return
      */
     @GetMapping("checkPassword")
     public boolean checkPassword(@RequestParam(value = "userAccount") String userAccount,
-                                @RequestParam(value = "userPassword") String userPassword){
-        return loginService.checkPassword(userAccount,userPassword) ==true?true:false;
+                                 @RequestParam(value = "userPassword") String userPassword) {
+        return loginService.checkPassword(userAccount, userPassword) == true ? true : false;
     }
 
 }

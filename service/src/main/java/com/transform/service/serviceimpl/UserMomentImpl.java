@@ -7,6 +7,7 @@ import com.transform.api.model.entiy.UserMomentCommentInfo;
 import com.transform.api.model.entiy.UserMomentInfo;
 import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.service.IMomentService;
+import com.transform.base.util.ListUtil;
 import com.transform.service.dao.UserMomentCollectInfoRepositry;
 import com.transform.service.dao.UserMomentCommentInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
@@ -30,15 +31,17 @@ public class UserMomentImpl implements IMomentService {
     UserMomentCommentInfoRepositry userMomentCommentInfoRepositry;
     @Autowired
     StrogeServiceImpl strogeService;
+
     /**
      * 上传动态
+     *
      * @param userMomentInfoDTO
      * @return
      */
     @Override
     public String uploadMoment(UserMomentInfoDTO userMomentInfoDTO) {
-        UserMomentInfo userMomentInfo=new UserMomentInfo();
-        BeanUtils.copyProperties(userMomentInfoDTO,userMomentInfo);
+        UserMomentInfo userMomentInfo = new UserMomentInfo();
+        BeanUtils.copyProperties(userMomentInfoDTO, userMomentInfo);
         userMomentInfo.setPicIds(userMomentInfoDTO.getPicIds());
 
         userMomentInfoRepositry.save(userMomentInfo);
@@ -47,8 +50,8 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public UserMomentInfoDTO getUserMomentInfo(String id) {
-        UserMomentInfoDTO userMomentInfoDTO=new UserMomentInfoDTO();
-        BeanUtils.copyProperties(userMomentInfoRepositry.getById(id),userMomentInfoDTO);
+        UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
+        BeanUtils.copyProperties(userMomentInfoRepositry.getById(id), userMomentInfoDTO);
         return userMomentInfoDTO;
     }
 
@@ -60,8 +63,8 @@ public class UserMomentImpl implements IMomentService {
     @Override
     public String deleteUserMoment(String id) {
         //删除mongo里的文件，再删除oracle里的数据
-        UserMomentInfo userMomentInfo=userMomentInfoRepositry.getById(id);
-        for (String s: ListUtil.stringToList(userMomentInfo.getPicIds())) {
+        UserMomentInfo userMomentInfo = userMomentInfoRepositry.getById(id);
+        for (String s : ListUtil.stringToList(userMomentInfo.getPicIds())) {
             strogeService.deleteMongoFile(s);
         }
         userMomentInfoRepositry.deleteById(id);
@@ -82,7 +85,7 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public UserMomentLikeInfo getLikeInfo(String momentId, String whoLiked) {
-        return userMomentLikeInfoRepositry.findByMomentIdAndWhoLike(momentId,whoLiked);
+        return userMomentLikeInfoRepositry.findByMomentIdAndWhoLike(momentId, whoLiked);
     }
 
     @Override
@@ -99,7 +102,7 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public UserMomentCollectInfo getCollectInfo(String momentId, String whoCollected) {
-        return userMomentCollectInfoRepositry.findByMomentIdAndAndWhoCollect(momentId,whoCollected);
+        return userMomentCollectInfoRepositry.findByMomentIdAndAndWhoCollect(momentId, whoCollected);
     }
 
     @Override
@@ -110,7 +113,7 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public String deleteComment(String momentId, String whoComment) {
-        userMomentCommentInfoRepositry.deleteByMomentIdAndWhoComment(momentId,whoComment);
+        userMomentCommentInfoRepositry.deleteByMomentIdAndWhoComment(momentId, whoComment);
         return "success";
     }
 
