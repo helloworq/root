@@ -16,9 +16,6 @@ public class UserInfo implements Serializable {
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "uuid", unique = true, nullable = false, length = 64)
-    private String uuid;
-
     @Column(name = "userName", nullable = false, length = 64)
     private String userName;
 

@@ -2,7 +2,19 @@ package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.service.ILoginService;
+import com.transform.base.util.GenerateCaptchaUtil;
+import com.transform.web.util.WebTools;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -10,6 +22,36 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     @Reference
     ILoginService loginService;
+    @Resource
+    GenerateCaptchaUtil generateCaptchaUtil;
+    @Autowired
+    WebTools tools;
+    /**
+     * 验证码验证完成后开始验证输入的账号与密码是否匹配
+     * 假如账号密码验证码全部验证成功则跳转进主页面，并且加入cookie值用来根据用户名拉取数据
+     * 三项验证成功后返回给浏览器对应的cookie值
+     */
+    @GetMapping("loginCheck")
+    public Map<String,Object> loginCheck(@RequestParam(value = "inputAccount") String inputAccount,
+                                         @RequestParam(value = "inputPassword") String inputPassword,
+                                         @RequestParam(value = "inputCaptcha") String inputCaptcha,
+                                         HttpServletResponse httpResponse){
+        Map<String,Object> map=new HashMap<>();
+        if(!inputCaptcha.equals(generateCaptchaUtil.getGeneratedString())){
+            map.put("msg","验证码错误");
+            return map;
+        }
+        if (checkPassword(inputAccount,inputPassword)){
+            map.put("msg", "success");
+            httpResponse.addCookie(new Cookie("userName",inputAccount));
+            return map;
+        }
+        else {
+            System.out.println("验证失败");
+            map.put("msg", "fail");
+            return map;
+        }
+    }
 
     /**
      * 添加账户
@@ -24,9 +66,9 @@ public class LoginController {
             loginService.addAccount(userAccount, userPassword);
             return "success";
         }
-        else
+        else {
             return "账户名已存在，请修改账户名";
-
+        }
     }
 
     /**
@@ -42,8 +84,9 @@ public class LoginController {
             loginService.deleteAccount(userAccount, userPassword);
             return "删除账户成功！";
         }
-        else
+        else {
             return "删除失败！";
+        }
     }
 
     /**
@@ -53,9 +96,9 @@ public class LoginController {
      * @return
      */
     @GetMapping("checkPassword")
-    public String checkPassword(@RequestParam(value = "userAccount") String userAccount,
+    public boolean checkPassword(@RequestParam(value = "userAccount") String userAccount,
                                 @RequestParam(value = "userPassword") String userPassword){
-        return loginService.checkPassword(userAccount,userPassword) ==true?"true":"false";
+        return loginService.checkPassword(userAccount,userPassword) ==true?true:false;
     }
 
 }

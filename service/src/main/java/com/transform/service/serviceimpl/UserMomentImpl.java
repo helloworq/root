@@ -11,7 +11,6 @@ import com.transform.service.dao.UserMomentCollectInfoRepositry;
 import com.transform.service.dao.UserMomentCommentInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
 import com.transform.service.dao.UserMomentLikeInfoRepositry;
-import com.transform.service.util.ListUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

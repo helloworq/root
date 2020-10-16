@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Service
 @Component
 public class BaseInfoServiceImpl implements IBaseInfoService {
@@ -58,7 +60,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
      */
     @Override
     public UserBaseInfoDTO getUserBaseInfo(String operationUserUUID) {
-        UserInfo userInfo=userInfoRepositry.findByUuid(operationUserUUID);
+        Optional<UserInfo> userInfo=userInfoRepositry.findById(operationUserUUID);
         UserBaseInfoDTO userBaseInfoDTO=new UserBaseInfoDTO();
         BeanUtils.copyProperties(userInfo,userBaseInfoDTO);
         return userBaseInfoDTO;

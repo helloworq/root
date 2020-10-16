@@ -1,6 +1,7 @@
 package com.transform.service;
 
 
+import com.transform.api.model.entiy.UserAccount;
 import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.service.dao.UserAccountRepositry;
@@ -23,7 +24,7 @@ class ServiceApplicationTests {
     @Test
     void contextLoads() {
         System.out.println("开始");
-        UserInfo userInfo=new UserInfo();
+        /*UserInfo userInfo=new UserInfo();
         userInfo.setUserAge("2");
         userInfo.setUserBlogLink("www.baidu,com");
         userInfo.setUserEmail("123@qq.com");
@@ -34,8 +35,11 @@ class ServiceApplicationTests {
         userInfo.setUserQQNum("312323121");
         userInfo.setUserSex("n");
         userInfo.setUserWechatNum("阿萨大大");
-        userInfo.setUuid(userAccountRepositry.findUUIDbyUserAccount("1273370082"));
-        userInfoRepositry.save(userInfo);
+        userInfoRepositry.save(userInfo);*/
+        UserAccount userAccount=new UserAccount();
+        userAccount.setUserPassword("ss");
+        userAccount.setUserAccount("ss");
+        userAccountRepositry.save(userAccount);
         System.out.println("结束");
     }
 

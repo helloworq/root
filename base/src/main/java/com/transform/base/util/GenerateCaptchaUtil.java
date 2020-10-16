@@ -1,6 +1,8 @@
 package com.transform.base.util;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,14 +12,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-
+@Service
 public class GenerateCaptchaUtil {
     final static int width = 120;
     final static int height = 40;
     final static String filePath = "C:\\Users\\12733\\Desktop\\Repositroy\\";
     static String generatedString = "";
-    public static String getGeneratedString() {
+    public String getGeneratedString() {
         return generatedString;
     }
 
@@ -58,7 +59,7 @@ public class GenerateCaptchaUtil {
     }
 
 
-    public static String generateCaptchaText() {
+    public String generateCaptchaText() {
         String orignString = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM";
         String resString = "";
         int resStringLength = 4;//设置验证码字符串长度
