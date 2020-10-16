@@ -8,9 +8,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @Api("用户信息控制器")
 @RestController
@@ -19,11 +22,11 @@ public class UserInfoController {
     @Reference
     IBaseInfoService baseInfoService;
 
-    @PostMapping("uploadUserInfo")
-    public String uploadUserInfo(@ApiParam UserInfoDTO userInfoDTO){
+    @PostMapping("/uploadUserInfo")
+    public String uploadUserInfo(@ApiParam @Validated UserInfoDTO userInfoDTO){
         UserInfo userInfo=new UserInfo();
         BeanUtils.copyProperties(userInfoDTO,userInfo);
-        baseInfoService.uploadUserInfo(userInfo);
-        return "";
+        //baseInfoService.uploadUserInfo(userInfo);
+        return "success";
     }
 }

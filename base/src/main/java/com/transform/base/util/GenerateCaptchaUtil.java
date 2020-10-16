@@ -18,7 +18,7 @@ public class GenerateCaptchaUtil {
     final static int height = 40;
     final static String filePath = "C:\\Users\\12733\\Desktop\\Repositroy\\";
     static String generatedString = "";
-    public String getGeneratedString() {
+    public static String getGeneratedString() {
         return generatedString;
     }
 

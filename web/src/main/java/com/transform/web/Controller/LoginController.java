@@ -23,8 +23,7 @@ import java.util.Map;
 public class LoginController {
     @Reference
     ILoginService loginService;
-    @Resource
-    GenerateCaptchaUtil generateCaptchaUtil;
+
     @Autowired
     WebTools tools;
 
@@ -39,7 +38,7 @@ public class LoginController {
                                           @RequestParam(value = "inputCaptcha") String inputCaptcha,
                                           HttpServletResponse httpResponse) {
         Map<String, Object> map = new HashMap<>();
-        if (!inputCaptcha.equals(generateCaptchaUtil.getGeneratedString())) {
+        if (!inputCaptcha.equals(GenerateCaptchaUtil.getGeneratedString())) {
             map.put("msg", "验证码错误");
             return map;
         }

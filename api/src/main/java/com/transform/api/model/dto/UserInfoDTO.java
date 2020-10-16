@@ -1,9 +1,7 @@
 package com.transform.api.model.dto;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,8 +10,7 @@ import java.util.Date;
 @Data
 public class UserInfoDTO implements Serializable {
     private String id;
-
-    @NotNull
+    @NotNull(message = "userName禁止为空")
     private String userName;
 
     private Date userJoinTime;
