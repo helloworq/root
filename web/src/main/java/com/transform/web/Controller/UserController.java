@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("用户信息控制器")
 @RestController
 @RequestMapping("/v1/rest")
-public class UserInfoController {
+public class UserController {
     @Reference
     IBaseInfoService baseInfoService;
 

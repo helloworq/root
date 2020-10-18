@@ -2,16 +2,19 @@ package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.model.dto.UserMomentInfoDTO;
+import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
 import com.transform.api.model.entiy.UserMomentCommentInfo;
 import com.transform.api.model.entiy.UserMomentInfo;
 import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
+import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
 import com.transform.base.util.ListUtil;
+import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
@@ -38,10 +41,14 @@ public class MomentController {
     IStrogeService strogeService;
     @Reference
     IMomentService momentService;
+    @Reference
+    IBaseInfoService baseInfoService;
     @Autowired
     MyIOUtil myIOUtil;
     @Autowired
     WebTools tools;
+    @Autowired
+    AsyncUtil asyncUtil;
 
     /**
      * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致难以传输，
@@ -54,7 +61,8 @@ public class MomentController {
      */
     @PostMapping(value = "/fileUpload")
     public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-                                   @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO) throws IOException {
+                                   @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO,
+                                   HttpServletRequest request) throws InterruptedException {
         if (list.length == 0 || null == list)
             return null;
         //判断是更新请求还是上传请求,是更新请求则删除已存信息
@@ -66,14 +74,21 @@ public class MomentController {
                 strogeService.deleteMongoFile(s);
             }
         }
-
         List<String> imageIds = new ArrayList<>();
         for (MultipartFile file : list) {
             imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
         }
         userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
-        momentService.uploadMoment(userMomentInfoDTO);//上传动态到oracle
-        return ResponseUtil.success( "上传成功！");
+        //上传动态到oracle
+        String momentId = momentService.uploadMoment(userMomentInfoDTO);
+
+        //上传完成之后将消息推送给朋友
+        String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
+        Message message = new Message(momentId, new Date().toString(), userId);
+        List<String> friendsList=baseInfoService.getFriendsId(userId);
+        asyncUtil.pushMoment(friendsList.toArray(new String[friendsList.size()]) , message);
+
+        return ResponseUtil.success("上传成功！");
     }
 
     /**
@@ -105,8 +120,8 @@ public class MomentController {
      * @return
      * @throws IOException
      */
-    @GetMapping(value = "/getDTO")
-    public UserMomentInfoDTO getDTO(@RequestParam("id") String id) throws IOException {
+    @GetMapping(value = "/getMomentInfo")
+    public UserMomentInfoDTO getMomentInfo(@RequestParam("id") String id) throws IOException {
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(id);
         //将id转换成链接
         String picIds = userMomentInfoDTO.getPicIds();
@@ -195,6 +210,12 @@ public class MomentController {
         return momentService.uploadMoment(userMomentInfoDTO);
     }
 
+    /**
+     * 删除评论
+     * @param momentId
+     * @param requeste
+     * @return
+     */
     @GetMapping(value = "/deleteComment")
     public String deleteComment(@RequestParam(value = "momentId") String momentId,
                                 HttpServletRequest requeste) {

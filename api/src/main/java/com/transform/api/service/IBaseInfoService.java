@@ -36,7 +36,7 @@ public interface IBaseInfoService {
     /**
      * 获取用户的uuid
      */
-    String getUserId(String userId);
+    String getUserId(String userName);
 
     /**
      * 上传或更新用户信息
@@ -58,4 +58,10 @@ public interface IBaseInfoService {
      * @return
      */
     Optional<UserInfo> getUserInfo(String userId);
+
+    /**
+     * 获取用户好友信息
+     * @return
+     */
+    List<String> getFriendsId(String userId);
 }

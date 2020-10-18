@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * 资源映射路径
+ * 配置资源映射路径，使得可以生成可供外部访问的链接，这样无须配置各类文件数据的返回值和返回方式
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {

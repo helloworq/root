@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 
+import java.util.List;
+
 @RepositoryDefinition(domainClass = UserRelation.class, idClass = String.class)
 public interface UserRelationRepositry extends JpaRepository<UserRelation,String> {
 
@@ -29,4 +31,7 @@ public interface UserRelationRepositry extends JpaRepository<UserRelation,String
     //获取用户粉丝数
     @Query(value = "select count(*) from TB_USERRELATION where UUID_USERB=?1",nativeQuery = true)
     Integer getUserFansCount(String operationUserUUID);
+    //获取用户全部好友
+    @Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1 AND RELATION_STATUS=1",nativeQuery = true)
+    List<String> getFriends(String userId);
 }

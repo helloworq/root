@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 参数校验工具-全局异常捕获处理类
+ * 参数校验工具-全局异常捕获处理类，此处作用是只提取注解里的message信息，剔除其余信息
  */
 @Slf4j
 @RestControllerAdvice

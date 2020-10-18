@@ -10,6 +10,7 @@ import com.transform.service.dao.UserRelationRepositry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
@@ -36,6 +37,37 @@ class ServiceApplicationTests {
 
         System.out.println(a.length);
         System.out.println("结束");
+    }
+
+    @Test
+    void addUser(){
+        for (int i = 0; i < 10; i++) {
+            UserInfo userInfo=new UserInfo();
+            userInfo.setUserWechatNum(String.valueOf(i));
+            userInfo.setUserSex(String.valueOf(i));
+            userInfo.setUserQQNum(String.valueOf(i));
+            userInfo.setUserPhoneNum(String.valueOf(i));
+            userInfo.setUserJoinTime(new Date());
+            userInfo.setUserAge(String.valueOf(i));
+            userInfo.setUserBlogLink(String.valueOf(i));
+            userInfo.setUserEmail(String.valueOf(i));
+            userInfo.setUserHeadUrl(String.valueOf(i));
+            userInfo.setUserName(String.valueOf(i));
+            userInfoRepositry.save(userInfo);
+        }
+    }
+
+    @Test
+    void addUserRelation(){
+        for (int i = 0; i < 10; i++){
+            UserRelation userRelation=new UserRelation();
+            userRelation.setOperTime(new Date());
+            userRelation.setRelationStatus(1);
+
+            userRelation.setUuidUserA(String.valueOf(i));
+            userRelation.setUuidUserB(String.valueOf(i));
+            userRelationRepositry.save(userRelation);
+        }
     }
 
 }

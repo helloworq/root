@@ -68,30 +68,64 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
         return userBaseInfoDTO;
     }
 
+    /**
+     * 获取用户id
+     * @param operationUsername
+     * @return
+     */
     @Override
     public String getUserId(String operationUsername){
         return userInfoRepositry.findId(operationUsername);
     }
 
+    /**
+     * 更新或上传用户信息
+     * @param userInfo
+     * @return
+     */
     @Override
     public String uploadUserInfo(UserInfo userInfo) {
         userInfoRepositry.save(userInfo);
         return "success";
     }
 
+    /**
+     * 删除用户信息
+     * @param userId
+     * @return
+     */
     @Override
     public String deleteUserInfo(String userId) {
         userInfoRepositry.deleteById(userId);
         return "success";
     }
 
+    /**
+     * 获取全部用户信息
+     * @return
+     */
     @Override
     public List<UserInfo> getAllUserInfo() {
         return userInfoRepositry.findAll();
     }
 
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
     @Override
     public Optional<UserInfo> getUserInfo(String userId) {
         return userInfoRepositry.findById(userId);
+    }
+
+    /**
+     * 获取用户全部好友id
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<String> getFriendsId(String userId) {
+        return userRelationRepositry.getFriends(userId);
     }
 }

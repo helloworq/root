@@ -44,8 +44,9 @@ public class UserMomentImpl implements IMomentService {
         BeanUtils.copyProperties(userMomentInfoDTO, userMomentInfo);
         userMomentInfo.setPicIds(userMomentInfoDTO.getPicIds());
 
-        userMomentInfoRepositry.save(userMomentInfo);
-        return "success";
+
+        String id=userMomentInfoRepositry.save(userMomentInfo).getId();
+        return id;
     }
 
     @Override
