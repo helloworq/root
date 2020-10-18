@@ -1,6 +1,7 @@
 package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.web.util.AsyncUtil;
 import io.swagger.annotations.Api;
@@ -27,8 +28,36 @@ public class MessageController {
     @Autowired
     AsyncUtil asyncUtil;
 
+    /**
+     * 获取未读消息数量
+     * @param key
+     * @param userName
+     * @return
+     * @throws InterruptedException
+     */
+    @GetMapping("/getUnReadMessageSize")
+    public int getUnReadMessageSize(@RequestParam("key") String key,
+                                    @RequestParam("userName") String userName) throws InterruptedException {
+        UserInfo userInfo=baseInfoService.getUserInfo(userName);
+        int prevSize=Integer.parseInt(userInfo.getRedisMsgSize());
+        return asyncUtil.readAllMomentByKey(key, userName).size()-prevSize;
+    }
+
+    /**
+     * 获取全部消息，大于500条消息就弹出一半
+     * @param key
+     * @param userName
+     * @return
+     * @throws InterruptedException
+     */
     @GetMapping("/getMessage")
-    public List<Object> getMessage(@RequestParam("key")String key) throws InterruptedException {
-        return asyncUtil.readAllMomentByKey(key);
+    public List<Object> getMessageByKey(@RequestParam("key") String key,
+                                        @RequestParam("userName") String userName) throws InterruptedException {
+        int size=Integer.parseInt(baseInfoService.getUserInfo(userName).getRedisMsgSize());
+        if (size>500){
+            asyncUtil.popMoment(key,size-250);
+        }
+        asyncUtil.saveCurrentQueneSize(key,userName);
+        return asyncUtil.readAllMomentByKey(key, userName);
     }
 }

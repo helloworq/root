@@ -45,4 +45,7 @@ public class UserInfo implements Serializable {
 
     @Column(name = "userBlogLink", nullable = false, length = 64)
     private String userBlogLink;
+
+    @Column(name = "redisMsgSize", nullable = false, length = 64)
+    private String redisMsgSize;
 }

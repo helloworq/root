@@ -111,12 +111,12 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取用户信息
-     * @param userId
+     * @param userName
      * @return
      */
     @Override
-    public Optional<UserInfo> getUserInfo(String userId) {
-        return userInfoRepositry.findById(userId);
+    public UserInfo getUserInfo(String userName) {
+        return userInfoRepositry.findByName(userName);
     }
 
     /**

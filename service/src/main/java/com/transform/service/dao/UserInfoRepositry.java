@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @RepositoryDefinition(domainClass = UserInfo.class, idClass = String.class)
 public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
-    Optional<UserInfo> findById(String id);
+    @Query(value = "select * from TB_USERINFO where USER_NAME=?1",nativeQuery = true)
+    UserInfo findByName(String name);
 
     @Query(value = "select id from TB_USERINFO u where u.USER_NAME=?1",nativeQuery = true)
     String findId(String Username);

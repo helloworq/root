@@ -57,7 +57,7 @@ public interface IBaseInfoService {
      * 获取指定用户信息
      * @return
      */
-    Optional<UserInfo> getUserInfo(String userId);
+    UserInfo getUserInfo(String userName);
 
     /**
      * 获取用户好友信息
