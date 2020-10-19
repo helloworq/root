@@ -19,7 +19,7 @@ import java.util.List;
  * 接口目前采取简单的redis列表实现，后期考虑采用专业的消息队列中间件实现
  * 考虑到消息如果人数比较多会很费时间，所以新建一个异步类，将任务委托给它处理
  */
-@Api("消息队列控制器")
+@Api("redis消息队列控制器")
 @RestController
 @RequestMapping("/v1/rest")
 public class MessageController {
@@ -29,7 +29,8 @@ public class MessageController {
     AsyncUtil asyncUtil;
 
     /**
-     * 获取未读消息数量
+     * 获取未读消息数量，此方法只提供未读消息数量
+     * 故调用此方法不会修改数据库内存放的上一次消息总数量
      * @param key
      * @param userName
      * @return
@@ -44,7 +45,8 @@ public class MessageController {
     }
 
     /**
-     * 获取全部消息，大于500条消息就弹出一半
+     * 获取全部消息，大于500条消息就弹出一半，减小内存压力
+     * 此方法会获取消息，因此会修改数据库内存放的上一次消息总数量
      * @param key
      * @param userName
      * @return

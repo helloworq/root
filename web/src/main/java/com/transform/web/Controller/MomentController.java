@@ -51,7 +51,7 @@ public class MomentController {
     AsyncUtil asyncUtil;
 
     /**
-     * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致难以传输，
+     * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致无法传输，
      * 故采取先上传到临时目录的方法
      *
      * @param list
@@ -79,6 +79,7 @@ public class MomentController {
             imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
         }
         userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
+        userMomentInfoDTO.setUuid(baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName")));
         //上传动态到oracle
         String momentId = momentService.uploadMoment(userMomentInfoDTO);
 

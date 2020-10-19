@@ -53,6 +53,7 @@ class ServiceApplicationTests {
             userInfo.setUserEmail(String.valueOf(i));
             userInfo.setUserHeadUrl(String.valueOf(i));
             userInfo.setUserName(String.valueOf(i));
+            userInfo.setRedisMsgSize("0");
             userInfoRepositry.save(userInfo);
         }
     }

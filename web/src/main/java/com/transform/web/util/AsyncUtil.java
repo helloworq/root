@@ -25,7 +25,9 @@ public class AsyncUtil {
     public void pushMoment(String[] friendsIds, Message message) throws InterruptedException {
         for (String id : friendsIds) {
             redisTemplate.opsForList().leftPush(id, message);
+            System.out.println("正在推送");
         }
+        System.out.println("完成推送");
     }
 
     /**
@@ -39,7 +41,7 @@ public class AsyncUtil {
     }
 
     /**
-     * 读取指定key的全部值
+     * 读取指定key的全部消息
      */
     public List<Object> readAllMomentByKey(String key,String userName) throws InterruptedException {
         return redisTemplate.opsForList().range(key,0,-1);
