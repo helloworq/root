@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api("登录控制器")
+@Api(description = "登录控制器")
 @RestController
 @RequestMapping("v1/rest/")
 public class LoginController {

@@ -18,8 +18,10 @@ import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +35,7 @@ import java.util.List;
 /**
  * 文件上传
  */
-@Api("上传动态控制器")
+@Api(description = "上传动态控制器")
 @RestController
 @RequestMapping("/v1/rest")
 public class MomentController {
@@ -59,9 +61,10 @@ public class MomentController {
      * @return
      * @throws IOException
      */
+    @ApiOperation(value = "更新/上传动态")
     @PostMapping(value = "/fileUpload")
     public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-                                   @ApiParam("参数") UserMomentInfoDTO userMomentInfoDTO,
+                                   @ApiParam("参数") @Validated UserMomentInfoDTO userMomentInfoDTO,
                                    HttpServletRequest request) throws InterruptedException {
         if (list.length == 0 || null == list)
             return null;
@@ -98,6 +101,7 @@ public class MomentController {
      * @return
      * @throws IOException
      */
+    @ApiOperation(value = "获取全部动态")
     @GetMapping(value = "/getAllMonment")
     public List<UserMomentInfo> getAllMonment(HttpServletRequest request) {
         return momentService.getAllUserMomentInfo(tools.getCookie(request.getCookies(), "userName"));
@@ -109,6 +113,7 @@ public class MomentController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "更新/上传动态")
     @DeleteMapping(value = "/deleteUserMoment")
     public String deleteUserMoment(@RequestParam("id") String id) {
         return momentService.deleteUserMoment(id);
@@ -121,6 +126,7 @@ public class MomentController {
      * @return
      * @throws IOException
      */
+    @ApiOperation(value = "根据id获取某一条动态信息")
     @GetMapping(value = "/getMomentInfo")
     public UserMomentInfoDTO getMomentInfo(@RequestParam("id") String id) throws IOException {
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(id);
@@ -148,6 +154,7 @@ public class MomentController {
      * 关于点赞收藏评论转发的接口，点赞
      * 点赞的时候由两种情况，第一种是点过赞了，这时得取消点赞，第二种是第一次点赞
      */
+    @ApiOperation(value = "赞/取消赞")
     @GetMapping(value = "/like")
     public String like(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
         String whoLiked = tools.getCookie(request.getCookies(), "userName");
@@ -171,6 +178,7 @@ public class MomentController {
     /**
      * 收藏，和点赞差不多
      */
+    @ApiOperation(value = "收藏/取消收藏")
     @GetMapping(value = "/collect")
     public String collect(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
         String whoCollected = tools.getCookie(request.getCookies(), "userName");
@@ -194,6 +202,7 @@ public class MomentController {
     /**
      * 评论 字段 id,momentId,commentContent,whoComment,commentTime
      */
+    @ApiOperation(value = "评论")
     @GetMapping(value = "/sendComment")
     public String sendComment(@RequestParam(value = "text") String text,
                               @RequestParam(value = "momentId") String momentId,
@@ -217,6 +226,7 @@ public class MomentController {
      * @param requeste
      * @return
      */
+    @ApiOperation(value = "删除评论")
     @GetMapping(value = "/deleteComment")
     public String deleteComment(@RequestParam(value = "momentId") String momentId,
                                 HttpServletRequest requeste) {

@@ -19,7 +19,7 @@ import java.util.List;
  * 接口目前采取简单的redis列表实现，后期考虑采用专业的消息队列中间件实现
  * 考虑到消息如果人数比较多会很费时间，所以新建一个异步类，将任务委托给它处理
  */
-@Api("redis消息队列控制器")
+@Api(description = "redis消息队列控制器")
 @RestController
 @RequestMapping("/v1/rest")
 public class MessageController {
@@ -36,6 +36,7 @@ public class MessageController {
      * @return
      * @throws InterruptedException
      */
+    @ApiOperation(value = "获取未读消息数量")
     @GetMapping("/getUnReadMessageSize")
     public int getUnReadMessageSize(@RequestParam("key") String key,
                                     @RequestParam("userName") String userName) throws InterruptedException {
@@ -52,6 +53,7 @@ public class MessageController {
      * @return
      * @throws InterruptedException
      */
+    @ApiOperation(value = "获取全部消息")
     @GetMapping("/getMessage")
     public List<Object> getMessageByKey(@RequestParam("key") String key,
                                         @RequestParam("userName") String userName) throws InterruptedException {
@@ -61,5 +63,18 @@ public class MessageController {
         }
         asyncUtil.saveCurrentQueneSize(key,userName);
         return asyncUtil.readAllMomentByKey(key, userName);
+    }
+
+    /**
+     * 获取redis内数据数量，单独写一个方法是为了在获取redis内数据之前先获取数量，
+     * 再和获取的数据数量比对判断是否有消息丢失
+     * @param key
+     * @param userName
+     * @return
+     * @throws InterruptedException
+     */
+    @GetMapping("/getMessageSize")
+    public int getMessageSize(String key,String userName) throws InterruptedException {
+        return asyncUtil.readAllMomentByKey(key, userName).size();
     }
 }

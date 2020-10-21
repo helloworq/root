@@ -32,7 +32,8 @@ public class UserController {
     public ResponseData uploadUserInfo(@ApiParam @Validated UserInfoDTO userInfoDTO){
         UserInfo userInfo=new UserInfo();
         BeanUtils.copyProperties(userInfoDTO,userInfo);
-        return ResponseUtil.success(baseInfoService.uploadUserInfo(userInfo));
+        //return ResponseUtil.success(baseInfoService.uploadUserInfo(userInfo));
+        return null;
     }
 
     /**
