@@ -67,7 +67,7 @@ public class MessageController {
 
     /**
      * 获取redis内数据数量，单独写一个方法是为了在获取redis内数据之前先获取数量，
-     * 再和获取的数据数量比对判断是否有消息丢失
+     * 再和获取的数据数量比对判断是否有消息丢失，如果尺寸不一致则重新读取
      * @param key
      * @param userName
      * @return

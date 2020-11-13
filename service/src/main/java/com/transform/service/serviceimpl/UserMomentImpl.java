@@ -16,7 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Component
@@ -41,9 +43,13 @@ public class UserMomentImpl implements IMomentService {
     @Override
     public String uploadMoment(UserMomentInfoDTO userMomentInfoDTO) {
         UserMomentInfo userMomentInfo = new UserMomentInfo();
+        //如果是新上传动态，非更新动态则初始化点赞，评论的数据为0
+        if (Objects.isNull(userMomentInfo.getId())){
+            userMomentInfoDTO.initCountValue();
+        }
         BeanUtils.copyProperties(userMomentInfoDTO, userMomentInfo);
         userMomentInfo.setPicIds(userMomentInfoDTO.getPicIds());
-
+        userMomentInfo.setMomentSendTime(new Date());
 
         String id=userMomentInfoRepositry.save(userMomentInfo).getId();
         return id;

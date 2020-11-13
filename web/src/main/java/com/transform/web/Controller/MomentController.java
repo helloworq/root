@@ -1,6 +1,7 @@
 package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
@@ -13,6 +14,7 @@ import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
+import com.transform.base.util.FileUtil;
 import com.transform.base.util.ListUtil;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
@@ -31,6 +33,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 文件上传
@@ -64,7 +67,7 @@ public class MomentController {
     @ApiOperation(value = "更新/上传动态")
     @PostMapping(value = "/fileUpload")
     public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
-                                   @ApiParam("参数") @Validated UserMomentInfoDTO userMomentInfoDTO,
+                                   @ApiParam("参数(动态内容，是否编辑，设备名必传)") @Validated UserMomentInfoDTO userMomentInfoDTO,
                                    HttpServletRequest request) throws InterruptedException {
         if (list.length == 0 || null == list)
             return null;
@@ -83,15 +86,16 @@ public class MomentController {
         }
         userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
         userMomentInfoDTO.setUuid(baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName")));
+
         //上传动态到oracle
         String momentId = momentService.uploadMoment(userMomentInfoDTO);
-
         //上传完成之后将消息推送给朋友
         String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
-        Message message = new Message(momentId, new Date().toString(), userId);
-        List<String> friendsList=baseInfoService.getFriendsId(userId);
-        asyncUtil.pushMoment(friendsList.toArray(new String[friendsList.size()]) , message);
-
+        if (Objects.nonNull(userId)) {
+            Message message = new Message(momentId, new Date().toString(), userId);
+            List<String> friendsList = baseInfoService.getFriendsId(userId);
+            asyncUtil.pushMoment(friendsList.toArray(new String[friendsList.size()]), message);
+        }
         return ResponseUtil.success("上传成功！");
     }
 
@@ -104,7 +108,8 @@ public class MomentController {
     @ApiOperation(value = "获取全部动态")
     @GetMapping(value = "/getAllMonment")
     public List<UserMomentInfo> getAllMonment(HttpServletRequest request) {
-        return momentService.getAllUserMomentInfo(tools.getCookie(request.getCookies(), "userName"));
+        String userId=baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
+        return momentService.getAllUserMomentInfo(userId);
     }
 
     /**
@@ -113,7 +118,7 @@ public class MomentController {
      * @param id
      * @return
      */
-    @ApiOperation(value = "更新/上传动态")
+    @ApiOperation(value = "删除动态")
     @DeleteMapping(value = "/deleteUserMoment")
     public String deleteUserMoment(@RequestParam("id") String id) {
         return momentService.deleteUserMoment(id);
@@ -135,13 +140,13 @@ public class MomentController {
         List<String> picList = ListUtil.stringToList(picIds);
         List<String> newPicList = new ArrayList<>();
         for (String s : picList) {
-            byte[] fileBytes = strogeService.getMongoFileInputStream(s);//dubbo只能传输字节
+            byte[] fileBytes = strogeService.getMongoFileBytes(s);//dubbo只能传输字节
             InputStream fileInputStream = new ByteArrayInputStream(fileBytes);
             ResourceInfo resourceInfo = (ResourceInfo) strogeService.getObject(s, ResourceInfo.class);
-            String filePath = myIOUtil.creatRandomNameFile(
+            String filePath = FileUtil.creatRandomNameFile(
                     System.getProperty("user.dir") + "/data/downloadTmp/", resourceInfo.getFileSuffix());
             OutputStream fileOutputStream = new FileOutputStream(new File(filePath));
-            myIOUtil.inputStreamWriteToOutputStream(fileInputStream, fileOutputStream);
+            FileUtil.inputStreamWriteToOutputStream(fileInputStream, fileOutputStream);
             //写入完成之后将数据拼成可访问的链接
             String url = tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
             newPicList.add(url);
@@ -222,6 +227,7 @@ public class MomentController {
 
     /**
      * 删除评论
+     *
      * @param momentId
      * @param requeste
      * @return

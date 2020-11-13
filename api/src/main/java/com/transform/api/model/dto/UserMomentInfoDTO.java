@@ -10,6 +10,24 @@ import java.util.List;
 
 @Data
 public class UserMomentInfoDTO implements Serializable {
+    public UserMomentInfoDTO(){}
+
+    public UserMomentInfoDTO(Date momentSendTime, String userDevice, String isEdit, String collectCount, String shareCount, String commentCount, String likeCount) {
+        this.momentSendTime = momentSendTime;
+        this.userDevice = userDevice;
+        this.isEdit = isEdit;
+        this.collectCount = collectCount;
+        this.shareCount = shareCount;
+        this.commentCount = commentCount;
+        this.likeCount = likeCount;
+    }
+
+    public void initCountValue(){
+        this.setCollectCount("0");
+        this.setLikeCount("0");
+        this.setShareCount("0");
+        this.setCommentCount("0");
+    }
     private String id;
 
     private String uuid;

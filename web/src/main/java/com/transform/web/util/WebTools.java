@@ -1,5 +1,6 @@
 package com.transform.web.util;
 
+import com.transform.base.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -9,11 +10,9 @@ import javax.servlet.http.Cookie;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
+public class WebTools implements ApplicationListener<WebServerInitializedEvent> {
     @Autowired
     MyIOUtil myIOUtil;
 
@@ -21,6 +20,7 @@ public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
 
     /**
      * 返回项目的ip+port，避免手动写死
+     *
      * @return
      */
     public String getUrl() {
@@ -30,7 +30,7 @@ public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        return "http://"+address.getHostAddress() +":"+this.serverPort;
+        return "http://" + address.getHostAddress() + ":" + this.serverPort;
     }
 
     @Override
@@ -38,10 +38,10 @@ public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
         this.serverPort = event.getWebServer().getPort();
     }
 
-    public String getCookie(Cookie[] cookies, String key){
-        if (cookies!=null){
-            for (Cookie cookie:cookies) {
-                if (cookie.getName().equals(key)){
+    public String getCookie(Cookie[] cookies, String key) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(key)) {
                     return cookie.getValue();
                 }
             }
@@ -67,22 +67,11 @@ public class WebTools implements ApplicationListener<WebServerInitializedEvent>{
                 Targetfile.createNewFile();
             }
             OutputStream outputStream = new FileOutputStream(Targetfile);
-            myIOUtil.inputStreamWriteToOutputStream(oringDataInputStream,outputStream);
+            FileUtil.inputStreamWriteToOutputStream(oringDataInputStream, outputStream);
             System.out.println("已完成第   " + ++order + "   个文件");
         }
 
 
     }
 
-    List<String> getListNameFomePath(String filePath) {
-        List<String> list = new ArrayList<>();
-        File file = new File(filePath);
-        String[] listOfFile = file.list();
-        //全部加上.jpg后缀
-        for (String s : listOfFile) {
-            File subfile = new File(filePath + "\\" + s);
-            subfile.renameTo(new File(filePath + "\\" + s + ".jpg"));
-        }
-        return list;
-    }
 }

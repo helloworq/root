@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -31,9 +30,10 @@ public class AsyncUtil {
     }
 
     /**
-     * 根据传入数据弹出信息
+     * 根据传入数据异步弹出信息
      * @throws InterruptedException
      */
+    @Async
     public void popMoment(String key,int size) throws InterruptedException {
         for (int i = 0; i < size; i++) {
            redisTemplate.opsForList().rightPop(key);

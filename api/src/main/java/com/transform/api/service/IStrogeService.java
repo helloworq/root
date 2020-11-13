@@ -24,7 +24,7 @@ public interface IStrogeService {
      * @param id
      * @return
      */
-    byte[] getMongoFileInputStream(String id) throws IOException;
+    byte[] getMongoFileBytes(String id) throws IOException;
 
     /**
      * 根据id删除mongo中的文件信息以及数据

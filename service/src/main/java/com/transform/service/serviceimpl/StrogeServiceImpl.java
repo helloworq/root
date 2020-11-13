@@ -28,6 +28,11 @@ public class StrogeServiceImpl implements IStrogeService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /**
+     * 上传缓存文件
+     * @param fileTempPath
+     * @return
+     */
     @Override
     public String uploadTempFile(String fileTempPath){
         String path=null;
@@ -46,8 +51,14 @@ public class StrogeServiceImpl implements IStrogeService {
         return path;
     }
 
+    /**
+     * 下载存储在mongo库里的文件
+     * @param id
+     * @return
+     * @throws IOException
+     */
     @Override
-    public byte[] getMongoFileInputStream(String id) throws IOException {
+    public byte[] getMongoFileBytes(String id) throws IOException {
         //根据id查询文件
         GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
         //打开流下载对象
@@ -69,6 +80,11 @@ public class StrogeServiceImpl implements IStrogeService {
         return res;
     }
 
+    /**
+     * 删除mongo库存储的文件以及存储的文件信息
+     * @param id
+     * @return
+     */
     @Override
     public String deleteMongoFile(String id) {
         //根据文件id删除fs.files和fs.chunks中的记录
@@ -78,12 +94,23 @@ public class StrogeServiceImpl implements IStrogeService {
         return "success delete";
     }
 
+    /**
+     * 保存实体类信息
+     * @param entiy
+     * @return
+     */
     @Override
     public String save(Object entiy) {
         mongoTemplate.save(entiy);
         return "success save";
     }
 
+    /**
+     * 获取实体类信息，获取时需要指定类的类型
+     * @param id
+     * @param type
+     * @return
+     */
     @Override
     public Object getObject(String id,Class type) {
         return mongoTemplate.findById(id,type);

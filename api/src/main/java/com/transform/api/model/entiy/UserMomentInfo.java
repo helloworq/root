@@ -25,22 +25,22 @@ public class UserMomentInfo implements Serializable {
     @Column(name = "momentSendTime", nullable = false, length = 64)
     private Date momentSendTime;
 
-    @Column(name = "userDevice", nullable = false, length = 64)
+    @Column(name = "userDevice",  length = 64)
     private String userDevice;
 
-    @Column(name = "isEdit", nullable = false, length = 64)
+    @Column(name = "isEdit",  length = 64)
     private String isEdit;
 
-    @Column(name = "collectCount", nullable = false, length = 64)
+    @Column(name = "collectCount",  length = 64)
     private String collectCount;
 
-    @Column(name = "shareCount", nullable = false, length = 64)
+    @Column(name = "shareCount",  length = 64)
     private String shareCount;
 
-    @Column(name = "commentCount", nullable = false, length = 64)
+    @Column(name = "commentCount",  length = 64)
     private String commentCount;
 
-    @Column(name = "likeCount", nullable = false, length = 64)
+    @Column(name = "likeCount",  length = 64)
     private String likeCount;
 
     @Column(name = "picIds", nullable = false, length = 1024)

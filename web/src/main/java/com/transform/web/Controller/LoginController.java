@@ -9,16 +9,12 @@ import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Api(description = "登录控制器")
 @RestController
@@ -111,9 +107,10 @@ public class LoginController {
      */
     @ApiOperation(value = "简便cookie添加")
     @GetMapping("addCookie")
-    public void addCookie(@RequestParam(value = "cookieValue") String cookieValue,
-                          HttpServletResponse response) {
+    public ResponseData addCookie(@RequestParam(value = "cookieValue") String cookieValue,
+                                  HttpServletResponse response) {
         response.addCookie(new Cookie("userName", cookieValue));
+        return ResponseUtil.success(cookieValue);
     }
 
     /**
@@ -123,7 +120,7 @@ public class LoginController {
      */
     @ApiOperation(value = "简便cookie获取")
     @GetMapping("getCookie")
-    public String getCookie(HttpServletRequest request) {
-        return tools.getCookie(request.getCookies(),"userName");
+    public ResponseData getCookie(HttpServletRequest request) {
+        return ResponseUtil.success(tools.getCookie(request.getCookies(),"userName"));
     }
 }
