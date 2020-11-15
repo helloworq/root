@@ -1,5 +1,7 @@
 package com.transform.api.service;
 
+import java.util.List;
+
 public interface IFollowService {
     //此接口用来实现有关用户关注的操作，这里传入的参数设置为uuid，即使设置成username但仍然需要查询其uuid
     //关注某人
@@ -14,4 +16,9 @@ public interface IFollowService {
     String unFriendSomeone(String operationUserUUID,String targetUserUUID);
     //取消屏蔽某人
     String unUnFriendSomeone(String operationUserUUID,String targetUserUUID);
+
+    //获取用户的好友列表
+    List<String> getFriendsList(String operationUserUUID);
+    //获取好友的关注列表
+    List<String> getFans(String operationUserUUID);
 }

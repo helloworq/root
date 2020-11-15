@@ -10,17 +10,6 @@ import java.util.Optional;
  * 此接口用来获取一些基本信息
  */
 public interface IBaseInfoService {
-    /**
-     * 获取关注人数
-     * @return
-     */
-    Integer getFollowCount(String userId);
-
-    /**
-     * 获取粉丝人数
-     * @return
-     */
-    Integer getFansCount(String userId);
 
     /**
      * 获取动态数

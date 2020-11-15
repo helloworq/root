@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Component
@@ -59,5 +60,15 @@ public class followServiceImpl implements IFollowService {
     public String unUnFriendSomeone(String operationUserUUID, String targetUserUUID) {
         userRelationRepositry.unUnFriendSomeone(operationUserUUID, targetUserUUID);
         return "success";
+    }
+
+    @Override
+    public List<String> getFriendsList(String operationUserUUID) {
+        return userRelationRepositry.getFriends(operationUserUUID);
+    }
+
+    @Override
+    public List<String> getFans(String operationUserUUID) {
+        return userRelationRepositry.getFans(operationUserUUID);
     }
 }

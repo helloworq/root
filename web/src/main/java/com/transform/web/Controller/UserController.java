@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(description = "用户信息控制器")
 @RestController
@@ -65,7 +62,7 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "获取指定用户信息")
-    @PostMapping("/getUserInfo")
+    @GetMapping("/getUserInfo")
     public ResponseData getAllUserInfo(@ApiParam @RequestParam("name") String name){
         return ResponseUtil.success(baseInfoService.getUserInfo(name));
     }

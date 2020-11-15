@@ -4,11 +4,14 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.util.*;
+import org.hibernate.validator.constraints.EAN;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,6 +19,8 @@ public class MyIOUtil {
     @Reference
     IStrogeService strogeService;
 
+    @Autowired
+    WebTools tools;
     /**
      * 由于dubbo传输时只允许传字节数据，可通过引入Hessin依赖解决，暂时不采用
      * 为避免麻烦，上传的文件先保存在本地，然后再上传到Mongo，同时保存文件信息
@@ -60,5 +65,29 @@ public class MyIOUtil {
             e.printStackTrace();
         }
         return path;
+    }
+
+    /**
+     * 将文件id转换为可访问的links
+     *
+     * @param picIds
+     * @return
+     * @throws IOException
+     */
+    public List<String> picIdsToLinks(List<String> picIds) throws IOException {
+        List<String> newPicList = new ArrayList<>();
+        for (String s : picIds) {
+            byte[] fileBytes = strogeService.getMongoFileBytes(s);//dubbo只能传输字节
+            InputStream fileInputStream = new ByteArrayInputStream(fileBytes);
+            ResourceInfo resourceInfo = (ResourceInfo) strogeService.getObject(s, ResourceInfo.class);
+            String filePath = FileUtil.creatRandomNameFile(
+                    System.getProperty("user.dir") + "/data/downloadTmp/", resourceInfo.getFileSuffix());
+            OutputStream fileOutputStream = new FileOutputStream(new File(filePath));
+            FileUtil.inputStreamWriteToOutputStream(fileInputStream, fileOutputStream);
+            //写入完成之后将数据拼成可访问的链接
+            String url = tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
+            newPicList.add(url);
+        }
+        return newPicList;
     }
 }

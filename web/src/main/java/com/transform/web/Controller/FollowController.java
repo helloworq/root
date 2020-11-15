@@ -72,4 +72,16 @@ public class FollowController {
                                                 @RequestParam("targetUserUUID") String targetUserUUID){
         return ResponseUtil.success(followService.outFromBlackList(operationUserUUID, targetUserUUID));
     }
+
+    @ApiOperation(value = "取消拉黑")
+    @GetMapping("getFriendsList")
+    public ResponseData getFriendsList(@RequestParam("operationUserUUID") String operationUserUUID){
+        return ResponseUtil.success(followService.getFriendsList(operationUserUUID));
+    }
+
+    @ApiOperation(value = "取消拉黑")
+    @GetMapping("getFans")
+    public ResponseData getFans(@RequestParam("operationUserUUID") String operationUserUUID){
+        return ResponseUtil.success(followService.getFans(operationUserUUID));
+    }
 }

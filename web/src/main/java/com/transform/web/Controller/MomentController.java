@@ -2,6 +2,7 @@ package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
@@ -10,6 +11,7 @@ import com.transform.api.model.entiy.UserMomentInfo;
 import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IBaseInfoService;
+import com.transform.api.service.IFollowService;
 import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.response.ResponseData;
@@ -22,6 +24,7 @@ import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 文件上传
@@ -48,6 +52,9 @@ public class MomentController {
     IMomentService momentService;
     @Reference
     IBaseInfoService baseInfoService;
+    @Reference
+    IFollowService followService;
+
     @Autowired
     MyIOUtil myIOUtil;
     @Autowired
@@ -69,13 +76,14 @@ public class MomentController {
     public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
                                    @ApiParam("参数(动态内容，是否编辑，设备名必传)") @Validated UserMomentInfoDTO userMomentInfoDTO,
                                    HttpServletRequest request) throws InterruptedException {
+        System.out.println(tools.getCookie(request.getCookies(), "userName"));
         if (list.length == 0 || null == list)
             return null;
         //判断是更新请求还是上传请求,是更新请求则删除已存信息
         if (null != userMomentInfoDTO.getId()) {
             //删除已存文件
             UserMomentInfoDTO momentInfo = momentService.getUserMomentInfo(userMomentInfoDTO.getId());
-            List<String> picIds = ListUtil.stringToList(momentInfo.getPicIds());
+            List<String> picIds = momentInfo.getPicIds();
             for (String s : picIds) {
                 strogeService.deleteMongoFile(s);
             }
@@ -84,7 +92,7 @@ public class MomentController {
         for (MultipartFile file : list) {
             imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
         }
-        userMomentInfoDTO.setPicIds(ListUtil.listToString(imageIds));
+        userMomentInfoDTO.setPicIds(imageIds);
         userMomentInfoDTO.setUuid(baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName")));
 
         //上传动态到oracle
@@ -107,9 +115,9 @@ public class MomentController {
      */
     @ApiOperation(value = "获取全部动态")
     @GetMapping(value = "/getAllMonment")
-    public List<UserMomentInfo> getAllMonment(HttpServletRequest request) {
-        String userId=baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
-        return momentService.getAllUserMomentInfo(userId);
+    public ResponseData getAllMonment(HttpServletRequest request) {
+        String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
+        return ResponseUtil.success(momentService.getAllUserMomentInfo(userId));
     }
 
     /**
@@ -120,8 +128,8 @@ public class MomentController {
      */
     @ApiOperation(value = "删除动态")
     @DeleteMapping(value = "/deleteUserMoment")
-    public String deleteUserMoment(@RequestParam("id") String id) {
-        return momentService.deleteUserMoment(id);
+    public ResponseData deleteUserMoment(@RequestParam("id") String id) {
+        return ResponseUtil.success(momentService.deleteUserMoment(id));
     }
 
     /**
@@ -133,26 +141,13 @@ public class MomentController {
      */
     @ApiOperation(value = "根据id获取某一条动态信息")
     @GetMapping(value = "/getMomentInfo")
-    public UserMomentInfoDTO getMomentInfo(@RequestParam("id") String id) throws IOException {
+    public ResponseData getMomentInfo(@RequestParam("id") String id) throws IOException {
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(id);
-        //将id转换成链接
-        String picIds = userMomentInfoDTO.getPicIds();
-        List<String> picList = ListUtil.stringToList(picIds);
-        List<String> newPicList = new ArrayList<>();
-        for (String s : picList) {
-            byte[] fileBytes = strogeService.getMongoFileBytes(s);//dubbo只能传输字节
-            InputStream fileInputStream = new ByteArrayInputStream(fileBytes);
-            ResourceInfo resourceInfo = (ResourceInfo) strogeService.getObject(s, ResourceInfo.class);
-            String filePath = FileUtil.creatRandomNameFile(
-                    System.getProperty("user.dir") + "/data/downloadTmp/", resourceInfo.getFileSuffix());
-            OutputStream fileOutputStream = new FileOutputStream(new File(filePath));
-            FileUtil.inputStreamWriteToOutputStream(fileInputStream, fileOutputStream);
-            //写入完成之后将数据拼成可访问的链接
-            String url = tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
-            newPicList.add(url);
-        }
-        userMomentInfoDTO.setPicIds(ListUtil.listToString(newPicList));
-        return userMomentInfoDTO;
+        //获取动态内的文件id
+        List<String> picIds = userMomentInfoDTO.getPicIds();
+        //转换完成的链接写入结果集
+        userMomentInfoDTO.setPicIds(myIOUtil.picIdsToLinks(picIds));
+        return ResponseUtil.success(userMomentInfoDTO);
     }
 
     /**
@@ -161,14 +156,14 @@ public class MomentController {
      */
     @ApiOperation(value = "赞/取消赞")
     @GetMapping(value = "/like")
-    public String like(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
+    public ResponseData like(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
         String whoLiked = tools.getCookie(request.getCookies(), "userName");
         UserMomentLikeInfo userMomentLikeInfo = momentService.getLikeInfo(momentId, whoLiked);
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(momentId);
         if (null != userMomentLikeInfo) {
             userMomentInfoDTO.setLikeCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getLikeCount()) - 1));
             momentService.uploadMoment(userMomentInfoDTO);
-            return momentService.unLike(userMomentLikeInfo.getId());
+            return ResponseUtil.success(momentService.unLike(userMomentLikeInfo.getId()));
         } else {
             UserMomentLikeInfo saveUserMomentLikeInfo = new UserMomentLikeInfo();
             saveUserMomentLikeInfo.setLikeTime(new Date());
@@ -176,7 +171,7 @@ public class MomentController {
             saveUserMomentLikeInfo.setWhoLike(whoLiked);
             userMomentInfoDTO.setLikeCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getLikeCount()) + 1));
             momentService.uploadMoment(userMomentInfoDTO);
-            return momentService.like(saveUserMomentLikeInfo);
+            return ResponseUtil.success(momentService.like(saveUserMomentLikeInfo));
         }
     }
 
@@ -185,14 +180,14 @@ public class MomentController {
      */
     @ApiOperation(value = "收藏/取消收藏")
     @GetMapping(value = "/collect")
-    public String collect(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
+    public ResponseData collect(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
         String whoCollected = tools.getCookie(request.getCookies(), "userName");
         UserMomentCollectInfo userMomentCollectInfo = momentService.getCollectInfo(momentId, whoCollected);
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(momentId);
         if (null != userMomentCollectInfo) {
             userMomentInfoDTO.setCollectCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getCollectCount()) - 1));
             momentService.uploadMoment(userMomentInfoDTO);
-            return momentService.unCollect(userMomentCollectInfo.getId());
+            return ResponseUtil.success(momentService.unCollect(userMomentCollectInfo.getId()));
         } else {
             UserMomentCollectInfo saveUserMomentCollectInfo = new UserMomentCollectInfo();
             saveUserMomentCollectInfo.setCollectTime(new Date());
@@ -200,7 +195,7 @@ public class MomentController {
             saveUserMomentCollectInfo.setWhoCollect(whoCollected);
             userMomentInfoDTO.setCollectCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getCollectCount()) + 1));
             momentService.uploadMoment(userMomentInfoDTO);
-            return momentService.collect(saveUserMomentCollectInfo);
+            return ResponseUtil.success(momentService.collect(saveUserMomentCollectInfo));
         }
     }
 
@@ -209,9 +204,9 @@ public class MomentController {
      */
     @ApiOperation(value = "评论")
     @GetMapping(value = "/sendComment")
-    public String sendComment(@RequestParam(value = "text") String text,
-                              @RequestParam(value = "momentId") String momentId,
-                              HttpServletRequest requeste) {
+    public ResponseData sendComment(@RequestParam(value = "text") String text,
+                                    @RequestParam(value = "momentId") String momentId,
+                                    HttpServletRequest requeste) {
         String whoComment = tools.getCookie(requeste.getCookies(), "userName");
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(momentId);
         UserMomentCommentInfo userMomentCommentInfo = new UserMomentCommentInfo();
@@ -222,7 +217,7 @@ public class MomentController {
         momentService.comment(userMomentCommentInfo);
         //评论完成之后，动态表的评论字段需自增
         userMomentInfoDTO.setCommentCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getCommentCount()) + 1));
-        return momentService.uploadMoment(userMomentInfoDTO);
+        return ResponseUtil.success(momentService.uploadMoment(userMomentInfoDTO));
     }
 
     /**
@@ -234,13 +229,48 @@ public class MomentController {
      */
     @ApiOperation(value = "删除评论")
     @GetMapping(value = "/deleteComment")
-    public String deleteComment(@RequestParam(value = "momentId") String momentId,
-                                HttpServletRequest requeste) {
+    public ResponseData deleteComment(@RequestParam(value = "momentId") String momentId,
+                                      HttpServletRequest requeste) {
         String whoComment = tools.getCookie(requeste.getCookies(), "userName");
         UserMomentInfoDTO userMomentInfoDTO = momentService.getUserMomentInfo(momentId);
         momentService.deleteComment(momentId, whoComment);
         //评论完成之后，动态表的评论字段需自增
         userMomentInfoDTO.setCommentCount(String.valueOf(Integer.parseInt(userMomentInfoDTO.getCommentCount()) - 1));
-        return momentService.uploadMoment(userMomentInfoDTO);
+        return ResponseUtil.success(momentService.uploadMoment(userMomentInfoDTO));
+    }
+
+    /**
+     * 获取主页信息
+     *
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "获取主页信息")
+    @GetMapping(value = "/getMainPageInfo")
+    public ResponseData getMainPageInfo(HttpServletRequest request) {
+        //根据用户名获取主页信息
+        String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
+        //获取关注用户以及粉丝
+        List<String> friendsList = followService.getFriendsList(userId);
+        List<String> fansList = followService.getFans(userId);
+        //获取全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
+        List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId)
+                .stream()
+                .map(element -> {
+                    UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
+                    BeanUtils.copyProperties(element, userMomentInfoDTO);
+                    try {
+                        userMomentInfoDTO.setPicIds(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getPicIds())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return userMomentInfoDTO;
+                }).collect(Collectors.toList());
+
+        JSONObject object = new JSONObject();
+        object.put("friendsList", friendsList);
+        object.put("fansList", fansList);
+        object.put("moments", userMomentInfoList);
+        return ResponseUtil.success(object);
     }
 }

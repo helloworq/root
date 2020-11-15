@@ -13,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 class ServiceApplicationTests {
@@ -25,12 +23,14 @@ class ServiceApplicationTests {
     UserRelationRepositry userRelationRepositry;
     @Autowired
     UserInfoRepositry userInfoRepositry;
+
     @Test
     void contextLoads() {
         System.out.println("开始");
-        UserInfo userInfo=new UserInfo();
-        List list=new ArrayList(){};
-        String[] a=new String[1];
+        UserInfo userInfo = new UserInfo();
+        List list = new ArrayList() {
+        };
+        String[] a = new String[1];
         System.out.println(ObjectUtils.isEmpty(userInfo));
         System.out.println(ObjectUtils.isEmpty(list));
         System.out.println(ObjectUtils.isEmpty(a));
@@ -40,9 +40,9 @@ class ServiceApplicationTests {
     }
 
     @Test
-    void addUser(){
+    void addUser() {
         for (int i = 0; i < 10; i++) {
-            UserInfo userInfo=new UserInfo();
+            UserInfo userInfo = new UserInfo();
             userInfo.setUserWechatNum(String.valueOf(i));
             userInfo.setUserSex(String.valueOf(i));
             userInfo.setUserQQNum(String.valueOf(i));
@@ -59,15 +59,24 @@ class ServiceApplicationTests {
     }
 
     @Test
-    void addUserRelation(){
-        for (int i = 0; i < 10; i++){
-            UserRelation userRelation=new UserRelation();
+    void addUserRelation() {
+        //生成不重复随机关系
+        HashSet<String> hashSet = new HashSet<>();
+        for (int i = 0; i < 50; i++) {
+            UserRelation userRelation = new UserRelation();
             userRelation.setOperTime(new Date());
             userRelation.setRelationStatus(1);
 
-            userRelation.setUuidUserA(String.valueOf(i));
-            userRelation.setUuidUserB(String.valueOf(i));
-            userRelationRepositry.save(userRelation);
+            int a = new Random().nextInt(10);
+            int b = new Random().nextInt(10);
+            String connectString = a + " <===> " + b;
+            System.out.println(connectString);
+            if (a != b && !hashSet.contains(connectString)) {
+                hashSet.add(connectString);
+                userRelation.setUuidUserA(userInfoRepositry.findId(String.valueOf(a)));
+                userRelation.setUuidUserB(userInfoRepositry.findId(String.valueOf(b)));
+                userRelationRepositry.save(userRelation);
+            }
         }
     }
 

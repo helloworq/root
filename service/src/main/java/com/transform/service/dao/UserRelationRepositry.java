@@ -25,13 +25,10 @@ public interface UserRelationRepositry extends JpaRepository<UserRelation,String
     //取消屏蔽某人
     @Query(value = "update TB_USERRELATION set RELATION_STATUS=1 where UUID_USERA=?1 and UUID_USERB=?2",nativeQuery = true)
     String unUnFriendSomeone(String operationUserUUID,String targetUserUUID);
-    //获取用户的关注人数
-    @Query(value = "select count(*) from TB_USERRELATION where UUID_USERA=?1",nativeQuery = true)
-    Integer getUserFollowCount(String operationUserUUID);
-    //获取用户粉丝数
-    @Query(value = "select count(*) from TB_USERRELATION where UUID_USERB=?1",nativeQuery = true)
-    Integer getUserFansCount(String operationUserUUID);
-    //获取用户全部好友
-    @Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1 AND RELATION_STATUS=1",nativeQuery = true)
-    List<String> getFriends(String userId);
+    //获取关注用户的全部用户
+    @Query(value = "select UUID_USERA from TB_USERRELATION where UUID_USERB=?1 AND RELATION_STATUS=1",nativeQuery = true)
+    List<String> getFans(String userId);
+    //获取用户关注的用户
+    @Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1",nativeQuery = true)
+    List<String> getFriends(String operationUserUUID);
 }

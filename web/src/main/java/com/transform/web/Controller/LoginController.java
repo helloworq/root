@@ -1,6 +1,7 @@
 package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
 import com.transform.api.service.ILoginService;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
@@ -121,6 +122,7 @@ public class LoginController {
     @ApiOperation(value = "简便cookie获取")
     @GetMapping("getCookie")
     public ResponseData getCookie(HttpServletRequest request) {
+        System.out.println(JSON.toJSONString(request.getCookies()));
         return ResponseUtil.success(tools.getCookie(request.getCookies(),"userName"));
     }
 }

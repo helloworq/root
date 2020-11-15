@@ -48,7 +48,7 @@ public class UserMomentImpl implements IMomentService {
             userMomentInfoDTO.initCountValue();
         }
         BeanUtils.copyProperties(userMomentInfoDTO, userMomentInfo);
-        userMomentInfo.setPicIds(userMomentInfoDTO.getPicIds());
+        userMomentInfo.setPicIds(ListUtil.listToString(userMomentInfoDTO.getPicIds()));
         userMomentInfo.setMomentSendTime(new Date());
 
         String id=userMomentInfoRepositry.save(userMomentInfo).getId();

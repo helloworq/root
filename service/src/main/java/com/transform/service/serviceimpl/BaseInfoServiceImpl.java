@@ -26,26 +26,6 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     UserRelationRepositry userRelationRepositry;
 
     /**
-     * 获取关注数
-     * @param operationUserUUID
-     * @return
-     */
-    @Override
-    public Integer getFollowCount(String operationUserUUID) {
-        return userRelationRepositry.getUserFollowCount(operationUserUUID);
-    }
-
-    /**
-     * 获取粉丝数
-     * @param operationUserUUID
-     * @return
-     */
-    @Override
-    public Integer getFansCount(String operationUserUUID) {
-        return userRelationRepositry.getUserFansCount(operationUserUUID);
-    }
-
-    /**
      * 获取动态数
      * @param operationUserUUID
      * @return
