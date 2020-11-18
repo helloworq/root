@@ -32,6 +32,8 @@ public class UserMomentInfoDTO implements Serializable {
 
     private String uuid;
 
+    private String name;
+
     private String momentContentWords;
 
     private Date momentSendTime;

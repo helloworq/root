@@ -41,7 +41,7 @@ public class FileUtil {
         //String path="C:\\Users\\12733\\Desktop\\Windows聚焦图片\\k\\";
         String pathid= UUID.randomUUID().toString().replace("-","");
         String path=filepath+pathid+"."+fileSuffix;
-        System.out.println(path);
+        //System.out.println(path);
         File file=new File(path);
         File pathParent=file.getParentFile();
         if (!pathParent.exists())

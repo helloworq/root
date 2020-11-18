@@ -3,12 +3,10 @@ package com.transform.web.Controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.transform.api.model.dto.UserInfoDTO;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
-import com.transform.api.model.entiy.UserMomentCollectInfo;
-import com.transform.api.model.entiy.UserMomentCommentInfo;
-import com.transform.api.model.entiy.UserMomentInfo;
-import com.transform.api.model.entiy.UserMomentLikeInfo;
+import com.transform.api.model.entiy.*;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
@@ -245,18 +243,28 @@ public class MomentController {
      * @param request
      * @return
      */
-    @ApiOperation(value = "获取主页信息")
+    @ApiOperation(value = "获取个人主页信息")
     @GetMapping(value = "/getMainPageInfo")
     public ResponseData getMainPageInfo(HttpServletRequest request) {
         //根据用户名获取主页信息
-        String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
-        //获取关注用户以及粉丝
-        List<String> friendsList = followService.getFriendsList(userId);
-        List<String> fansList = followService.getFans(userId);
+        String userName=tools.getCookie(request.getCookies(), "userName");
+        String userId = baseInfoService.getUserId(userName);
+        //获取关注用户的信息
+        List<UserInfoDTO> friendsList = followService.getFriendsList(userId).stream().map(id->{
+                    UserInfoDTO userInfoDTO =new UserInfoDTO();
+                    BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
+                    return userInfoDTO;
+                }).collect(Collectors.toList());
+
+        //获取粉丝的信息
+        List<UserInfoDTO> fansList = followService.getFriendsList(userId).stream().map(id->{
+                    UserInfoDTO userInfoDTO =new UserInfoDTO();
+                    BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
+                    return userInfoDTO;
+                }).collect(Collectors.toList());
+
         //获取全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
-        List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId)
-                .stream()
-                .map(element -> {
+        List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId).stream().map(element -> {
                     UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
                     BeanUtils.copyProperties(element, userMomentInfoDTO);
                     try {
@@ -264,8 +272,10 @@ public class MomentController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    userMomentInfoDTO.setName(baseInfoService.getUserName(element.getUuid()));
                     return userMomentInfoDTO;
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
 
         JSONObject object = new JSONObject();
         object.put("friendsList", friendsList);

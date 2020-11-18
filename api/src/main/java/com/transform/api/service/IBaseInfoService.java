@@ -28,6 +28,11 @@ public interface IBaseInfoService {
     String getUserId(String userName);
 
     /**
+     * 获取用户的name
+     */
+    String getUserName(String userId);
+
+    /**
      * 上传或更新用户信息
      */
     String uploadUserInfo(UserInfo userInfo);

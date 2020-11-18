@@ -59,6 +59,16 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     }
 
     /**
+     * 获取用户name
+     * @param operationUserId
+     * @return
+     */
+    @Override
+    public String getUserName(String operationUserId){
+        return userInfoRepositry.findName(operationUserId);
+    }
+
+    /**
      * 更新或上传用户信息
      * @param userInfo
      * @return

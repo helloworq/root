@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class UserInfoDTO implements Serializable {
     private String id;
-    @NotNull(message = "userName禁止为空")
+
     private String userName;
 
     private Date userJoinTime;
