@@ -31,10 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -263,7 +260,7 @@ public class MomentController {
                     return userInfoDTO;
                 }).collect(Collectors.toList());
 
-        //获取全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
+        //获取个人全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId).stream().map(element -> {
                     UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
                     BeanUtils.copyProperties(element, userMomentInfoDTO);
@@ -280,6 +277,41 @@ public class MomentController {
         JSONObject object = new JSONObject();
         object.put("friendsList", friendsList);
         object.put("fansList", fansList);
+        object.put("moments", userMomentInfoList);
+        return ResponseUtil.success(object);
+    }
+
+    @ApiOperation(value = "获取好友动态信息")
+    @GetMapping(value = "/getFriendMoment")
+    public ResponseData getFriendMoment(HttpServletRequest request) {
+        //根据用户名获取主页信息
+        String userName=tools.getCookie(request.getCookies(), "userName");
+        String userId = baseInfoService.getUserId(userName);
+        //获取关注用户的信息
+        List<UserInfoDTO> friendsList = followService.getFriendsList(userId).stream().map(id->{
+            UserInfoDTO userInfoDTO =new UserInfoDTO();
+            BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
+            return userInfoDTO;
+        }).collect(Collectors.toList());
+
+        //获取全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
+        List<UserMomentInfoDTO> userMomentInfoList = new ArrayList<>();
+        //根据好友列表里的好友id查询好友全部动态然后依据时间排序排序（等数据量大了的时候可以考虑将逻辑在数据库里完成以减少io）
+        friendsList.stream().forEach(userInfo-> userMomentInfoList.addAll(
+                momentService.getAllUserMomentInfo(baseInfoService.getUserId(userInfo.getUserName())).stream().map(element -> {
+                    UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
+                    BeanUtils.copyProperties(element, userMomentInfoDTO);
+                    try {
+                        userMomentInfoDTO.setPicIds(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getPicIds())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    userMomentInfoDTO.setName(baseInfoService.getUserName(element.getUuid()));
+                    return userMomentInfoDTO;
+                }).collect(Collectors.toList())));
+        userMomentInfoList.stream().sorted(Comparator.comparing(UserMomentInfoDTO::getMomentSendTime));
+
+        JSONObject object = new JSONObject();
         object.put("moments", userMomentInfoList);
         return ResponseUtil.success(object);
     }

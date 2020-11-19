@@ -79,24 +79,13 @@ public class MyIOUtil {
     public List<String> picIdsToLinks(List<String> picIds) throws IOException {
         List<String> newPicList = new ArrayList<>();
         for (String s : picIds) {
-            long transform=System.currentTimeMillis();
             byte[] fileBytes = strogeService.getMongoFileBytes(s);//dubbo只能传输字节
-            System.out.println("transform消耗时间"+(System.currentTimeMillis()-transform));
-            log.info("transform消耗时间"+(System.currentTimeMillis()-transform));
-
-            long getObj=System.currentTimeMillis();
             InputStream fileInputStream = new ByteArrayInputStream(fileBytes);
             ResourceInfo resourceInfo = (ResourceInfo) strogeService.getObject(s, ResourceInfo.class);
-            System.out.println("getObj消耗时间"+(System.currentTimeMillis()-getObj));
-
-            long rewrite=System.currentTimeMillis();
             String filePath = FileUtil.creatRandomNameFile(
                     System.getProperty("user.dir") + "/data/downloadTmp/", resourceInfo.getFileSuffix());
-
             OutputStream fileOutputStream = new FileOutputStream(new File(filePath));
             FileUtil.inputStreamWriteToOutputStream(fileInputStream, fileOutputStream);
-            System.out.println("rewrite消耗时间"+(System.currentTimeMillis()-rewrite));
-
             //写入完成之后将数据拼成可访问的链接
             String url = tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
             newPicList.add(url);
