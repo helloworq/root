@@ -1,5 +1,8 @@
 package com.transform.api.service;
 
+import com.transform.api.model.dto.UserInfoDTO;
+import com.transform.api.model.entiy.UserInfo;
+
 import java.util.List;
 
 public interface IFollowService {
@@ -18,7 +21,7 @@ public interface IFollowService {
     String unUnFriendSomeone(String operationUserUUID,String targetUserUUID);
 
     //获取用户的好友列表
-    List<String> getFriendsList(String operationUserUUID);
+    List<UserInfoDTO> getFriendsList(String operationUserUUID);
     //获取好友的关注列表
-    List<String> getFans(String operationUserUUID);
+    List<UserInfoDTO> getFans(String operationUserUUID);
 }

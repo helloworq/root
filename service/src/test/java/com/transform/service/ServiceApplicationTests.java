@@ -1,7 +1,6 @@
 package com.transform.service;
 
 
-import com.transform.api.model.entiy.UserAccount;
 import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.service.dao.UserAccountRepositry;
@@ -10,7 +9,6 @@ import com.transform.service.dao.UserRelationRepositry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
@@ -23,6 +21,12 @@ class ServiceApplicationTests {
     UserRelationRepositry userRelationRepositry;
     @Autowired
     UserInfoRepositry userInfoRepositry;
+    @Autowired
+    WebTools tools;
+    @Test
+    void getUrl(){
+        System.out.println(tools.getUrl());
+    }
 
     @Test
     void contextLoads() {

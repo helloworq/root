@@ -115,7 +115,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
      * @return
      */
     @Override
-    public List<String> getFriendsId(String userId) {
+    public List<UserInfo> getFriendsId(String userId) {
         return userRelationRepositry.getFriends(userId);
     }
 }

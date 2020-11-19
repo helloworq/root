@@ -96,7 +96,7 @@ public class MomentController {
         String userId = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
         if (Objects.nonNull(userId)) {
             Message message = new Message(momentId, new Date().toString(), userId);
-            List<String> friendsList = baseInfoService.getFriendsId(userId);
+            List<String> friendsList = baseInfoService.getFriendsId(userId).stream().map(UserInfo::getId).collect(Collectors.toList());
             asyncUtil.pushMoment(friendsList.toArray(new String[friendsList.size()]), message);
         }
         return ResponseUtil.success("上传成功！");
@@ -247,18 +247,10 @@ public class MomentController {
         String userName=tools.getCookie(request.getCookies(), "userName");
         String userId = baseInfoService.getUserId(userName);
         //获取关注用户的信息
-        List<UserInfoDTO> friendsList = followService.getFriendsList(userId).stream().map(id->{
-                    UserInfoDTO userInfoDTO =new UserInfoDTO();
-                    BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
-                    return userInfoDTO;
-                }).collect(Collectors.toList());
+        List<UserInfoDTO> friendsList = followService.getFriendsList(userId);
 
         //获取粉丝的信息
-        List<UserInfoDTO> fansList = followService.getFriendsList(userId).stream().map(id->{
-                    UserInfoDTO userInfoDTO =new UserInfoDTO();
-                    BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
-                    return userInfoDTO;
-                }).collect(Collectors.toList());
+        List<UserInfoDTO> fansList = followService.getFriendsList(userId);
 
         //获取个人全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId).stream().map(element -> {
@@ -288,11 +280,7 @@ public class MomentController {
         String userName=tools.getCookie(request.getCookies(), "userName");
         String userId = baseInfoService.getUserId(userName);
         //获取关注用户的信息
-        List<UserInfoDTO> friendsList = followService.getFriendsList(userId).stream().map(id->{
-            UserInfoDTO userInfoDTO =new UserInfoDTO();
-            BeanUtils.copyProperties(baseInfoService.getUserInfo(baseInfoService.getUserName(id)),userInfoDTO);
-            return userInfoDTO;
-        }).collect(Collectors.toList());
+        List<UserInfoDTO> friendsList = followService.getFriendsList(userId);
 
         //获取全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
         List<UserMomentInfoDTO> userMomentInfoList = new ArrayList<>();

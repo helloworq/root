@@ -1,16 +1,20 @@
 package com.transform.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.transform.api.model.dto.UserInfoDTO;
+import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
 import com.transform.service.dao.UserRelationRepositry;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Component
@@ -63,12 +67,24 @@ public class followServiceImpl implements IFollowService {
     }
 
     @Override
-    public List<String> getFriendsList(String operationUserUUID) {
-        return userRelationRepositry.getFriends(operationUserUUID);
+    public List<UserInfoDTO> getFriendsList(String operationUserUUID) {
+        return userRelationRepositry.getFriends(operationUserUUID)
+                .stream()
+                .map(elemet->{
+                    UserInfoDTO userInfoDTO=new UserInfoDTO();
+                    BeanUtils.copyProperties(elemet,userInfoDTO);
+                    return userInfoDTO;
+                }).collect(Collectors.toList());
     }
 
     @Override
-    public List<String> getFans(String operationUserUUID) {
-        return userRelationRepositry.getFans(operationUserUUID);
+    public List<UserInfoDTO> getFans(String operationUserUUID) {
+        return userRelationRepositry.getFans(operationUserUUID)
+                .stream()
+                .map(elemet->{
+                    UserInfoDTO userInfoDTO=new UserInfoDTO();
+                    BeanUtils.copyProperties(elemet,userInfoDTO);
+                    return userInfoDTO;
+                }).collect(Collectors.toList());
     }
 }

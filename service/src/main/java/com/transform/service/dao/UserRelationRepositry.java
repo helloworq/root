@@ -1,5 +1,6 @@
 package com.transform.service.dao;
 
+import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,9 +27,11 @@ public interface UserRelationRepositry extends JpaRepository<UserRelation,String
     @Query(value = "update TB_USERRELATION set RELATION_STATUS=1 where UUID_USERA=?1 and UUID_USERB=?2",nativeQuery = true)
     String unUnFriendSomeone(String operationUserUUID,String targetUserUUID);
     //获取关注用户的全部用户
-    @Query(value = "select UUID_USERA from TB_USERRELATION where UUID_USERB=?1 AND RELATION_STATUS=1",nativeQuery = true)
-    List<String> getFans(String userId);
-    //获取用户关注的用户
-    @Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1",nativeQuery = true)
-    List<String> getFriends(String operationUserUUID);
+    //@Query(value = "select UUID_USERA from TB_USERRELATION where UUID_USERB=?1 AND RELATION_STATUS=1",nativeQuery = true)
+    @Query(value = "select * from TB_USERINFO where ID in (select UUID_USERA from TB_USERRELATION where UUID_USERB=?1 AND RELATION_STATUS=1)",nativeQuery = true)
+    List<UserInfo> getFans(String userId);
+    //获取用户关注的用户(根据传入用户id查找其朋友的信息)
+    //@Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1",nativeQuery = true)
+    @Query(value = "select * from TB_USERINFO where ID in (select UUID_USERB from TB_USERRELATION where UUID_USERA=?1)",nativeQuery = true)
+    List<UserInfo> getFriends(String operationUserUUID);
 }

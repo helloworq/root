@@ -57,5 +57,5 @@ public interface IBaseInfoService {
      * 获取用户好友信息
      * @return
      */
-    List<String> getFriendsId(String userId);
+    List<UserInfo> getFriendsId(String userId);
 }
