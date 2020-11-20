@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserMomentInfoDTO;
+import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.WebTools;
@@ -48,12 +49,8 @@ public class testController {
     }
 
     @RequestMapping("getuuid")
-    public Map<String, Object> info() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("", "");
-        hashMap.get("");
-        String a = "";
-        return hashMap;
+    public Object info() {
+        return baseInfoService.getUserInfo("齐天大圣");
     }
 
     /**

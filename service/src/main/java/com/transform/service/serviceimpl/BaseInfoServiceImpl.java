@@ -7,6 +7,7 @@ import com.transform.api.service.IBaseInfoService;
 import com.transform.service.dao.UserInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
 import com.transform.service.dao.UserRelationRepositry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @Component
 public class BaseInfoServiceImpl implements IBaseInfoService {
@@ -106,6 +108,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
      */
     @Override
     public UserInfo getUserInfo(String userName) {
+        log.info(userName);
         return userInfoRepositry.findByName(userName);
     }
 
@@ -116,6 +119,6 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
      */
     @Override
     public List<UserInfo> getFriendsId(String userId) {
-        return userRelationRepositry.getFriends(userId);
+        return userInfoRepositry.getFriends(userId);
     }
 }

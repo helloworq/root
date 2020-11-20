@@ -6,6 +6,7 @@ import com.transform.api.model.entiy.UserMomentCollectInfo;
 import com.transform.api.model.entiy.UserMomentCommentInfo;
 import com.transform.api.model.entiy.UserMomentInfo;
 import com.transform.api.model.entiy.UserMomentLikeInfo;
+import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IMomentService;
 import com.transform.base.util.ListUtil;
 import com.transform.service.dao.UserMomentCollectInfoRepositry;
@@ -16,9 +17,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Component
@@ -33,6 +36,8 @@ public class UserMomentImpl implements IMomentService {
     UserMomentCommentInfoRepositry userMomentCommentInfoRepositry;
     @Autowired
     StrogeServiceImpl strogeService;
+    @Autowired
+    IBaseInfoService baseInfoService;
 
     /**
      * 上传动态
@@ -63,8 +68,30 @@ public class UserMomentImpl implements IMomentService {
     }
 
     @Override
-    public List<UserMomentInfo> getAllUserMomentInfo(String uuid) {
-        return userMomentInfoRepositry.getByUuid(uuid);
+    public List<UserMomentInfoDTO> getAllUserMomentInfo(String uuid) {
+        return userMomentInfoRepositry.getByUuid(uuid).stream().map(element -> {
+            UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
+            BeanUtils.copyProperties(element, userMomentInfoDTO);
+            userMomentInfoDTO.setPicIds(ListUtil.stringToList(element.getPicIds()));
+            userMomentInfoDTO.setName(baseInfoService.getUserName(element.getUuid()));
+            return userMomentInfoDTO;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 为了减少数据库io，把获取好友全部动态的功能放在新方法里执行，同时方便分页
+     * @param uuid
+     * @return
+     */
+    @Override
+    public List<UserMomentInfoDTO> getAllFriendsMomentInfo(String uuid) {
+        return userMomentInfoRepositry.getFriendsMomentsByUserId(uuid).stream().map(elemet->{
+            UserMomentInfoDTO userMomentInfoDTO=new UserMomentInfoDTO();
+            BeanUtils.copyProperties(elemet,userMomentInfoDTO);
+            userMomentInfoDTO.setPicIds(ListUtil.stringToList(elemet.getPicIds()));
+            userMomentInfoDTO.setName(baseInfoService.getUserName(elemet.getUuid()));
+            return userMomentInfoDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override

@@ -21,12 +21,6 @@ class ServiceApplicationTests {
     UserRelationRepositry userRelationRepositry;
     @Autowired
     UserInfoRepositry userInfoRepositry;
-    @Autowired
-    WebTools tools;
-    @Test
-    void getUrl(){
-        System.out.println(tools.getUrl());
-    }
 
     @Test
     void contextLoads() {

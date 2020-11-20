@@ -14,7 +14,9 @@ public interface IMomentService {
 
     UserMomentInfoDTO getUserMomentInfo(String id);
 
-    List<UserMomentInfo> getAllUserMomentInfo(String uuid);
+    List<UserMomentInfoDTO> getAllUserMomentInfo(String uuid);
+
+    List<UserMomentInfoDTO> getAllFriendsMomentInfo(String uuid);
 
     String deleteUserMoment(String id);
 

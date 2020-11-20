@@ -16,4 +16,7 @@ public interface UserMomentInfoRepositry extends JpaRepository<UserMomentInfo,St
     UserMomentInfo getById(String id);
 
     List<UserMomentInfo> getByUuid(String uuid);
+
+    @Query(value = "select * from TB_USERMOMENTINFO where UUID in (select UUID_USERB from TB_USERRELATION where UUID_USERA=?1) order by MOMENT_SEND_TIME desc ", nativeQuery = true)
+    List<UserMomentInfo> getFriendsMomentsByUserId(String uuid);
 }

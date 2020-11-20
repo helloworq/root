@@ -6,6 +6,7 @@ import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
+import com.transform.service.dao.UserInfoRepositry;
 import com.transform.service.dao.UserRelationRepositry;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class followServiceImpl implements IFollowService {
     @Autowired
     UserRelationRepositry userRelationRepositry;
+    @Autowired
+    UserInfoRepositry userInfoRepositry;
     /**
      * 关注用户功能，用户之间的关系有三种，关注，拉黑，屏蔽，这三种状态是互斥的，也就是说不能同时为true。所以当有
      * 对用户进行某些操作时只需要将状态都置为false再将目标操作置为true，当都为false时表明未关注用户,
@@ -68,7 +71,7 @@ public class followServiceImpl implements IFollowService {
 
     @Override
     public List<UserInfoDTO> getFriendsList(String operationUserUUID) {
-        return userRelationRepositry.getFriends(operationUserUUID)
+        return userInfoRepositry.getFriends(operationUserUUID)
                 .stream()
                 .map(elemet->{
                     UserInfoDTO userInfoDTO=new UserInfoDTO();
@@ -79,7 +82,7 @@ public class followServiceImpl implements IFollowService {
 
     @Override
     public List<UserInfoDTO> getFans(String operationUserUUID) {
-        return userRelationRepositry.getFans(operationUserUUID)
+        return userInfoRepositry.getFans(operationUserUUID)
                 .stream()
                 .map(elemet->{
                     UserInfoDTO userInfoDTO=new UserInfoDTO();
