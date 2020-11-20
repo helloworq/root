@@ -20,19 +20,19 @@ public interface IMomentService {
 
     String deleteUserMoment(String id);
 
-    String like(UserMomentLikeInfo userMomentLikeInfo);
+    void like(String momentId, UserMomentLikeInfo userMomentLikeInfo);
 
-    String unLike(String id);
+    void unLike(String momentId, String likeId);
 
-    UserMomentLikeInfo getLikeInfo(String momentId,String whoLiked);
+    UserMomentLikeInfo getLikeInfo(String momentId, String whoLiked);
 
-    String collect(UserMomentCollectInfo userMomentCollectInfo);
+    void collect(String momentId, UserMomentCollectInfo userMomentCollectInfo);
 
-    String unCollect(String id);
+    void unCollect(String momentId, String id);
 
-    UserMomentCollectInfo getCollectInfo(String momentId,String whoCollected);
+    UserMomentCollectInfo getCollectInfo(String momentId, String whoCollected);
 
-    String comment(UserMomentCommentInfo userMomentCommentInfo);
+    void comment(String momentId, UserMomentCommentInfo userMomentCommentInfo);
 
-    String deleteComment(String momentId,String whoComment);
+    void deleteComment(String momentId, String whoComment);
 }

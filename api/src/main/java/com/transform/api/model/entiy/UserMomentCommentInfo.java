@@ -16,15 +16,15 @@ public class UserMomentCommentInfo implements Serializable {
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "momentId", unique = true, nullable = false, length = 64)
+    @Column(name = "momentId", nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "commentContent", unique = true, nullable = false, length = 64)
+    @Column(name = "commentContent",  nullable = false, length = 64)
     private String commentContent;
 
-    @Column(name = "whoComment", unique = true, nullable = false, length = 64)
+    @Column(name = "whoComment", nullable = false, length = 64)
     private String whoComment;
 
-    @Column(name = "commentTime", unique = true, nullable = false, length = 64)
+    @Column(name = "commentTime", nullable = false, length = 64)
     private Date commentTime;
 }

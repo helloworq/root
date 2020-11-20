@@ -16,12 +16,12 @@ public class UserMomentShareInfo implements Serializable {
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "momentId", unique = true, nullable = false, length = 64)
+    @Column(name = "momentId",  nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "whoShare", unique = true, nullable = false, length = 64)
+    @Column(name = "whoShare", nullable = false, length = 64)
     private String whoShare;
 
-    @Column(name = "shareTime", unique = true, nullable = false, length = 64)
+    @Column(name = "shareTime", nullable = false, length = 64)
     private Date shareTime;
 }

@@ -71,8 +71,7 @@ public class followServiceImpl implements IFollowService {
 
     @Override
     public List<UserInfoDTO> getFriendsList(String operationUserUUID) {
-        return userInfoRepositry.getFriends(operationUserUUID)
-                .stream()
+        return userInfoRepositry.getFriends(operationUserUUID).stream()
                 .map(elemet->{
                     UserInfoDTO userInfoDTO=new UserInfoDTO();
                     BeanUtils.copyProperties(elemet,userInfoDTO);
@@ -82,8 +81,7 @@ public class followServiceImpl implements IFollowService {
 
     @Override
     public List<UserInfoDTO> getFans(String operationUserUUID) {
-        return userInfoRepositry.getFans(operationUserUUID)
-                .stream()
+        return userInfoRepositry.getFans(operationUserUUID).stream()
                 .map(elemet->{
                     UserInfoDTO userInfoDTO=new UserInfoDTO();
                     BeanUtils.copyProperties(elemet,userInfoDTO);

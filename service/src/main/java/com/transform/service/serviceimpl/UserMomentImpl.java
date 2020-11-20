@@ -16,6 +16,7 @@ import com.transform.service.dao.UserMomentLikeInfoRepositry;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Date;
@@ -49,14 +50,14 @@ public class UserMomentImpl implements IMomentService {
     public String uploadMoment(UserMomentInfoDTO userMomentInfoDTO) {
         UserMomentInfo userMomentInfo = new UserMomentInfo();
         //如果是新上传动态，非更新动态则初始化点赞，评论的数据为0
-        if (Objects.isNull(userMomentInfo.getId())){
+        if (Objects.isNull(userMomentInfo.getId())) {
             userMomentInfoDTO.initCountValue();
         }
         BeanUtils.copyProperties(userMomentInfoDTO, userMomentInfo);
         userMomentInfo.setPicIds(ListUtil.listToString(userMomentInfoDTO.getPicIds()));
         userMomentInfo.setMomentSendTime(new Date());
 
-        String id=userMomentInfoRepositry.save(userMomentInfo).getId();
+        String id = userMomentInfoRepositry.save(userMomentInfo).getId();
         return id;
     }
 
@@ -80,14 +81,15 @@ public class UserMomentImpl implements IMomentService {
 
     /**
      * 为了减少数据库io，把获取好友全部动态的功能放在新方法里执行，同时方便分页
+     *
      * @param uuid
      * @return
      */
     @Override
     public List<UserMomentInfoDTO> getAllFriendsMomentInfo(String uuid) {
-        return userMomentInfoRepositry.getFriendsMomentsByUserId(uuid).stream().map(elemet->{
-            UserMomentInfoDTO userMomentInfoDTO=new UserMomentInfoDTO();
-            BeanUtils.copyProperties(elemet,userMomentInfoDTO);
+        return userMomentInfoRepositry.getFriendsMomentsByUserId(uuid).stream().map(elemet -> {
+            UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
+            BeanUtils.copyProperties(elemet, userMomentInfoDTO);
             userMomentInfoDTO.setPicIds(ListUtil.stringToList(elemet.getPicIds()));
             userMomentInfoDTO.setName(baseInfoService.getUserName(elemet.getUuid()));
             return userMomentInfoDTO;
@@ -106,15 +108,17 @@ public class UserMomentImpl implements IMomentService {
     }
 
     @Override
-    public String like(UserMomentLikeInfo userMomentLikeInfo) {
+    public void like(String momentId, UserMomentLikeInfo userMomentLikeInfo) {
+        //动态赞字段加一,新增like信息
+        userMomentInfoRepositry.incLikeCount(momentId);
         userMomentLikeInfoRepositry.save(userMomentLikeInfo);
-        return "success";
     }
 
     @Override
-    public String unLike(String id) {
-        userMomentLikeInfoRepositry.deleteById(id);
-        return "success";
+    public void unLike(String momentId, String likeId) {
+        //动态赞字段减一,删除like信息
+        userMomentInfoRepositry.reduceLikeCount(momentId);
+        userMomentLikeInfoRepositry.deleteById(likeId);
     }
 
     @Override
@@ -123,15 +127,17 @@ public class UserMomentImpl implements IMomentService {
     }
 
     @Override
-    public String collect(UserMomentCollectInfo userMomentCollectInfo) {
+    public void collect(String momentId, UserMomentCollectInfo userMomentCollectInfo) {
+        //收藏赞字段加一,删除collect信息
+        userMomentInfoRepositry.incCollectCount(momentId);
         userMomentCollectInfoRepositry.save(userMomentCollectInfo);
-        return "success";
     }
 
     @Override
-    public String unCollect(String id) {
-        userMomentCollectInfoRepositry.deleteById(id);
-        return "success";
+    public void unCollect(String momentId, String collectId) {
+        //收藏赞字段减一,新增collect信息
+        userMomentInfoRepositry.reduceCollectCount(momentId);
+        userMomentCollectInfoRepositry.deleteById(collectId);
     }
 
     @Override
@@ -140,15 +146,15 @@ public class UserMomentImpl implements IMomentService {
     }
 
     @Override
-    public String comment(UserMomentCommentInfo userMomentCommentInfo) {
+    public void comment(String momentId, UserMomentCommentInfo userMomentCommentInfo) {
+        userMomentInfoRepositry.incCommentCount(momentId);
         userMomentCommentInfoRepositry.save(userMomentCommentInfo);
-        return "success";
     }
 
     @Override
-    public String deleteComment(String momentId, String whoComment) {
+    public void deleteComment(String momentId, String whoComment) {
+        userMomentInfoRepositry.reduceCommentCount(momentId);
         userMomentCommentInfoRepositry.deleteByMomentIdAndWhoComment(momentId, whoComment);
-        return "success";
     }
 
 }

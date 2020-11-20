@@ -16,13 +16,13 @@ public class UserMomentLikeInfo implements Serializable {
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "momentId", unique = true, nullable = false, length = 64)
+    @Column(name = "momentId", nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "whoLike", unique = true, nullable = false, length = 64)
+    @Column(name = "whoLike",  nullable = false, length = 64)
     private String whoLike;
 
-    @Column(name = "likeTime", unique = true, nullable = false, length = 64)
+    @Column(name = "likeTime",  nullable = false, length = 64)
     private Date likeTime;
 
 }

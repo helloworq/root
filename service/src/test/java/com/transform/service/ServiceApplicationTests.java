@@ -5,10 +5,13 @@ import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.service.dao.UserAccountRepositry;
 import com.transform.service.dao.UserInfoRepositry;
+import com.transform.service.dao.UserMomentInfoRepositry;
 import com.transform.service.dao.UserRelationRepositry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
@@ -21,19 +24,13 @@ class ServiceApplicationTests {
     UserRelationRepositry userRelationRepositry;
     @Autowired
     UserInfoRepositry userInfoRepositry;
+    @Autowired
+    UserMomentInfoRepositry userMomentInfoRepositry;
 
     @Test
-    void contextLoads() {
+    void test() {
         System.out.println("开始");
-        UserInfo userInfo = new UserInfo();
-        List list = new ArrayList() {
-        };
-        String[] a = new String[1];
-        System.out.println(ObjectUtils.isEmpty(userInfo));
-        System.out.println(ObjectUtils.isEmpty(list));
-        System.out.println(ObjectUtils.isEmpty(a));
-
-        System.out.println(a.length);
+        userMomentInfoRepositry.incLikeCount("402881eb75c1e6450175c4a44a3c0000");
         System.out.println("结束");
     }
 

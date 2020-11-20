@@ -16,12 +16,12 @@ public class UserMomentCollectInfo implements Serializable {
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "momentId", unique = true, nullable = false, length = 64)
+    @Column(name = "momentId",  nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "whoCollect", unique = true, nullable = false, length = 64)
+    @Column(name = "whoCollect",  nullable = false, length = 64)
     private String whoCollect;
 
-    @Column(name = "collectTime", unique = true, nullable = false, length = 64)
+    @Column(name = "collectTime",  nullable = false, length = 64)
     private Date collectTime;
 }
