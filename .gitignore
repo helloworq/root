@@ -8,7 +8,7 @@
 *.settings
 # Log file
 *.log
-
+*.gz
 
 # Package Files #
 *.war
