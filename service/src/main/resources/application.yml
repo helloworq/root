@@ -5,41 +5,5 @@ server:
 
 #spring配置
 spring:
-  datasource:
-    url: jdbc:oracle:thin:@127.0.0.1/ORCL
-    username: DIST
-    password: 12345678
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-  jpa:
-    database: oracle
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  data:
-    mongodb:
-      database: dist
-      host: 127.0.0.1
-      port: 27017
-  redis:
-    host: localhost
-    port: 6379
-    timeout: 30000
-    jedis:
-      pool:
-        max-idle: 8
-        max-wait: -1
-        min-idle: 0
-
-#dubbo配置
-dubbo:
-  application:
-    name: user-service-provider
-  registry:
-    address: 127.0.0.1:2181
-    protocol: zookeeper
-  protocol:
-    port: 20881
-  scan:
-    base-packages: com.transform.service
-  monitor:
-    protocol: registry
+  profiles:
+    active: @spring.profiles.active@ #此处由maven的环境选择决
