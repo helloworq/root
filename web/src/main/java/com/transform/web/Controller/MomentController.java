@@ -152,7 +152,7 @@ public class MomentController {
     @ApiOperation(value = "赞/取消赞")
     @GetMapping(value = "/like")
     public ResponseData like(@RequestParam("MomentId") String momentId, HttpServletRequest request) {
-        //赞操作的时候需要访问两次数据库，第一次获取动态数据，第二次修改。尝试合并处理
+        //判断当前用户是初次点赞还是取消点赞
         String whoLiked = baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName"));
         UserMomentLikeInfo userMomentLikeInfo = momentService.getLikeInfo(momentId, whoLiked);
         //更改逻辑，将逻辑全部放在数据库  删除赞记录，动态赞点击数减一

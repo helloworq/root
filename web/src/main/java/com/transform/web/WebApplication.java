@@ -14,8 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAsync
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableSwagger2
-@PropertySource("classpath:/application.properties")
-@EnableDubbo(scanBasePackages = "com.transform.web")
+@PropertySource("classpath:/templates/application1.properties1")
+@EnableDubbo
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class WebApplication extends SpringBootServletInitializer {
 

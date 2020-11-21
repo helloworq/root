@@ -1,0 +1,52 @@
+#oracle配置信息
+server:
+  servlet:
+    context-path: /
+    jsp:
+      init-parameters: true
+  port: 6729
+  tomcat:
+    basedir: /data/apps/temp
+
+#spring配置
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      enabled: true
+      location: /tmp
+      max-file-size: 10MB
+      max-request-size: 12MB
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    timeout: 10000
+
+#dubbo配置
+dubbo:
+  application:
+    name: boot-order-service-consumer
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper
+  scan:
+    base-packages: com.transform.web
+  protocol:
+    port: 20881
+  monitor:
+    protocol: registry
+  consumer:
+    timeout: 30000
+
+#日志文件名
+logging:
+  file:
+    name: log.log

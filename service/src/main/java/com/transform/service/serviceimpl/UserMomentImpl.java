@@ -70,7 +70,7 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public List<UserMomentInfoDTO> getAllUserMomentInfo(String uuid) {
-        return userMomentInfoRepositry.getByUuid(uuid).stream().map(element -> {
+        return userMomentInfoRepositry. getByUuidOrderByMomentSendTimeDesc(uuid).stream().map(element -> {
             UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
             BeanUtils.copyProperties(element, userMomentInfoDTO);
             userMomentInfoDTO.setPicIds(ListUtil.stringToList(element.getPicIds()));
