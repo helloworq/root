@@ -1,7 +1,6 @@
 #oracle配置信息
 server:
   servlet:
-    context-path: /
     jsp:
       init-parameters: true
   port: 6729
