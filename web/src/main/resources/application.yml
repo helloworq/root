@@ -1,5 +1,6 @@
 #oracle配置信息
 server:
+  port: 6729
   servlet:
     context-path: /
 

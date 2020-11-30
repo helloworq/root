@@ -3,7 +3,6 @@ server:
   servlet:
     jsp:
       init-parameters: true
-  port: 6729
   tomcat:
     basedir: /data/apps/temp
 
