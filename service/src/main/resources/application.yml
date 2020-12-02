@@ -6,4 +6,4 @@ server:
 #spring配置
 spring:
   profiles:
-    active: @spring.profiles.active@ #此处由maven的环境选择决
+    active: '@spring.profiles.active@' #此处由maven的环境选择决

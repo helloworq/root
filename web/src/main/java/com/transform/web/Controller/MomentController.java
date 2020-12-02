@@ -282,4 +282,10 @@ public class MomentController {
         object.put("moments", userMomentInfoList);
         return ResponseUtil.success(object);
     }
+
+    @ApiOperation(value = "根据动态id获取评论")
+    @GetMapping(value = "/getComment")
+    public ResponseData getComment(@RequestParam("momentId") String momentId) {
+        return ResponseUtil.success(momentService.getComment(momentId));
+    }
 }

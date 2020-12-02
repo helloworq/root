@@ -3,7 +3,6 @@ package com.transform.api.service;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
 import com.transform.api.model.entiy.UserMomentCommentInfo;
-import com.transform.api.model.entiy.UserMomentInfo;
 import com.transform.api.model.entiy.UserMomentLikeInfo;
 
 import java.util.List;
@@ -35,4 +34,6 @@ public interface IMomentService {
     void comment(String momentId, UserMomentCommentInfo userMomentCommentInfo);
 
     void deleteComment(String momentId, String whoComment);
+
+    List<UserMomentCommentInfo> getComment(String momentId);
 }

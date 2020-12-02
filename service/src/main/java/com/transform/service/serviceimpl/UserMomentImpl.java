@@ -13,17 +13,17 @@ import com.transform.service.dao.UserMomentCollectInfoRepositry;
 import com.transform.service.dao.UserMomentCommentInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
 import com.transform.service.dao.UserMomentLikeInfoRepositry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Component
 public class UserMomentImpl implements IMomentService {
@@ -155,6 +155,11 @@ public class UserMomentImpl implements IMomentService {
     public void deleteComment(String momentId, String whoComment) {
         userMomentInfoRepositry.reduceCommentCount(momentId);
         userMomentCommentInfoRepositry.deleteByMomentIdAndWhoComment(momentId, whoComment);
+    }
+
+    @Override
+    public List<UserMomentCommentInfo> getComment(String momentId) {
+        return userMomentCommentInfoRepositry.findComment(momentId);
     }
 
 }
