@@ -121,4 +121,14 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     public List<UserInfo> getFriendsId(String userId) {
         return userInfoRepositry.getFriends(userId);
     }
+
+    /**
+     * 更新用户头像信息
+     * @param picId
+     * @return
+     */
+    @Override
+    public void updateHeadIcon(String picId,String userName) {
+        userInfoRepositry.updateHeadIcon(picId, userName);
+    }
 }

@@ -58,4 +58,10 @@ public interface IBaseInfoService {
      * @return
      */
     List<UserInfo> getFriendsId(String userId);
+
+    /**
+     * 更新头像信息
+     * @param picId
+     */
+    void updateHeadIcon(String picId,String userName);
 }

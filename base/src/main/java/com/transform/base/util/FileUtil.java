@@ -87,41 +87,34 @@ public class FileUtil {
 
     /**
      * 获取文件后缀，url一般为aaa.jpg
-     *             可能会是a.b.c.x/sq.jpg
+     * 可能会是a.b.c.x/sq.jpg
+     * 增加对无后缀文件的判断例如文件名为：aaa  bbb
+     *
      * @param filePath
      * @return
      */
-    public static String getFileSuffix(String filePath){
-        Integer dotIndex=filePath.lastIndexOf(".")+1;
-        return filePath.substring(dotIndex);
+    public static String getFileSuffix(String filePath) {
+        //剔除文件的路径，无路径则不处理
+        String fileCompletePath = filePath.substring(filePath.lastIndexOf("/") + 1);
+        //判断文件名是否含有.号
+        Integer dotIndex = fileCompletePath.lastIndexOf(".");
+        return dotIndex == -1 ? null : fileCompletePath.substring(dotIndex + 1);
     }
 
     /**
      * 获取文件后缀，url一般为aaa.jpg
-     *             可能会是a.b.c.x/sq.jpg
+     * 可能会是a.b.c.x/sq.jpg
+     * 增加对无后缀文件的支持例如文件名为：aaa  bbb
+     *
      * @param filePath
      * @return
      */
-    public static String getFilename(String filePath){
-        String fileCompletePath=filePath.substring(filePath.lastIndexOf("/")+1);
-        Integer dotIndex=fileCompletePath.lastIndexOf(".");
-        return fileCompletePath.substring(0,dotIndex);
+    public static String getFilename(String filePath) {
+        //剔除文件的路径，无路径则不处理
+        String fileCompletePath = filePath.substring(filePath.lastIndexOf("/") + 1);
+        //判断文件名是否含有.号
+        Integer dotIndex = fileCompletePath.lastIndexOf(".");
+        return dotIndex == -1 ? fileCompletePath : fileCompletePath.substring(0, dotIndex);
     }
 
-    /**
-     * 获取目录下全部文件名
-     * @param filePath
-     * @return
-     */
-    public static List<String> getListNameFomePath(String filePath) {
-        List<String> list = new ArrayList<>();
-        File file = new File(filePath);
-        String[] listOfFile = file.list();
-        //全部加上.jpg后缀
-        for (String s : listOfFile) {
-            File subfile = new File(filePath + "\\" + s);
-            subfile.renameTo(new File(filePath + "\\" + s + ".jpg"));
-        }
-        return list;
-    }
 }

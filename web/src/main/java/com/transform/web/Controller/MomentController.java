@@ -226,6 +226,17 @@ public class MomentController {
     }
 
     /**
+     * 获取评论
+     * @param momentId
+     * @return
+     */
+    @ApiOperation(value = "根据动态id获取评论")
+    @GetMapping(value = "/getComment")
+    public ResponseData getComment(@RequestParam("momentId") String momentId) {
+        return ResponseUtil.success(momentService.getComment(momentId));
+    }
+
+    /**
      * 获取主页信息
      *
      * @param request
@@ -283,9 +294,4 @@ public class MomentController {
         return ResponseUtil.success(object);
     }
 
-    @ApiOperation(value = "根据动态id获取评论")
-    @GetMapping(value = "/getComment")
-    public ResponseData getComment(@RequestParam("momentId") String momentId) {
-        return ResponseUtil.success(momentService.getComment(momentId));
-    }
 }

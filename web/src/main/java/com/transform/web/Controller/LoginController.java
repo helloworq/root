@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 @Api(description = "登录控制器")
@@ -122,7 +124,7 @@ public class LoginController {
     @ApiOperation(value = "简便cookie获取")
     @GetMapping("getCookie")
     public ResponseData getCookie(HttpServletRequest request) {
-        System.out.println(JSON.toJSONString(request.getCookies()));
+        System.out.println(tools.getCookie(request.getCookies(),"userName"));
         return ResponseUtil.success(tools.getCookie(request.getCookies(),"userName"));
     }
 }

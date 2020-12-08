@@ -67,19 +67,12 @@ public class StrogeServiceImpl implements IStrogeService {
     public byte[] getMongoFileBytes(String id) throws IOException {
 
         //根据id查询文件
-        long start=System.currentTimeMillis();
         GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
-        log.info("1消耗时间  "+(System.currentTimeMillis()-start));
         //打开流下载对象
-        long start1=System.currentTimeMillis();
         GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
-        log.info("2消耗时间  "+(System.currentTimeMillis()-start1));
         //获取流对象
-        long start2=System.currentTimeMillis();
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, downloadStream);
-        log.info("3消耗时间  "+(System.currentTimeMillis()-start2));
 
-        long start3=System.currentTimeMillis();
         InputStream input = gridFsResource.getInputStream();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -88,7 +81,6 @@ public class StrogeServiceImpl implements IStrogeService {
             baos.write(ch);
         }
         byte[] res = baos.toByteArray();
-        log.info("4消耗时间  "+(System.currentTimeMillis()-start3));
         downloadStream.close();
         input.close();
         baos.close();

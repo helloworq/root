@@ -2,12 +2,14 @@ package com.transform.service.dao;
 
 import com.transform.api.model.entiy.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
+@Transactional
 @RepositoryDefinition(domainClass = UserInfo.class, idClass = String.class)
 public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
     @Query(value = "select * from TB_USERINFO u where u.USER_NAME=?1",nativeQuery = true)
@@ -27,4 +29,8 @@ public interface UserInfoRepositry extends JpaRepository<UserInfo,String> {
     //@Query(value = "select UUID_USERB from TB_USERRELATION where UUID_USERA=?1",nativeQuery = true)
     @Query(value = "select * from TB_USERINFO where ID in (select UUID_USERB from TB_USERRELATION where UUID_USERA=?1)",nativeQuery = true)
     List<UserInfo> getFriends(String operationUserUUID);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE TB_USERINFO set USER_HEAD_URL=?1 where USER_NAME=?2",nativeQuery = true)
+    void updateHeadIcon(String headIcon,String userName);
 }

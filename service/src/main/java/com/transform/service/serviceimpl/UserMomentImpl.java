@@ -1,6 +1,7 @@
 package com.transform.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
 import com.transform.api.model.entiy.UserMomentCommentInfo;
@@ -159,6 +160,7 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public List<UserMomentCommentInfo> getComment(String momentId) {
+        log.info(JSON.toJSONString(userMomentCommentInfoRepositry.findComment(momentId)));
         return userMomentCommentInfoRepositry.findComment(momentId);
     }
 
