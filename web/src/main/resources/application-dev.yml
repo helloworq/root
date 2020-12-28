@@ -1,8 +1,5 @@
 #oracle配置信息
 server:
-  servlet:
-    jsp:
-      init-parameters: true
   tomcat:
     basedir: /data/apps/temp
 

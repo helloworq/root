@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserInfoDTO;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
+import com.transform.api.model.dto.custom.UserMainPageInfo;
 import com.transform.api.model.entiy.*;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IBaseInfoService;
@@ -265,10 +266,11 @@ public class MomentController {
         });
 
         JSONObject object = new JSONObject();
-        object.put("friendsList", friendsList);
+        UserMainPageInfo userMainPageInfo=new UserMainPageInfo(friendsList,fansList,userMomentInfoList);
+        /*object.put("friendsList", friendsList);
         object.put("fansList", fansList);
-        object.put("moments", userMomentInfoList);
-        return ResponseUtil.success(object);
+        object.put("moments", userMomentInfoList);*/
+        return ResponseUtil.success(userMainPageInfo);
     }
 
     @ApiOperation(value = "获取好友动态信息")

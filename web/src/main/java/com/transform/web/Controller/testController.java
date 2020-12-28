@@ -50,7 +50,9 @@ public class testController {
 
     @RequestMapping("getuuid")
     public Object info() {
-        return baseInfoService.getUserInfo("齐天大圣");
+        System.out.println(System.getProperty("user.dir"));
+        return System.getProperty("user.dir");
+        //return baseInfoService.getUserInfo("齐天大圣");
     }
 
     /**
