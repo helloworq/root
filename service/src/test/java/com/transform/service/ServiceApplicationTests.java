@@ -1,6 +1,7 @@
 package com.transform.service;
 
 
+import com.alibaba.fastjson.JSON;
 import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
 import com.transform.service.dao.UserAccountRepositry;
@@ -26,6 +27,18 @@ class ServiceApplicationTests {
     UserInfoRepositry userInfoRepositry;
     @Autowired
     UserMomentInfoRepositry userMomentInfoRepositry;
+
+    @Test
+    void getCommonFriends() {
+        System.out.println("开始");
+        List<String> commonFriendA=userRelationRepositry.getCommonFriends("齐天大圣", "二郎神");
+        List<String> commonFriendB=userRelationRepositry.getCommonFriends("哮天犬", "如来");
+        List<String> commonFriendC=userRelationRepositry.getCommonFriends("二郎神", "齐天大圣");
+        System.out.println(JSON.toJSONString(commonFriendA));
+        System.out.println(JSON.toJSONString(commonFriendB));
+        System.out.println(JSON.toJSONString(commonFriendC));
+        System.out.println("结束");
+    }
 
     @Test
     void test() {
