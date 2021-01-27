@@ -46,7 +46,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
     public UserBaseInfoDTO getUserBaseInfo(String operationUserUUID) {
         Optional<UserInfo> userInfo=userInfoRepositry.findById(operationUserUUID);
         UserBaseInfoDTO userBaseInfoDTO=new UserBaseInfoDTO();
-        BeanUtils.copyProperties(userInfo,userBaseInfoDTO);
+        BeanUtils.copyProperties(userInfo.get(),userBaseInfoDTO);
         return userBaseInfoDTO;
     }
 

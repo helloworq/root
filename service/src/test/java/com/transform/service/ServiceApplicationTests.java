@@ -2,8 +2,10 @@ package com.transform.service;
 
 
 import com.alibaba.fastjson.JSON;
+import com.transform.api.model.dto.UserBaseInfoDTO;
 import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.model.entiy.UserRelation;
+import com.transform.api.service.IBaseInfoService;
 import com.transform.service.dao.UserAccountRepositry;
 import com.transform.service.dao.UserInfoRepositry;
 import com.transform.service.dao.UserMomentInfoRepositry;
@@ -27,6 +29,8 @@ class ServiceApplicationTests {
     UserInfoRepositry userInfoRepositry;
     @Autowired
     UserMomentInfoRepositry userMomentInfoRepositry;
+    @Autowired
+    IBaseInfoService baseInfoService;
 
     @Test
     void getCommonFriends() {
@@ -43,7 +47,9 @@ class ServiceApplicationTests {
     @Test
     void test() {
         System.out.println("开始");
-        userMomentInfoRepositry.incLikeCount("402881eb75c1e6450175c4a44a3c0000");
+        System.out.println(baseInfoService.getUserId("齐天大圣"));
+        UserBaseInfoDTO userBaseInfoDTO=baseInfoService.getUserBaseInfo(baseInfoService.getUserId("齐天大圣"));
+        System.out.println(userBaseInfoDTO);
         System.out.println("结束");
     }
 

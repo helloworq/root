@@ -265,7 +265,6 @@ public class MomentController {
             }
         });
 
-        JSONObject object = new JSONObject();
         UserMainPageInfo userMainPageInfo=new UserMainPageInfo(friendsList,fansList,userMomentInfoList);
         /*object.put("friendsList", friendsList);
         object.put("fansList", fansList);
