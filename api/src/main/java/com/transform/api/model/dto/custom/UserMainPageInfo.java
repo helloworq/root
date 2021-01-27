@@ -1,39 +1,21 @@
 package com.transform.api.model.dto.custom;
 
+import com.transform.api.model.dto.UserBaseInfoDTO;
+import lombok.Data;
+
+@Data
 public class UserMainPageInfo {
 
     public Object friendsList;
     public Object fansList;
     public Object userMomentInfoList;
+    public UserBaseInfoDTO userBaseInfoDTO;
 
-    public UserMainPageInfo(Object friendsList, Object fansList, Object userMomentInfoList) {
+    public UserMainPageInfo(Object friendsList, Object fansList, Object userMomentInfoList, UserBaseInfoDTO userBaseInfoDTO) {
         this.friendsList = friendsList;
         this.fansList = fansList;
         this.userMomentInfoList = userMomentInfoList;
-    }
-
-    public Object getFriendsList() {
-        return friendsList;
-    }
-
-    public void setFriendsList(Object friendsList) {
-        this.friendsList = friendsList;
-    }
-
-    public Object getFansList() {
-        return fansList;
-    }
-
-    public void setFansList(Object fansList) {
-        this.fansList = fansList;
-    }
-
-    public Object getUserMomentInfoList() {
-        return userMomentInfoList;
-    }
-
-    public void setUserMomentInfoList(Object userMomentInfoList) {
-        this.userMomentInfoList = userMomentInfoList;
+        this.userBaseInfoDTO = userBaseInfoDTO;
     }
 
 }

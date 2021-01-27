@@ -3,6 +3,7 @@ package com.transform.web.Controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.transform.api.model.dto.UserBaseInfoDTO;
 import com.transform.api.model.dto.UserInfoDTO;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
@@ -23,6 +24,7 @@ import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -228,6 +230,7 @@ public class MomentController {
 
     /**
      * 获取评论
+     *
      * @param momentId
      * @return
      */
@@ -249,11 +252,26 @@ public class MomentController {
         //根据用户名获取主页信息
         String userName = tools.getCookie(request.getCookies(), "userName");
         String userId = baseInfoService.getUserId(userName);
+        UserBaseInfoDTO userBaseInfoDTO = baseInfoService.getUserBaseInfo(userId);
         //获取关注用户的信息
         List<UserInfoDTO> friendsList = followService.getFriendsList(userId);
+        friendsList.stream().forEach(element-> {
+            try {
+                element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         //获取粉丝的信息
         List<UserInfoDTO> fansList = followService.getFriendsList(userId);
+        fansList.stream().forEach(element-> {
+            try {
+                element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         //获取个人全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId);
@@ -265,10 +283,8 @@ public class MomentController {
             }
         });
 
-        UserMainPageInfo userMainPageInfo=new UserMainPageInfo(friendsList,fansList,userMomentInfoList);
-        /*object.put("friendsList", friendsList);
-        object.put("fansList", fansList);
-        object.put("moments", userMomentInfoList);*/
+        UserMainPageInfo userMainPageInfo = new UserMainPageInfo(friendsList, fansList, userMomentInfoList, userBaseInfoDTO);
+
         return ResponseUtil.success(userMainPageInfo);
     }
 
@@ -289,10 +305,7 @@ public class MomentController {
                 e.printStackTrace();
             }
         });
-
-        JSONObject object = new JSONObject();
-        object.put("moments", userMomentInfoList);
-        return ResponseUtil.success(object);
+        return ResponseUtil.success(userMomentInfoList);
     }
 
 }
