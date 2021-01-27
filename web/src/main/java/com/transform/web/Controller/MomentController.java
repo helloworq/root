@@ -264,7 +264,7 @@ public class MomentController {
         });
 
         //获取粉丝的信息
-        List<UserInfoDTO> fansList = followService.getFriendsList(userId);
+        List<UserInfoDTO> fansList = followService.getFans(userId);
         fansList.stream().forEach(element-> {
             try {
                 element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));

@@ -6,6 +6,7 @@ import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IStrogeService;
+import com.transform.base.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.slf4j.LoggerFactory;
@@ -72,19 +73,15 @@ public class StrogeServiceImpl implements IStrogeService {
         GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
         //获取流对象
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, downloadStream);
-
         InputStream input = gridFsResource.getInputStream();
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        int ch;
-        while (-1 != (ch = input.read())) {
-            baos.write(ch);
-        }
-        byte[] res = baos.toByteArray();
+
+        FileUtil.inputStreamWriteToOutputStream(input, baos);
+
         downloadStream.close();
         input.close();
         baos.close();
-        return res;
+        return baos.toByteArray();
     }
 
     /**
