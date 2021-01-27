@@ -4,10 +4,14 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserMomentInfoDTO;
+import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.service.IBaseInfoService;
+import com.transform.base.response.ResponseData;
+import com.transform.base.response.ResponseUtil;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.WebTools;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -65,5 +69,15 @@ public class testController {
         asyncUtil.pushMoment(null, null);
 
         System.out.println("测试结束");
+    }
+
+    @ApiOperation(value = "更新/上传动态")
+    @PostMapping(value = "/fileUploadTest")
+    public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
+                                   @ApiParam("参数(动态内容，是否编辑，设备名必传)") @RequestParam(value = "text") String text,
+                                   HttpServletRequest request) throws InterruptedException {
+        System.out.println(list.length);
+        System.out.println(text);
+        return ResponseUtil.success("上传成功！");
     }
 }
