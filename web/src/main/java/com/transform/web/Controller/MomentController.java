@@ -196,7 +196,7 @@ public class MomentController {
      * 评论 字段 id,momentId,commentContent,whoComment,commentTime
      */
     @ApiOperation(value = "评论")
-    @GetMapping(value = "/sendComment")
+    @PostMapping(value = "/sendComment")
     public ResponseData sendComment(@RequestParam(value = "text") String text,
                                     @RequestParam(value = "momentId") String momentId,
                                     HttpServletRequest request) {

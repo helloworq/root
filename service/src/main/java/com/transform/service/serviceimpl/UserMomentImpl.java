@@ -111,15 +111,15 @@ public class UserMomentImpl implements IMomentService {
     @Override
     public void like(String momentId, UserMomentLikeInfo userMomentLikeInfo) {
         //动态赞字段加一,新增like信息
-        userMomentInfoRepositry.incLikeCount(momentId);
         userMomentLikeInfoRepositry.save(userMomentLikeInfo);
+        userMomentInfoRepositry.incLikeCount(momentId);
     }
 
     @Override
     public void unLike(String momentId, String likeId) {
         //动态赞字段减一,删除like信息
-        userMomentInfoRepositry.reduceLikeCount(momentId);
         userMomentLikeInfoRepositry.deleteById(likeId);
+        userMomentInfoRepositry.reduceLikeCount(momentId);
     }
 
     @Override
@@ -130,15 +130,15 @@ public class UserMomentImpl implements IMomentService {
     @Override
     public void collect(String momentId, UserMomentCollectInfo userMomentCollectInfo) {
         //收藏赞字段加一,删除collect信息
-        userMomentInfoRepositry.incCollectCount(momentId);
         userMomentCollectInfoRepositry.save(userMomentCollectInfo);
+        userMomentInfoRepositry.incCollectCount(momentId);
     }
 
     @Override
     public void unCollect(String momentId, String collectId) {
         //收藏赞字段减一,新增collect信息
-        userMomentInfoRepositry.reduceCollectCount(momentId);
         userMomentCollectInfoRepositry.deleteById(collectId);
+        userMomentInfoRepositry.reduceCollectCount(momentId);
     }
 
     @Override
@@ -148,8 +148,8 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public void comment(String momentId, UserMomentCommentInfo userMomentCommentInfo) {
-        userMomentInfoRepositry.incCommentCount(momentId);
         userMomentCommentInfoRepositry.save(userMomentCommentInfo);
+        userMomentInfoRepositry.incCommentCount(momentId);
     }
 
     @Override
