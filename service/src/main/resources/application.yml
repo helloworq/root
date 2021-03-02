@@ -7,3 +7,23 @@ server:
 spring:
   profiles:
     active: '@spring.profiles.active@' #此处由maven的环境选择决
+
+logging:
+  config: classpath:logback-spring.xml
+  print: true
+  system:
+    name: service
+    active: dev
+    logLevel: info
+    logBaseDir: ../dist-log
+    maxHistory: 30
+    maxFileSize: 20MB
+  console:
+    logLevel: info
+  rely:
+    logLevel: warn
+
+#日志导出路径配置
+log:
+  export:
+    dir: /rest/public/log

@@ -40,8 +40,3 @@ dubbo:
     protocol: registry
   consumer:
     timeout: 30000
-
-#日志文件名
-logging:
-  file:
-    name: log.log
