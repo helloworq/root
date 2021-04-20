@@ -30,6 +30,6 @@ public interface UserMomentCommentInfoRepositry extends JpaRepository<UserMoment
             "         from TB_USERMONMENTCOMMENTINFO,\n" +
             "              TB_USERINFO\n" +
             "         where MOMENT_ID = ?1)\n" +
-            "where WHO_COMMENT is not null\n",nativeQuery = true)
+            "where WHO_COMMENT is not null order by COMMENT_TIME desc\n",nativeQuery = true)
     List<UserMomentCommentInfo> findComment(String momemtId);
 }

@@ -19,4 +19,6 @@ public class UserMomentCommentInfoDTO implements Serializable {
     private String whoComment;
 
     private Date commentTime;
+
+    private String headIconUrl;
 }

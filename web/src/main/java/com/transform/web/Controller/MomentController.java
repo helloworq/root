@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserBaseInfoDTO;
 import com.transform.api.model.dto.UserInfoDTO;
+import com.transform.api.model.dto.UserMomentCommentInfoDTO;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.dto.custom.UserMainPageInfo;
@@ -237,7 +238,25 @@ public class MomentController {
     @ApiOperation(value = "根据动态id获取评论")
     @GetMapping(value = "/getComment")
     public ResponseData getComment(@RequestParam("momentId") String momentId) {
-        return ResponseUtil.success(momentService.getComment(momentId));
+
+        List<UserMomentCommentInfo> userMomentCommentInfoList = momentService.getComment(momentId);
+
+        List<UserMomentCommentInfoDTO> userMomentCommentInfoDTOList= userMomentCommentInfoList.stream().map(ele -> {
+            UserMomentCommentInfoDTO userMomentCommentInfoDTO = new UserMomentCommentInfoDTO();
+            BeanUtils.copyProperties(ele, userMomentCommentInfoDTO);
+
+            //生成头像链接
+            UserInfo userInfo = baseInfoService.getUserInfo(ele.getWhoComment());
+            try {
+                String headUrl = myIOUtil.picIdsToLinks(Arrays.asList(userInfo.getUserHeadUrl())).get(0);
+                userMomentCommentInfoDTO.setHeadIconUrl(headUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return userMomentCommentInfoDTO;
+        }).collect(Collectors.toList());
+
+        return ResponseUtil.success(userMomentCommentInfoDTOList);
     }
 
     /**

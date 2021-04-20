@@ -160,7 +160,6 @@ public class UserMomentImpl implements IMomentService {
 
     @Override
     public List<UserMomentCommentInfo> getComment(String momentId) {
-        log.info(JSON.toJSONString(userMomentCommentInfoRepositry.findComment(momentId)));
         return userMomentCommentInfoRepositry.findComment(momentId);
     }
 
