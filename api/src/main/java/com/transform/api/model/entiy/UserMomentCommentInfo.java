@@ -19,7 +19,7 @@ public class UserMomentCommentInfo implements Serializable {
     @Column(name = "momentId", nullable = false, length = 64)
     private String momentId;
 
-    @Column(name = "commentContent",  nullable = false, length = 64)
+    @Column(name = "commentContent",  nullable = false, length = 2048)
     private String commentContent;
 
     @Column(name = "whoComment", nullable = false, length = 64)
