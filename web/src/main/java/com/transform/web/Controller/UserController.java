@@ -61,17 +61,6 @@ public class UserController {
     }
 
     /**
-     * 获取全部用户信息
-     *
-     * @return
-     */
-    @ApiOperation(value = "获取全部用户信息")
-    @PostMapping("/getAllUserInfo")
-    public ResponseData getAllUserInfo() {
-        return ResponseUtil.success(baseInfoService.getAllUserInfo());
-    }
-
-    /**
      * 获取指定用户信息-byId
      *
      * @param name

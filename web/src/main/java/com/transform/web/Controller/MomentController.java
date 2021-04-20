@@ -273,7 +273,7 @@ public class MomentController {
         String userId = baseInfoService.getUserId(userName);
         UserBaseInfoDTO userBaseInfoDTO = baseInfoService.getUserBaseInfo(userId);
         //获取关注用户的信息
-        List<UserInfoDTO> friendsList = followService.getFriendsList(userId);
+        List<UserInfoDTO> friendsList = followService.relationList(userId,1);
         friendsList.stream().forEach(element -> {
             try {
                 element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));

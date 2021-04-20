@@ -29,6 +29,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取动态数
+     *
      * @param operationUserUUID
      * @return
      */
@@ -39,39 +40,43 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取基本信息
+     *
      * @param operationUserUUID
      * @return
      */
     @Override
     public UserBaseInfoDTO getUserBaseInfo(String operationUserUUID) {
-        Optional<UserInfo> userInfo=userInfoRepositry.findById(operationUserUUID);
-        UserBaseInfoDTO userBaseInfoDTO=new UserBaseInfoDTO();
-        BeanUtils.copyProperties(userInfo.get(),userBaseInfoDTO);
+        Optional<UserInfo> userInfo = userInfoRepositry.findById(operationUserUUID);
+        UserBaseInfoDTO userBaseInfoDTO = new UserBaseInfoDTO();
+        BeanUtils.copyProperties(userInfo.get(), userBaseInfoDTO);
         return userBaseInfoDTO;
     }
 
     /**
      * 获取用户id
+     *
      * @param operationUsername
      * @return
      */
     @Override
-    public String getUserId(String operationUsername){
+    public String getUserId(String operationUsername) {
         return userInfoRepositry.findId(operationUsername);
     }
 
     /**
      * 获取用户name
+     *
      * @param operationUserId
      * @return
      */
     @Override
-    public String getUserName(String operationUserId){
+    public String getUserName(String operationUserId) {
         return userInfoRepositry.findName(operationUserId);
     }
 
     /**
      * 更新或上传用户信息
+     *
      * @param userInfo
      * @return
      */
@@ -83,6 +88,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 删除用户信息
+     *
      * @param userId
      * @return
      */
@@ -94,6 +100,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取全部用户信息
+     *
      * @return
      */
     @Override
@@ -103,6 +110,7 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取用户信息
+     *
      * @param userName
      * @return
      */
@@ -114,21 +122,23 @@ public class BaseInfoServiceImpl implements IBaseInfoService {
 
     /**
      * 获取用户全部好友id
+     *
      * @param userId
      * @return
      */
     @Override
     public List<UserInfo> getFriendsId(String userId) {
-        return userInfoRepositry.getFriends(userId);
+        return userInfoRepositry.relationList(userId, 1);
     }
 
     /**
      * 更新用户头像信息
+     *
      * @param picId
      * @return
      */
     @Override
-    public void updateHeadIcon(String picId,String userName) {
+    public void updateHeadIcon(String picId, String userName) {
         userInfoRepositry.updateHeadIcon(picId, userName);
     }
 }
