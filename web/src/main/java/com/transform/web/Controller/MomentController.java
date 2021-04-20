@@ -248,14 +248,14 @@ public class MomentController {
      */
     @ApiOperation(value = "获取个人主页信息")
     @GetMapping(value = "/getMainPageInfo")
-    public ResponseData getMainPageInfo(HttpServletRequest request) {
+    public ResponseData getMainPageInfo(HttpServletRequest request) throws IOException {
         //根据用户名获取主页信息
         String userName = tools.getCookie(request.getCookies(), "userName");
         String userId = baseInfoService.getUserId(userName);
         UserBaseInfoDTO userBaseInfoDTO = baseInfoService.getUserBaseInfo(userId);
         //获取关注用户的信息
         List<UserInfoDTO> friendsList = followService.getFriendsList(userId);
-        friendsList.stream().forEach(element-> {
+        friendsList.stream().forEach(element -> {
             try {
                 element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
             } catch (IOException e) {
@@ -265,7 +265,7 @@ public class MomentController {
 
         //获取粉丝的信息
         List<UserInfoDTO> fansList = followService.getFans(userId);
-        fansList.stream().forEach(element-> {
+        fansList.stream().forEach(element -> {
             try {
                 element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
             } catch (IOException e) {
@@ -277,7 +277,12 @@ public class MomentController {
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId);
         userMomentInfoList.stream().forEach(element -> {
             try {
+                //生成头像链接
+                UserInfo userInfo = baseInfoService.getUserInfo(userName);
+                String headUrl = myIOUtil.picIdsToLinks(Arrays.asList(userInfo.getUserHeadUrl())).get(0);
+
                 element.setPicIds(myIOUtil.picIdsToLinks(element.getPicIds()));
+                element.setHeadIconUrl(headUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }

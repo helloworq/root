@@ -51,4 +51,6 @@ public class UserMomentInfoDTO implements Serializable {
     private String likeCount;
 
     private List<String> picIds;
+
+    private String headIconUrl;
 }
