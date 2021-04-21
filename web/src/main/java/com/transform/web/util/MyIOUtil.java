@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -23,6 +22,7 @@ public class MyIOUtil {
 
     @Autowired
     WebTools tools;
+
     /**
      * 由于dubbo传输时只允许传字节数据，可通过引入Hessin依赖解决，暂时不采用
      * 为避免麻烦，上传的文件先保存在本地，然后再上传到Mongo，同时保存文件信息
@@ -32,11 +32,12 @@ public class MyIOUtil {
      * 3.还有Mongo库里的文件数据分为files表和chunks表
      * 4.本地存储的文件
      * 更新文件的策略采取删除全部已有文件和信息.
+     *
      * @param file
      * @return
      */
-    public String saveToTempPath(MultipartFile file){
-        String path=null;
+    public String saveToTempPath(MultipartFile file) {
+        String path = null;
         try {
             String fileName = UUID.randomUUID().toString().replace("-", "");
             String fileSuffix = FileUtil.getFileSuffix(file.getOriginalFilename());
@@ -58,7 +59,7 @@ public class MyIOUtil {
             resourceInfo.setId(path);
             resourceInfo.setFileName(fileName);
             resourceInfo.setFileSuffix(fileSuffix);
-            resourceInfo.setFileSize(fileSize+"MB");
+            resourceInfo.setFileSize(fileSize + "MB");
             resourceInfo.setFileTempPath(fileTempPath);
 
             strogeService.save(resourceInfo);
@@ -91,5 +92,29 @@ public class MyIOUtil {
             newPicList.add(url);
         }
         return newPicList;
+    }
+
+    public String picIdToLink(String picId) throws IOException {
+        if (Objects.nonNull(picId)) {
+            List<String> picIds = Arrays.asList(picId);
+            List<String> newPicList = this.picIdsToLinks(picIds);
+            return newPicList.size() > 0 ? newPicList.get(0) : "";
+        }
+        return "";
+    }
+
+    public String picIdToLink(Object o, String field) throws IOException {
+        Class c = o.getClass();
+        String picId = null;
+        try {
+            Field fields;
+            fields = c.getDeclaredField(field);
+            fields.setAccessible(true);
+            picId = (String) fields.get(o);
+        } catch (Exception e) {
+            log.info("获取实体对象属性失败!");
+            e.printStackTrace();
+        }
+        return this.picIdToLink(picId);
     }
 }
