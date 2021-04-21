@@ -2,10 +2,6 @@ package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.transform.api.model.dto.UserMomentInfoDTO;
-import com.transform.api.model.dto.custom.Message;
-import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
@@ -14,15 +10,15 @@ import com.transform.web.util.MyIOUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collector;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 //@CrossOrigin(origins = "*")
@@ -56,7 +52,7 @@ public class testController {
         return "success";
     }
 
-    @RequestMapping("getuuid")
+    @RequestMapping(value = "getuuid",method = RequestMethod.GET)
     public Object info() {
         System.out.println(System.getProperty("user.dir"));
         return System.getProperty("user.dir");
@@ -66,7 +62,7 @@ public class testController {
     /**
      * @return
      */
-    @RequestMapping("asyncTest")
+    @RequestMapping(value = "asyncTest",method = RequestMethod.GET)
     public void asyncTest() throws InterruptedException {
         System.out.println("测试开始");
 
@@ -83,5 +79,30 @@ public class testController {
         System.out.println(list.length);
         System.out.println(text);
         return ResponseUtil.success("上传成功！");
+    }
+}
+
+@Data
+class Entiy implements Serializable {
+    public Entiy() {
+    }
+
+    private String name;
+    private String age;
+    private String id;
+
+    public Entiy(String name, String age, String id) {
+        this.name = name;
+        this.age = age;
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Entiy{" +
+                "name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

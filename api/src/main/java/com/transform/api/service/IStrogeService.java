@@ -1,11 +1,6 @@
 package com.transform.api.service;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * 此接口负责有关文件上传和下载的功能
@@ -25,6 +20,13 @@ public interface IStrogeService {
      * @return
      */
     byte[] getMongoFileBytes(String id) throws IOException;
+
+    /**
+     * 传入文件id，直接生成临时文件
+     * @param picId
+     * @return 返回生成的文件路径
+     */
+    String createSingleTempFileByMongo(String picId) throws IOException;
 
     /**
      * 根据id删除mongo中的文件信息以及数据

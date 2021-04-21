@@ -9,7 +9,6 @@ import com.transform.api.service.IStrogeService;
 import com.transform.base.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,8 +18,8 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Slf4j
 @Service
@@ -28,8 +27,10 @@ import java.util.logging.Logger;
 public class StrogeServiceImpl implements IStrogeService {
     @Autowired
     GridFsTemplate gridFsTemplate;
+
     @Autowired
     GridFSBucket gridFSBucket;
+
     @Autowired
     MongoTemplate mongoTemplate;
 
@@ -82,6 +83,27 @@ public class StrogeServiceImpl implements IStrogeService {
         input.close();
         baos.close();
         return baos.toByteArray();
+    }
+
+    @Override
+    public String createSingleTempFileByMongo(String picId) {
+        GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(picId)));
+
+        if (Objects.nonNull(gridFSFile)) {
+            ResourceInfo resourceInfo = mongoTemplate.findById(picId, ResourceInfo.class);
+            try {
+                String filePath = FileUtil.creatRandomNameFile(
+                        System.getProperty("user.dir") + "/data/downloadTmp/", resourceInfo.getFileSuffix());
+                FileOutputStream outputStream = new FileOutputStream(new File(filePath));
+                gridFSBucket.downloadToStream(gridFSFile.getObjectId(), outputStream);
+
+                outputStream.close();
+                return filePath;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     /**

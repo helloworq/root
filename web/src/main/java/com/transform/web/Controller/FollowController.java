@@ -1,12 +1,13 @@
 package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.transform.api.model.dto.UserInfoDTO;
+import com.transform.api.model.entiy.UserInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
 import com.transform.base.constant.Global_Constant;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
-import com.transform.base.util.ListUtil;
 import com.transform.web.util.MyIOUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 此类提供关于用户关注的功能
@@ -86,7 +85,7 @@ public class FollowController {
     @ApiOperation(value = "获取关注好友列表")
     @GetMapping("relation/get/{relationList}")
     public ResponseData getFriendsList(@RequestParam("operationUserUUID") String operationUserUUID,
-                                       @PathVariable String relationList) {
+                                       @PathVariable String relationList) throws IOException {
 
         Integer relationStatus = Global_Constant.SOCIAL_RELATION.get(relationList);
 
@@ -94,32 +93,20 @@ public class FollowController {
             return ResponseUtil.fail("empty");
         }
 
-        return ResponseUtil.success(
-                followService.relationList(operationUserUUID, relationStatus)
-                        .stream()
-                        .peek(ele -> {
-                            try {
-                                ele.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(Arrays.asList(ele.getUserHeadUrl()))));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        })
-        );
+        List<UserInfoDTO> relationSocialList = followService.relationList(operationUserUUID, relationStatus);
+        myIOUtil.picIdToLinkList(relationSocialList, "userHeadUrl");
+
+        return ResponseUtil.success(relationSocialList);
     }
 
     @ApiOperation(value = "获取粉丝列表")
     @GetMapping("relation/get/FansList")
-    public ResponseData getFans(@RequestParam("operationUserUUID") String operationUserUUID) {
-        return ResponseUtil.success(
-                followService.getFans(operationUserUUID)
-                        .stream()
-                        .peek(ele -> {
-                            try {
-                                ele.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(Arrays.asList(ele.getUserHeadUrl()))));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }));
+    public ResponseData getFans(@RequestParam("operationUserUUID") String operationUserUUID) throws IOException {
+
+        List<UserInfoDTO> relationfansList = followService.getFans(operationUserUUID);
+        myIOUtil.picIdToLinkList(relationfansList, "userHeadUrl");
+
+        return ResponseUtil.success(relationfansList);
     }
 
     /**
@@ -129,16 +116,11 @@ public class FollowController {
      */
     @ApiOperation(value = "获取全部用户信息")
     @GetMapping("relation/get/friendSquareList")
-    public ResponseData getAllUserInfo(@RequestParam("operationUserUUID") String operationUserUUID) {
-        return ResponseUtil.success(
-                baseInfoService.getAllUserInfo()
-                        .stream()
-                        .peek(ele -> {
-                            try {
-                                ele.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(Arrays.asList(ele.getUserHeadUrl()))));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }));
+    public ResponseData getAllUserInfo() throws IOException {
+
+        List<UserInfo> allUserInfo = baseInfoService.getAllUserInfo();
+        myIOUtil.picIdToLinkList(allUserInfo, "userHeadUrl");
+
+        return ResponseUtil.success(allUserInfo);
     }
 }

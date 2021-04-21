@@ -1,41 +1,40 @@
 package com.transform.web.Controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.transform.api.model.dto.UserBaseInfoDTO;
 import com.transform.api.model.dto.UserInfoDTO;
 import com.transform.api.model.dto.UserMomentCommentInfoDTO;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.dto.custom.Message;
 import com.transform.api.model.dto.custom.UserMainPageInfo;
-import com.transform.api.model.entiy.*;
-import com.transform.api.model.entiy.mongo.ResourceInfo;
+import com.transform.api.model.entiy.UserInfo;
+import com.transform.api.model.entiy.UserMomentCollectInfo;
+import com.transform.api.model.entiy.UserMomentCommentInfo;
+import com.transform.api.model.entiy.UserMomentLikeInfo;
 import com.transform.api.service.IBaseInfoService;
 import com.transform.api.service.IFollowService;
 import com.transform.api.service.IMomentService;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
-import com.transform.base.util.FileUtil;
-import com.transform.base.util.ListUtil;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -241,18 +240,19 @@ public class MomentController {
 
         List<UserMomentCommentInfo> userMomentCommentInfoList = momentService.getComment(momentId);
 
-        List<UserMomentCommentInfoDTO> userMomentCommentInfoDTOList= userMomentCommentInfoList.stream().map(ele -> {
+        List<UserMomentCommentInfoDTO> userMomentCommentInfoDTOList = userMomentCommentInfoList.stream().map(ele -> {
             UserMomentCommentInfoDTO userMomentCommentInfoDTO = new UserMomentCommentInfoDTO();
             BeanUtils.copyProperties(ele, userMomentCommentInfoDTO);
 
             //生成头像链接
             UserInfo userInfo = baseInfoService.getUserInfo(ele.getWhoComment());
+            String headUrl = null;
             try {
-                String headUrl = myIOUtil.picIdsToLinks(Arrays.asList(userInfo.getUserHeadUrl())).get(0);
-                userMomentCommentInfoDTO.setHeadIconUrl(headUrl);
+                headUrl = myIOUtil.picIdToLink(userInfo.getUserHeadUrl());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            userMomentCommentInfoDTO.setHeadIconUrl(headUrl);
             return userMomentCommentInfoDTO;
         }).collect(Collectors.toList());
 
@@ -273,10 +273,10 @@ public class MomentController {
         String userId = baseInfoService.getUserId(userName);
         UserBaseInfoDTO userBaseInfoDTO = baseInfoService.getUserBaseInfo(userId);
         //获取关注用户的信息
-        List<UserInfoDTO> friendsList = followService.relationList(userId,1);
-        friendsList.stream().forEach(element -> {
+        List<UserInfoDTO> friendsList = followService.relationList(userId, 1);
+        friendsList.forEach(element -> {
             try {
-                element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
+                element.setUserHeadUrl(myIOUtil.picIdToLink(element.getUserHeadUrl()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -284,9 +284,9 @@ public class MomentController {
 
         //获取粉丝的信息
         List<UserInfoDTO> fansList = followService.getFans(userId);
-        fansList.stream().forEach(element -> {
+        fansList.forEach(element -> {
             try {
-                element.setUserHeadUrl(ListUtil.listToString(myIOUtil.picIdsToLinks(ListUtil.stringToList(element.getUserHeadUrl()))));
+                element.setUserHeadUrl(myIOUtil.picIdToLink(element.getUserHeadUrl()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -294,17 +294,18 @@ public class MomentController {
 
         //获取个人全部动态，UserMomentInfoDTO和UserMomentInfo的picIds格式不一样，在流里也需要处理
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllUserMomentInfo(userId);
-        userMomentInfoList.stream().forEach(element -> {
+        userMomentInfoList.forEach(element -> {
+            //生成头像链接
+            UserInfo userInfo = baseInfoService.getUserInfo(userName);
+            String headUrl = null;
             try {
-                //生成头像链接
-                UserInfo userInfo = baseInfoService.getUserInfo(userName);
-                String headUrl = myIOUtil.picIdsToLinks(Arrays.asList(userInfo.getUserHeadUrl())).get(0);
-
-                element.setPicIds(myIOUtil.picIdsToLinks(element.getPicIds()));
-                element.setHeadIconUrl(headUrl);
+                headUrl = myIOUtil.picIdToLink(userInfo.getUserHeadUrl());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            element.setPicIds(myIOUtil.picIdsToLinks(element.getPicIds()));
+            element.setHeadIconUrl(headUrl);
         });
 
         UserMainPageInfo userMainPageInfo = new UserMainPageInfo(friendsList, fansList, userMomentInfoList, userBaseInfoDTO);
@@ -323,11 +324,7 @@ public class MomentController {
         //根据好友列表里的好友id查询好友全部动态然后依据时间排序排序（等数据量大了的时候可以考虑将逻辑在数据库里完成以减少io）
         List<UserMomentInfoDTO> userMomentInfoList = momentService.getAllFriendsMomentInfo(userId);
         userMomentInfoList.stream().forEach(element -> {
-            try {
-                element.setPicIds(myIOUtil.picIdsToLinks(element.getPicIds()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            element.setPicIds(myIOUtil.picIdsToLinks(element.getPicIds()));
         });
         return ResponseUtil.success(userMomentInfoList);
     }
