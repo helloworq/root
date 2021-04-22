@@ -106,6 +106,13 @@ public class MyIOUtil {
         return null;
     }
 
+    /**
+     * 更改任意实体类的指定属性为指定属性
+     *
+     * @param o
+     * @param field
+     * @throws IOException
+     */
     public void picIdToLink(Object o, String field) throws IOException {
         Class c = o.getClass();
         String picId = null;

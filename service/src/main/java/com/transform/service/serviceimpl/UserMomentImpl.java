@@ -1,7 +1,6 @@
 package com.transform.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.alibaba.fastjson.JSON;
 import com.transform.api.model.dto.UserMomentInfoDTO;
 import com.transform.api.model.entiy.UserMomentCollectInfo;
 import com.transform.api.model.entiy.UserMomentCommentInfo;
@@ -65,7 +64,9 @@ public class UserMomentImpl implements IMomentService {
     @Override
     public UserMomentInfoDTO getUserMomentInfo(String id) {
         UserMomentInfoDTO userMomentInfoDTO = new UserMomentInfoDTO();
-        BeanUtils.copyProperties(userMomentInfoRepositry.getById(id), userMomentInfoDTO);
+        UserMomentInfo userMomentInfo=userMomentInfoRepositry.getById(id);
+        BeanUtils.copyProperties(userMomentInfo, userMomentInfoDTO);
+        userMomentInfoDTO.setPicIds(ListUtil.stringToList(userMomentInfo.getPicIds()));
         return userMomentInfoDTO;
     }
 

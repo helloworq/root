@@ -9,11 +9,13 @@ import com.transform.base.constant.Global_Constant;
 import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
 import com.transform.web.util.MyIOUtil;
+import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class FollowController {
     @Autowired
     MyIOUtil myIOUtil;
 
+    @Autowired
+    WebTools tools;
+
     @ApiOperation(value = "获取基础信息")
     @GetMapping("getbaseinfo")
     public ResponseData getbaseinfo(@RequestParam("userId") String userId) {
@@ -42,52 +47,38 @@ public class FollowController {
 
     @ApiOperation(value = "关注")
     @GetMapping("relation/follow")
-    public ResponseData follow(@RequestParam("operationUserUUID") String operationUserUUID,
-                               @RequestParam("targetUserUUID") String targetUserUUID) {
+    public ResponseData follow(@RequestParam("targetUserUUID") String targetUserUUID,
+                               HttpServletRequest request) {
+        String operationUserName = tools.getCookie(request.getCookies(), "userName");
+        String operationUserUUID = baseInfoService.getUserId(operationUserName);
         return ResponseUtil.success(followService.followSomeone(operationUserUUID, targetUserUUID));
     }
 
     @ApiOperation(value = "取消关注")
     @GetMapping("relation/unfollow")
-    public ResponseData unfollow(@RequestParam("operationUserUUID") String operationUserUUID,
-                                 @RequestParam("targetUserUUID") String targetUserUUID) {
+    public ResponseData unfollow(@RequestParam("targetUserUUID") String targetUserUUID,
+                                 HttpServletRequest request) {
+        String operationUserName = tools.getCookie(request.getCookies(), "userName");
+        String operationUserUUID = baseInfoService.getUserId(operationUserName);
         return ResponseUtil.success(followService.unFollowSomeone(operationUserUUID, targetUserUUID));
     }
 
-    @ApiOperation(value = "屏蔽")
-    @GetMapping("relation/unfriend")
-    public ResponseData unfriend(@RequestParam("operationUserUUID") String operationUserUUID,
-                                 @RequestParam("targetUserUUID") String targetUserUUID) {
-        return ResponseUtil.success(followService.unFriendSomeone(operationUserUUID, targetUserUUID));
+    @ApiOperation(value = "处理关系")
+    @GetMapping("relation/handleRelation")
+    public ResponseData handleRelation(@RequestParam("targetUserUUID") String targetUserUUID,
+                                       @RequestParam("relationStatus") Integer relationStatus,
+                                       HttpServletRequest request) {
+        String operationUserName = tools.getCookie(request.getCookies(), "userName");
+        String operationUserUUID = baseInfoService.getUserId(operationUserName);
+        return ResponseUtil.success(followService.handleRelation(operationUserUUID, targetUserUUID, relationStatus));
     }
 
-    @ApiOperation(value = "取消屏蔽")
-    @GetMapping("relation/unUnfriend")
-    public ResponseData unUnfriend(@RequestParam("operationUserUUID") String operationUserUUID,
-                                   @RequestParam("targetUserUUID") String targetUserUUID) {
-        return ResponseUtil.success(followService.unUnFriendSomeone(operationUserUUID, targetUserUUID));
-    }
-
-    @ApiOperation(value = "拉黑")
-    @GetMapping("relation/sendIntoBlackList")
-    public ResponseData sendIntoBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
-                                          @RequestParam("targetUserUUID") String targetUserUUID) {
-        return ResponseUtil.success(followService.sendIntoBlackList(operationUserUUID, targetUserUUID));
-    }
-
-    @ApiOperation(value = "取消拉黑")
-    @GetMapping("relation/outFromBlackList")
-    public ResponseData outFromBlackList(@RequestParam("operationUserUUID") String operationUserUUID,
-                                         @RequestParam("targetUserUUID") String targetUserUUID) {
-        return ResponseUtil.success(followService.outFromBlackList(operationUserUUID, targetUserUUID));
-    }
-
-    @ApiOperation(value = "获取关注好友列表")
+    @ApiOperation(value = "获取关系列表")
     @GetMapping("relation/get/{relationList}")
     public ResponseData getFriendsList(@RequestParam("operationUserUUID") String operationUserUUID,
                                        @PathVariable String relationList) throws IOException {
 
-        Integer relationStatus = Global_Constant.SOCIAL_RELATION.get(relationList);
+        Integer relationStatus = Global_Constant.SOCIAL_RELATION_URL_MAP.get(relationList);
 
         if (relationStatus == 2) {
             return ResponseUtil.fail("empty");
