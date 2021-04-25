@@ -1,6 +1,7 @@
 package com.transform.web.util;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.picserver.server.Annotation.Img2UrlSpeedUp;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.util.FileUtil;
@@ -80,6 +81,7 @@ public class MyIOUtil {
      * @return
      * @throws IOException
      */
+    @Img2UrlSpeedUp
     public List<String> picIdsToLinks(List<String> picIds) {
 
         List<String> fileUrls = picIds.stream().map(picId -> {

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -17,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @PropertySource("classpath:/templates/application1.properties1")
 @EnableDubbo
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@ComponentScan(basePackages = {"com.picserver.*","com.transform.web.*"})//扫描图片服务注解
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

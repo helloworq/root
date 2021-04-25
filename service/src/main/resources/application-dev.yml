@@ -38,3 +38,8 @@ dubbo:
     base-packages: com.transform.service
   monitor:
     protocol: registry
+
+fastConfig:
+  txtSavePath: D:\\picBed\\infoTable\\信息表.txt
+  picSavePath: D:\\picBed\\fast\\
+  resourceHandlerPath: uploadSub
