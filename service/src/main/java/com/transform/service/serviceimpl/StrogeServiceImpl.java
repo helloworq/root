@@ -4,7 +4,6 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSFile;
-import com.picserver.server.Annotation.CheckDownload;
 import com.transform.api.model.entiy.mongo.ResourceInfo;
 import com.transform.api.service.IStrogeService;
 import com.transform.base.util.FileUtil;
@@ -41,7 +40,6 @@ public class StrogeServiceImpl implements IStrogeService {
      * @param fileTempPath
      * @return
      */
-    @CheckDownload
     @Override
     public String uploadTempFile(String fileTempPath) {
         String path = null;

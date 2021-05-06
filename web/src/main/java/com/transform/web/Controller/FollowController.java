@@ -74,7 +74,7 @@ public class FollowController {
     }
 
     @ApiOperation(value = "获取关系列表")
-    @GetMapping("relation/get/{relationList}")
+    @PostMapping("relation/get/self/{relationList}")
     public ResponseData getFriendsList(@RequestParam("operationUserUUID") String operationUserUUID,
                                        @PathVariable String relationList) throws IOException {
 
@@ -91,7 +91,7 @@ public class FollowController {
     }
 
     @ApiOperation(value = "获取粉丝列表")
-    @GetMapping("relation/get/FansList")
+    @PostMapping("relation/get/fansList")
     public ResponseData getFans(@RequestParam("operationUserUUID") String operationUserUUID) throws IOException {
 
         List<UserInfoDTO> relationfansList = followService.getFans(operationUserUUID);
@@ -106,7 +106,7 @@ public class FollowController {
      * @return
      */
     @ApiOperation(value = "获取全部用户信息")
-    @GetMapping("relation/get/friendSquareList")
+    @PostMapping("relation/get/friendSquareList")
     public ResponseData getAllUserInfo() throws IOException {
 
         List<UserInfo> allUserInfo = baseInfoService.getAllUserInfo();
