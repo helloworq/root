@@ -7,6 +7,7 @@ import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
+import com.transform.web.util.PicUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -80,6 +82,17 @@ public class testController {
         System.out.println(text);
         return ResponseUtil.success("上传成功！");
     }
+
+    @Autowired
+    PicUtil picUtil;
+
+    @ApiOperation(value = "更新/上传动态")
+    @PostMapping(value = "/pic/speed")
+    public ResponseData picSpeed() throws IOException {
+        picUtil.getPicUrl();
+        return ResponseUtil.success("上传成功！");
+    }
+
 }
 
 @Data

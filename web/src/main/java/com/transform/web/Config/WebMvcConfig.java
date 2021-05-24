@@ -20,8 +20,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //System.getProperty("user.dir") + "/data/downloadTmp" + "/
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+
-                        System.getProperty("user.dir") + "/data/downloadTmp/");
+        registry.addResourceHandler("/upload/**")/*.addResourceLocations("file:"+
+                        System.getProperty("user.dir") + "/data/downloadTmp/")*/
+        .addResourceLocations("file:D:\\picBed\\Sync\\Pic\\");
 
         //registry.addResourceHandler("/upload/**").addResourceLocations("file:C:\\Users\\12733\\Pictures\\Saved Pictures\\");
     }

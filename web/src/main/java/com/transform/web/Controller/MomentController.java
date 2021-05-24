@@ -19,6 +19,7 @@ import com.transform.base.response.ResponseData;
 import com.transform.base.response.ResponseUtil;
 import com.transform.web.util.AsyncUtil;
 import com.transform.web.util.MyIOUtil;
+import com.transform.web.util.PicUtil;
 import com.transform.web.util.WebTools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +60,8 @@ public class MomentController {
     WebTools tools;
     @Autowired
     AsyncUtil asyncUtil;
+    @Autowired
+    PicUtil picUtil;
 
     /**
      * 上传文件以及文件信息到mongo和oracle，dubbo下文件无法序列化导致无法传输，
@@ -73,7 +76,7 @@ public class MomentController {
     @PostMapping(value = "/fileUpload")
     public ResponseData fileUpload(@ApiParam("多选") @RequestParam(value = "file") MultipartFile[] list,
                                    @ApiParam("参数(动态内容，是否编辑，设备名必传)") @Validated UserMomentInfoDTO userMomentInfoDTO,
-                                   HttpServletRequest request) throws InterruptedException {
+                                   HttpServletRequest request) throws InterruptedException, IOException {
         System.out.println(tools.getCookie(request.getCookies(), "userName"));
         if (list.length == 0 || null == list)
             return null;
@@ -88,7 +91,8 @@ public class MomentController {
         }
         List<String> imageIds = new ArrayList<>();
         for (MultipartFile file : list) {
-            imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
+            imageIds.add(picUtil.save(file));
+            //imageIds.add(myIOUtil.saveToTempPath(file));//存入到Mongo
         }
         userMomentInfoDTO.setPicIds(imageIds);
         userMomentInfoDTO.setUuid(baseInfoService.getUserId(tools.getCookie(request.getCookies(), "userName")));

@@ -26,6 +26,9 @@ public class MyIOUtil {
     @Autowired
     WebTools tools;
 
+    @Autowired
+    PicUtil picUtil;
+
     /**
      * 由于dubbo传输时只允许传字节数据，可通过引入Hessin依赖解决，暂时不采用
      * 为避免麻烦，上传的文件先保存在本地，然后再上传到Mongo，同时保存文件信息
@@ -83,13 +86,14 @@ public class MyIOUtil {
     public List<String> picIdsToLinks(List<String> picIds) {
 
         List<String> fileUrls = picIds.stream().map(picId -> {
-            String filePath = null;
+            String filePath;
             String fileUrl = null;
             try {
-                filePath = strogeService.createSingleTempFileByMongo(picId);
-                fileUrl = tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
+                //filePath = strogeService.createSingleTempFileByMongo(picId);
+                filePath = picUtil.getPicRelativePath(picId, 1000);
+                fileUrl = tools.getUrl() + "/upload/" + filePath;
                 return fileUrl;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return fileUrl;
@@ -100,8 +104,9 @@ public class MyIOUtil {
 
     public String picIdToLink(String picId) throws IOException {
         if (Objects.nonNull(picId)) {
-            String filePath = strogeService.createSingleTempFileByMongo(picId);
-            return tools.getUrl() + "/upload" + filePath.substring(filePath.lastIndexOf("/"));
+            //String filePath = strogeService.createSingleTempFileByMongo(picId);
+            String filePath = picUtil.getPicRelativePath(picId, 1000);
+            return tools.getUrl() + "/upload/" + filePath;
         }
         return null;
     }
